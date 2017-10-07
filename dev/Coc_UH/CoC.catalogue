@@ -1,0 +1,60 @@
+TAG "Agent Help 2 2 24401"
+"Universal Hub door" 
+"Press this to go to the Universal Hub"
+
+TAG "Agent Help 2 2 24402"
+"Meso Door" 
+"Press this to go back to the meso."
+
+TAG "Agent Help 2 2 24403"
+"Catallipac Door" 
+"Press this to go to the Catallipac"
+
+TAG "Agent Help 2 2 24404"
+"Universal Hub Door" 
+"Press this to go back to the Universal Hub"
+
+TAG "Agent Help 2 2 24405"
+"Daedalus Door"
+"Press this to go to the Daedalus"
+
+TAG "Agent Help 2 2 24406"
+"Universal Hub Door"
+"Press this to go back to the Universal Hub"
+
+TAG "Agent Help 2 12 24401"
+"Callbutton"
+"Press this to call the lift to this level."
+
+TAG "Agent Help 2 23 24401"
+"Reverse Empatheic Vendor"
+"Like the normal empathetic vendor, only the exact opposite."
+
+TAG "Agent Help 3 1 24401"
+"Lift"
+"This moves norns from one level to another."
+
+TAG "Agent Help 3 3 24401"
+"Environment Control"
+"This controls the environment."
+
+TAG "Agent Help 5 5 24401"
+"Dummy Doors"
+"If you don't intend to add metarooms using the Universal Hub then these serve no real purpose. If you want to add metarooms using Universal Hub for the doors then ask Zzzzoot."
+
+TAG "Agent Help 2 4 24401"
+"Justanut Pot"
+"This is a potted justanut tree. Just wait and they will drop justanuts."
+
+TAG "Agent Help 2 4 24402"
+"Lemon Pot"
+"This is a potted lemon tree. Just wait and they will drop lemons."
+
+TAG "zot_CAT"
+"This is the Catilipac.\n\nImages by Silvak\nCode by Zzzzoot"
+
+TAG "zot_UH"
+"This is the Universal Hub.\n\nImages by Silvak\nCode by Zzzzoot"
+
+TAG "zot_DAE"
+"This is Deadolous.\n\nImages by Silvak\nCode by Zzzzoot"

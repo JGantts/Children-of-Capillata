@@ -1,0 +1,125 @@
+* Script 3 extracted from CoC_CAT.agents by Mirality REVELATION
+* Thank you Mirality! -Zzzzoot
+
+*call button activate
+scrp 2 12 24401 1
+	doif ov02 = 0
+		doif ov00 = 1
+			setv va02 1
+		endi
+	elif ov02 = 1
+		doif ov00 = 0
+			setv va02 1
+		endi
+	endi
+	doif va02 = 1 and ov01 <> 1
+		rtar 3 1 24401
+		seta va00 targ
+		targ ownr
+		pose 1
+		mesg writ va00 0
+	endi
+endm
+
+*move
+scrp 3 1 24401 1
+	lock
+	pose 1
+	targ ov02
+	setv ov01 1
+	targ mv03
+	setv ov01 1
+	targ ownr
+*	go up
+	doif ov00 = 0
+		targ ov02
+		setv ov00 1
+		targ mv03
+		setv ov00 1
+		targ ownr
+		setv ov00 1
+		doif type from <> 3
+			targ from
+			doif carr = null
+				targ ownr
+				spas ownr from
+			endi
+			targ ownr
+		else
+			gpas 4 0 0 1
+		endi
+		velo 0 -10
+*		get the position to go to
+		targ ov03
+		setv va00 post
+		subv va00 65
+		targ ownr
+		loop
+			setv va01 post
+			doif va00 > va01
+				velo 0 0
+				dpas 0 0 0
+				pose 0
+				targ ov02
+				setv ov01 0
+				targ mv03
+				setv ov01 0
+* tell the world we're done
+				prt: send 0 1
+				pose 0
+				stop
+			endi
+		ever
+*	go down	
+	elif ov00 = 1
+		targ ov02
+		setv ov00 0
+		targ mv03
+		setv ov00 0
+		targ ownr
+		setv ov00 0
+		doif type from <> 3
+			targ from
+			doif carr = null
+				targ ownr
+				spas ownr from
+			endi
+			targ ownr
+		else
+			gpas 4 0 0 1
+		endi
+		velo 0 10
+*		get the position to go to
+		targ ov02
+		setv va00 post
+		subv va00 83
+		targ ownr
+		loop
+			setv va01 post
+			doif va00 < va01
+				velo 0 0
+				dpas 0 0 0
+				pose 0
+				targ ov02
+				setv ov01 0
+				pose 0
+* tell the world we're done
+				prt: send 0 1
+				targ mv03
+				setv ov01 0
+				stop
+			endi
+		ever
+	endi
+endm
+
+*rscr
+*enum 3 1 24401
+*	kill targ
+*next
+*enum 2 12 24401
+*	kill targ
+*next
+*enum 2 12 24402
+*	kill targ
+*next

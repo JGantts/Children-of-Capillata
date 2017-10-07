@@ -1,0 +1,291 @@
+* Script 2 extracted from CoC_CAT.agents by Mirality REVELATION
+* Thank you Mirality! -Zzzzoot
+
+* UH door activate
+scrp 2 2 24403 1
+	lock
+* check for lock
+	doif from <> pntr
+		targ from
+		setv va00 gnus
+		targ ownr
+		setv va01 0
+*			if norn check if allowed
+		doif va00 = 1 and avar ownr ov00 = 1
+*				allow
+			setv va01 1
+*			if grendel check if allowed
+		elif va00 = 2 and avar ownr ov01 = 1
+*				allow
+			setv va01 1
+*			if ettin check if allowed
+		elif va00 = 3 and avar ownr ov02 = 1
+*			allow
+			setv va01 1
+		endi
+	else
+		setv va01 1
+	endi
+	doif va01 = 0
+		stim writ from 0 1
+		stop
+	endi
+** open
+*	self
+	anim [1 2 3 4 5 6 7 8 9 10 11 12 13]
+*	partner
+	rtar 2 2 24404
+* turn off buttons
+	part 1
+	pose 0
+
+	part 2
+	pose 0
+
+	part 3
+	pose 0
+
+	part 0
+	anim [1 2 3 4 5 6 7 8 9 10 11 12]
+	over
+*	get position of partner
+	setv va02 posx
+	setv va03 posy
+*addv va03 40
+	targ ownr
+** move
+	doif from = pntr
+*		move the camera, then all touching creatures
+		cmrp va02 va03 0
+		etch 4 0 0
+			doif targ <> null
+				doif dead = 0 and aslp = 0
+					mvsf va02 va03
+				endi
+
+			endi
+		next
+	else
+		targ from
+		doif aslp = 0 and dead = 0 and carr = null and aslp = 0
+			mvsf va02 va03
+			stim writ targ 95 1
+		endi
+		targ ownr
+	endi
+** close
+*	self
+	anim [12 11 10 9 8 7 6 5 4 3 2 1 0]
+*	partner
+	rtar 2 2 24404
+	anim [11 10 9 8 7 6 5 4 3 2 1 0]
+	over
+*	grendel
+	part 1
+	doif ov01 = 0
+		pose 2
+	else
+		pose 1
+	endi
+*	ettin
+	part 2
+	doif ov02 = 0
+		pose 2
+	else
+		pose 1
+	endi
+*	norn
+	part 3
+	doif ov00 = 0
+		pose 2
+	else
+		pose 1
+	endi
+	part 0
+endm
+
+* Catillapac activate
+scrp 2 2 24404 1
+	lock
+* check for lock
+	doif from <> pntr
+		targ from
+		setv va00 gnus
+		targ ownr
+		setv va01 0
+*			if norn check if allowed
+		doif va00 = 1 and ov00 = 1
+*				allow
+			setv va01 1
+*			if grendel check if allowed
+		elif va00 = 2 and ov01 = 1
+*				allow
+			setv va01 1
+*			if ettin check if allowed
+		elif va00 = 3 and ov02 = 1
+*			allow
+			setv va01 1
+		endi
+	else
+		setv va01 1
+	endi
+	doif va01 = 0
+		stim writ from 0 1
+		stop
+	endi
+* turn off buttons
+	part 1
+	pose 0
+	part 2
+	pose 0
+	part 3
+	pose 0
+	part 0
+** open
+*	self
+	anim [1 2 3 4 5 6 7 8 9 10 11 12]
+*	partner
+	rtar 2 2 24403
+	anim [1 2 3 4 5 6 7 8 9 10 11 12 13]
+	over
+*	get position of partner
+	setv va02 posx
+	setv va03 posy
+*addv va03 40
+	targ ownr
+** move
+	doif from = pntr
+*		move the camera, then all touching creatures
+		cmrp va02 va03 0
+		etch 4 0 0
+			doif targ <> null
+				doif dead = 0 and aslp = 0
+					mvsf va02 va03
+				endi
+
+			endi
+		next
+	else
+		targ from
+		doif aslp = 0 and dead = 0 and carr = null and aslp = 0
+			mvsf va02 va03
+			stim writ targ 95 1
+		endi
+	endi
+	targ ownr
+** close
+*	partner
+	rtar 2 2 24403
+	anim [12 11 10 9 8 7 6 5 4 3 2 1 0]
+*	self
+	targ ownr
+	anim [11 10 9 8 7 6 5 4 3 2 1 0]
+	over
+*	grendel
+	part 1
+	doif ov01 = 0
+		pose 2
+	else
+		pose 1
+	endi
+*	ettin
+	part 2
+	doif ov02 = 0
+		pose 2
+	else
+		pose 1
+	endi
+*	norn
+	part 3
+	doif ov00 = 0
+		pose 2
+	else
+		pose 1
+	endi
+	part 0
+endm
+
+** change the settings catillapac
+* norn
+scrp 2 2 24404 1000
+	doif ov00 = 1
+		part 3
+		pose 2
+		setv ov00 0
+	else
+		part 3
+		pose 1
+		setv ov00 1
+	endi
+endm
+* grendel
+scrp 2 2 24404 1001
+	doif ov01 = 1
+		part 1
+		pose 2
+		setv ov01 0
+	else
+		part 1
+		pose 1
+		setv ov01 1
+	endi
+endm
+* ettin
+scrp 2 2 24404 1002
+	doif ov02 = 1
+		part 2
+		pose 2
+		setv ov02 0
+	else
+		part 2
+		pose 1
+		setv ov02 1
+	endi
+endm
+
+** change the settings UH
+* norn
+scrp 2 2 24403 1000
+	doif ov00 = 1
+		part 1
+		pose 3
+		part 0
+		setv ov00 0
+	else
+		part 1
+		pose 0
+		setv ov00 1
+	endi
+endm
+* grendel
+scrp 2 2 24403 1001
+	doif ov01 = 1
+		part 2
+		pose 2
+		setv ov01 0
+	else
+		part 2
+		pose 0
+		setv ov01 1
+	endi
+endm
+* ettin
+scrp 2 2 24403 1002
+	doif ov02 = 1
+		part 3
+		pose 1
+		setv ov02 0
+	else
+		part 3
+		pose 0
+		setv ov02 1
+	endi
+endm
+
+*rscr
+*enum 2 2 24403
+*	kill targ
+*next
+*enum 2 2 24404
+*	kill targ
+*next

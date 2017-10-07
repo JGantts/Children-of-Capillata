@@ -1,0 +1,116 @@
+***Justanut tick script
+scrp 2 4 24401 9
+	tick rand 700 800
+*go throught all the parts, grow one, if old enough...
+*...make a new lemon and drop it
+	setv va00 0
+	loop
+		targ ownr
+		addv va00 1
+		part va00
+		setv va01 0
+		doif pose <> 5
+*		if not grown age
+			setv va01 pose
+			addv va01 1
+			pose va01
+		else
+			inst
+*		else make a new fruit
+			pose 0
+*			get the lopleft position
+			setv va10 posl
+			setv va11 post
+*			add the x y position of the fruit
+			sets va15 vtos va00
+			adds va15 "x"
+			addv va10 name va15
+
+			sets va16 vtos va00
+			adds va16 "y"
+			addv va11 name va16
+* vend a justanut
+			new: simp 2 3 17 "justanut pod" 9 18 51
+			attr 194
+			perm 64
+			bhvr 48
+			pose 1
+			accg 3
+			aero 5
+			fric 99
+			elas 20
+** move it to a safe place if necessary
+			doif tmvt va10 va11 = 0
+				mvsf va10 va11
+			else
+				mvto va10 va11
+			endi
+			emit 7 .5
+			tick 200
+		endi
+		wait 100
+	untl va00 >= 7
+endm
+
+***Lemon tick script
+scrp 2 4 24402 9
+	tick rand 700 800
+*go throught all the parts, grow one, if old enough...
+*...make a new lemon and drop it
+	setv va00 0
+	loop
+		targ ownr
+		addv va00 1
+		part va00
+		setv va01 0
+		doif pose <> 5
+*		if not grown age
+			setv va01 pose
+			addv va01 1
+			pose va01
+		else
+			inst
+*		else make a new fruit
+			pose 0
+*			get the lopleft position
+			setv va10 posl
+			setv va11 post
+*			add the x y position of the fruit
+			sets va15 vtos va00
+			adds va15 "x"
+			addv va10 name va15
+
+			sets va16 vtos va00
+			adds va16 "y"
+			addv va11 name va16
+			new: simp 2 8 7 "ds lemon pod" 2 30 355
+			attr 194
+			bhvr 48
+			accg 2
+			perm 64
+			fric 100
+			elas 30
+			aero 2
+** "eaten" is used to determine how the lemon (and the lemon detritus) should appear
+			sets name "eaten" "no"
+** Check the required position before moving
+			doif tmvt va10 va11 = 0
+				mvsf va10 va11
+			else
+				mvto va10 va11
+			endi
+** make it emit fruit smell
+			emit 6 .5
+			tick 1000
+		endi
+		wait 100
+	untl va00 >= 7
+endm
+
+*rscr
+*enum 2 4 24401
+*	kill targ
+*next
+*enum 2 4 24402
+*	kill targ
+*next

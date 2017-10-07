@@ -1,0 +1,140 @@
+* Script 2 extracted from CoC_UH.agents by Mirality REVELATION
+
+*injection moved to injection.cos
+
+*Constructor
+scrp 2 2 24401 10
+	dbg: outs "constructor ds side door"
+	attr 4
+	clac 0
+	bhvr 1
+	pat: dull 2 "CoCUHdoor" 1 34 29 0
+	part 2
+	frat 2
+	pat: dull 1 "CoCUHdoor" 9 52 8 0
+	part 1
+	pose 1
+	dbg: outs "end constructor ds side door"
+endm
+
+scrp 2 2 24401 1
+	lock
+	part 2
+	anim [0 1 2 3]
+	part 1
+	pose 0
+**move stuff
+*get location of partner door
+	rtar 2 2 24402
+	setv va00 posx
+	setv va01 posy
+	part 1
+	pose 0
+	part 0
+	anim [0 1 2 3]
+	over
+	targ ownr
+	doif from = pntr
+*		move the camera, then all touching creatures
+		cmrp va00 va01 0
+		etch 4 0 0
+			doif targ <> null
+				doif dead = 0 and aslp = 0
+					doif tmvf va00 va01 = 1
+						mvsf va00 va01
+					endi
+				endi
+
+			endi
+		next
+	else
+		targ from
+		doif tmvf va00 va01 = 1
+			mvsf va00 va01
+		endi
+		targ ownr
+	endi
+	part 2
+	anim [3 2 1 0]
+	rtar 2 2 24402
+	part 0
+	anim [3 2 1 0]
+	over
+	part 1
+	pose 1
+	targ ownr
+	part 1
+	pose 1
+endm
+
+*Constructor
+scrp 2 2 24402 10
+	dbg: outs "constructor uh side door"
+	attr 4
+	clac 0
+	bhvr 1
+	frat 2
+	pat: butt 1 "CoCUHdoor" 11 2 23 -24 0 [] 0 0
+	part 1
+	pose 1
+	dbg: outs "end constructor uh side door"
+endm
+
+scrp 2 2 24402 1
+	lock
+	part 1
+	pose 0
+	part 0
+	anim [0 1 2 3]
+**move stuff
+*get location of partner door
+	rtar 2 2 24401
+	setv va00 posx
+	setv va01 posy
+	part 2
+	anim [0 1 2 3]
+	over
+	part 1
+	pose 0
+	targ ownr
+	doif from = pntr
+*		move the camera, then all touching creatures
+		cmrp va00 va01 0
+		etch 4 0 0
+			doif targ <> null
+				doif dead = 0 and aslp = 0
+					doif tmvf va00 va01 = 1
+						mvsf va00 va01
+					endi
+				endi
+
+			endi
+		next
+	else
+		targ from
+		doif tmvf va00 va01 = 1
+			mvsf va00 va01
+		endi
+		targ ownr
+	endi
+	part 0
+	anim [3 2 1 0]
+	inst
+	rtar 2 2 24401
+	part 2
+	anim [3 2 1 0]
+	over
+	part 1
+	pose 1
+	targ ownr
+	part 1
+	pose 1
+endm
+
+*rscr
+*enum 2 2 24401
+*	kill targ
+*next
+*enum 2 2 24402
+*	kill targ
+*next

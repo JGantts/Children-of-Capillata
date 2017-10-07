@@ -1,0 +1,517 @@
+* Script 3 extracted from Mor.agents by Mirality REVELATION
+
+*new: simp 2 12 2 "lift" 2 14 5000
+*bhvr 1
+*attr 4
+*perm 10
+*clac 0
+*elas 0
+*setv ov88 2
+*setv ov00 0
+*seta ov16 null
+*prt: inew 0 "lift call button in" "reads in data" 37 9 1000
+*prt: onew 0 "lift call button out" "outputs input data or lift call state" 38 20
+**map position top
+*setv va45 40122
+*mvto va45 30485
+*
+*pose 0
+*setv va66 room targ
+*
+*new: simp 2 12 2 "lift" 2 14 5000
+*bhvr 1
+*attr 4
+*perm 10
+*clac 0
+*elas 0
+*setv ov88 2
+*setv ov00 0
+*seta ov16 null
+*prt: inew 0 "lift call button in" "reads in data" 37 9 1000
+*prt: onew 0 "lift call button out" "outputs input data or lift call state" 38 20
+**map position middle
+*mvto va45 30786
+*
+*pose 0
+*setv va67 room targ
+*link va66 va67 100
+*
+*new: simp 2 12 2 "lift" 2 14 5000
+*bhvr 1
+*attr 4
+*perm 10
+*clac 0
+*elas 0
+*setv ov88 3
+*setv ov00 0
+*seta ov16 null
+*prt: inew 0 "lift call button in" "reads in data" 37 9 1000
+*prt: onew 0 "lift call button out" "outputs input data or lift call state" 38 20
+**map position bottom
+*mvto va45 30985
+*
+*pose 0
+*setv va66 room targ
+*link va66 va67 100
+*
+*new: vhcl 3 1 1 "lift" 23 0 50
+*bhvr 3
+*attr 12
+*clac -1
+*elas 0
+*setv ov80 0
+*addv va45 45
+**map position lift
+*mvto va45 30430
+*seta ov99 null
+*
+*pat: dull 1 "lift" 4 0 0 200
+*cabn 0 0 121 144
+*cabw 5
+*
+*pat: butt 2 "lift" 16 7 52 68 0 [] 2000 1
+*pat: butt 3 "lift" 16 7 52 82 0 [] 2001 1
+*part 2
+*anim [4]
+*part 3
+*anim [5]
+*
+*seta va00 targ
+*enum 2 12 2
+*	doif ov16 = null
+*		seta ov16 va00
+*	endi
+*next
+*targ va00
+*
+*part 1
+*anim [7]
+
+scrp 2 12 2 1
+	inst
+	lock
+	seta va88 ov16
+	enum 2 12 2
+		doif ov16 = va88
+			addv va66 ov00
+			addv va66 pose
+		endi
+	next
+	targ ov16
+	addv va66 ov00
+	setv va51 posy
+	setv va52 posy
+	targ ownr
+	addv va51 20
+	subv va52 20
+	doif va66 = 0
+
+		doif posy > va51 or posy < va52
+			prt: send 0 0
+			enum 2 12 2
+				doif ov16 = va88
+					pose 0
+					setv ov00 0
+				endi
+			next
+			snde "but1"
+			pose 1
+			setv ov00 1
+			inst
+			mesg wrt+ ov16 1500 unid 0 0
+			slow
+		else
+			anim [1]
+			over
+			anim [0]
+			over
+		endi
+	endi
+endm
+
+scrp 2 12 2 1000
+	inst
+	setv ov70 _p1_
+	setv ov71 ov70
+	absv ov71
+	seta va16 ov16
+	enum 2 12 2
+		doif ov16 = va16
+			doif pose = 1 or ov00 = 1
+				setv va67 1
+			endi
+		endi
+	next
+	doif ov71 > 0
+		doif va67 = 0
+			mesg writ ownr 0
+		endi
+	endi
+	doif ov71 = 0
+		pose 0
+		setv ov00 0
+	endi
+endm
+
+
+scrp 2 12 2 1501
+	inst
+	lock
+	base 0
+	doif ov00 = 1
+		prt: send 0 255
+	endi
+	anim [0]
+	setv ov00 0
+endm
+
+scrp 3 1 1 1
+	inst
+	seta va99 null
+	targ from
+	doif fmly eq 4
+
+		stim writ targ 75 0
+		seta va99 targ
+	endi
+	targ ownr
+	seta ov99 va99
+
+	mesg writ ownr 2000
+endm
+
+scrp 3 1 1 2
+	inst
+	seta va99 null
+	targ from
+	doif fmly eq 4
+
+		stim writ targ 75 0
+		seta va99 targ
+	endi
+	targ ownr
+	seta ov99 va99
+	mesg writ ownr 2001
+endm
+
+
+
+scrp 3 1 1 1500
+	inst
+	lock
+	doif ov00 eq 0
+		setv ov00 1
+		inst
+		setv ov70 _p1_
+
+
+
+
+		snde "clik"
+		tick 1
+		slow
+	endi
+
+endm
+
+scrp 3 1 1 9
+	lock
+	setv va17 ov70
+	inst
+	doif ov80 = 0
+		etch 4 2 0
+			inst
+			doif targ <> null
+				nohh
+				zomb 1
+				pose 80
+				dirn 1
+				wait 4
+				inst
+				doif targ <> null
+					spas ownr targ
+				endi
+				wait 2
+				inst
+				doif targ <> null
+					doif carr = null
+						zomb 0
+					endi
+				endi
+
+
+
+
+
+
+
+
+
+			endi
+		next
+		inst
+		gpas 4 0 0 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		inst
+		part 1
+		anim [7 6 5 4 3 2 1 0]
+		over
+		setv ov80 1
+	endi
+	enum 2 12 2
+		doif ov16 = ownr
+			doif unid = va17
+				seta va16 targ
+				targ ownr
+				seta ov16 va16
+				setv va02 rely ownr ov16
+				subv va02 20
+				setv va03 va02
+				absv va03
+				doif va03 > 200
+					setv va04 10
+					tick 6
+				elif va03 > 100 and va03 <= 200
+					setv va04 8
+					tick 4
+				elif va03 > 50 and va03 <= 100
+					setv va04 5
+					tick 2
+				elif va03 > 10 and va03 <= 50
+					setv va04 3
+					tick 1
+				elif va03 <= 10
+					setv va04 1
+					tick 1
+				endi
+			endi
+		endi
+	next
+	doif va02 < 0
+		absv va04
+		negv va04
+		part 0
+		anim [3]
+		bhvr 0
+		part 2
+		anim [6]
+		part 3
+		anim [6]
+		velo 0 va04
+	elif va02 > 0
+		absv va04
+		part 0
+		anim [2]
+		bhvr 0
+		part 2
+		anim [6]
+		part 3
+		anim [6]
+		velo 0 va04
+	elif va02 = 0
+		velo 0 0
+		tick 0
+		setv ov80 0
+		part 1
+		anim [0 1 2 3 4 5 6 7]
+		over
+
+
+		inst
+		epas 4 0 0
+			doif targ <> null
+				zomb 0
+			endi
+		next
+		dpas 4 0 0
+
+
+		inst
+
+		doif ov99 ne null
+			targ ov99
+			doif fmly eq 4
+
+				stim writ targ 94 1
+			endi
+			targ ownr
+			seta ov99 null
+		endi
+
+
+
+		setv ov00 0
+		part 0
+		anim [0]
+
+		enum 2 12 2
+			doif ov16 = ownr
+				mesg writ targ 1501
+				targ ownr
+				unlk
+			endi
+		next
+		unlk
+		snde "ding"
+		part 2
+		anim [4]
+		part 3
+		anim [5]
+		bhvr 3
+	endi
+endm
+
+scrp 3 1 1 2000
+	inst
+	doif from = pntr
+		targ pntr
+		anim [1 0]
+		targ ownr
+	endi
+
+
+	part 2
+	anim [6]
+	part 3
+	anim [6]
+	addv va66 ov00
+	enum 2 12 2
+		addv va66 ov00
+	next
+	targ ownr
+	slow
+	doif va66 = 0
+		setv va00 unid
+		seta va16 null
+		setv va88 999999
+		enum 2 12 2
+			doif ov16 = ownr
+				setv va50 rely ownr targ
+				doif va50 < 0
+					setv va51 va50
+					absv va51
+					doif va51 < va88 and va51 > 10
+						setv va88 va51
+						seta va16 targ
+					endi
+				endi
+			endi
+		next
+		doif va16 = null
+		endi
+		doif va16 <> null
+			part 0
+			anim [3]
+			mesg writ va16 0
+		endi
+
+	else
+		part 2
+		anim [4]
+		part 3
+		anim [5]
+	endi
+
+endm
+
+scrp 3 1 1 2001
+	inst
+	doif from = pntr
+		targ pntr
+		anim [1 1 1 0]
+		targ ownr
+	endi
+
+
+	part 2
+	anim [6]
+	part 3
+	anim [6]
+	snde "clik"
+	addv va66 ov00
+	enum 2 12 2
+		doif ov16 = ownr
+			addv va66 ov00
+		endi
+	next
+	targ ownr
+	slow
+	doif va66 = 0
+
+		setv va00 unid
+		seta va16 null
+		setv va88 999999
+		enum 2 12 2
+			doif ov16 = ownr
+				setv va50 rely ownr targ
+				doif va50 > 0
+					setv va51 va50
+					absv va51
+					doif va51 < va88 and va51 > 20
+						setv va88 va51
+						seta va16 targ
+					endi
+				endi
+			endi
+		next
+		doif va16 = null
+		endi
+		doif va16 <> null
+			part 0
+			anim [2]
+			mesg writ va16 0
+		endi
+	else
+		part 2
+		anim [4]
+		part 3
+		anim [5]
+	endi
+
+endm
+
+
+
+scrp 2 12 2 3
+	sndc "hit_"
+	prt: bang rand 60 100
+	stim writ from 92 1
+endm
+
+*rscr
+*enum 3 1 1
+*	kill targ
+*next
+*scrx 3 1 1 1
+*scrx 3 1 1 2
+*scrx 3 1 1 9
+*scrx 3 1 1 1500
+*scrx 3 1 1 2000
+*scrx 3 1 1 2001
+*
+*
+*enum 2 12 2
+*	kill targ
+*next
+*scrx 2 12 2 1
+*scrx 2 12 2 2
+*scrx 2 12 2 1500
+*scrx 2 12 2 1501
+*scrx 2 12 2 1000

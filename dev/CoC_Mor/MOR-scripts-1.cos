@@ -1,0 +1,146 @@
+* Script 2 extracted from Mor.agents by Mirality REVELATION
+
+*enum 5 5 24401
+*	doif ov00 = 1
+*		setv va00 posl
+*		setv va01 post
+*		kill targ
+*	endi
+*next
+*
+** UH
+*
+*new: comp 2 2 24407 "cocmordoor" 14 0 0
+** mvto the location of the late dummy door
+*addv va00 1
+*mvto va00 va01
+** user can click on door and when s/he does run script 1
+*attr 4
+*clac 0
+*bhvr 1
+*setv va00 room targ
+*** set the entry
+*setv ov00 1
+*setv ov01 1
+*setv ov02 1
+*pat: butt 1 "CoCmordoor" 14 4 -35 22 0 [] 1000 0
+*pat: butt 2 "CoCmordoor" 15 3 -35 45 0 [] 1000 0
+*pat: butt 3 "CoCmordoor" 16 2 -35 70 0 [] 1000 0
+*
+** MOR
+*new: comp 2 2 24408 "ettin_doors" 4 4 0
+*mvto 39994 30956
+** user can click on door and when s/he does run script 1
+*attr 4
+*clac 0
+*bhvr 1
+*tran 0 0
+*** link the rooms, spread the CA around
+*link va00 room targ 100
+*setv ov00 1
+*setv ov01 1
+*setv ov02 1
+
+
+* UH activate
+scrp 2 2 24407 1
+	lock
+** open
+*	self
+	anim [1 2 3 4 5 6 7 8 9 10 11 12 13]
+*	partner
+	rtar 2 2 24408
+	anim [0 1 2 3]
+	over
+*	get position of partner
+	setv va02 posx
+	setv va03 posy
+	addv va03 40
+	targ ownr
+** move
+	doif from = pntr
+		cmrp va02 va03 0
+		etch 4 0 0
+			doif targ <> null
+				doif dead = 0 and aslp = 0
+					mvsf va02 va03
+				endi
+			endi
+		next
+	else
+		targ from
+		doif aslp = 0 and dead = 0 and carr = null and aslp = 0
+			mvsf va02 va03
+			stim writ targ 95 1
+		endi
+		targ ownr
+	endi
+** close
+*	self
+	anim [12 11 10 9 8 7 6 5 4 3 2 1 0]
+*	partner
+	rtar 2 2 24408
+	anim [3 2 1 0]
+endm
+
+* DAE activate
+scrp 2 2 24408 1
+	lock
+** open
+*	self
+	anim [0 1 2 3]
+*	partner
+	rtar 2 2 24407
+	anim [0 1 2 3 4 5 6 7 8 9 10 11 12]
+	over
+*	get position of partner
+	setv va02 posx
+	setv va03 posy
+	addv va03 40
+	targ ownr
+** move
+	doif from = pntr
+		cmrp va02 va03 0
+		etch 4 0 0
+			doif targ <> null
+				doif dead = 0 and aslp = 0
+					mvsf va02 va03
+				endi
+			endi
+		next
+	else
+		targ from
+		doif aslp = 0 and dead = 0 and carr = null and aslp = 0
+			mvsf va02 va03
+			stim writ targ 95 1
+		endi
+		targ ownr
+	endi
+** close
+*	self
+	anim [3 2 1 0]
+*	partner
+	rtar 2 2 24407
+	anim [12 11 10 9 8 7 6 5 4 3 2 1 0]
+endm
+
+* can't lock, sorry
+scrp 2 2 24407 1000
+	rtar 1 2 10
+	mesg wrt+ targ 126 "Sorry, You can't lock this door" ownr 0
+endm
+
+
+*rscr
+*enum 2 2 24407
+*	kill targ
+*next
+*enum 2 2 24408
+*	kill targ
+*next
+*setv va00 1000
+*loop
+*	scrx 2 2 24407 va00
+*	scrx 2 2 24408 va00
+*	addv va00 1
+*untl va00 > 10000
