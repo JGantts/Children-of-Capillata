@@ -1,6 +1,6 @@
-TAG "Agent Help 1 3 24404"
-"Morpheri Favorite Place Icon" 
-"Press this to go to Morpheri"
+TAG "Agent Help 1 4 24404"
+"Morpheri"
+"Click this to go to Morpheri"
 
 TAG "Agent Help 2 2 24407"
 "Morpheri Door" 
@@ -11,4 +11,4 @@ TAG "Agent Help 2 2 24408"
 "Press this to go to the Universal Hub"
 
 TAG "zot_Mor"
-"This is the Morpheri.\n\nImages by Zequr\nCode by Zzzzoot"
+"This is Morpheri. It used Creatures 3 graphics.\n\nImages by Zequr\nCode by Zzzzoot"

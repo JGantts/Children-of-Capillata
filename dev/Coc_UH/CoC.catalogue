@@ -1,3 +1,15 @@
+TAG "Agent Help 1 4 24401"
+"The Catallipac"
+"Click this to go to the Catallipac"
+
+TAG "Agent Help 1 4 24402"
+"Universal Hub"
+"Click this to go to the Universal Hub"
+
+TAG "Agent Help 1 4 24403"
+"Daedalus"
+"Click this to go to Daedalus"
+
 TAG "Agent Help 2 2 24401"
 "Universal Hub door" 
 "Press this to go to the Universal Hub"
@@ -51,10 +63,10 @@ TAG "Agent Help 2 4 24402"
 "This is a potted lemon tree. Just wait and they will drop lemons."
 
 TAG "zot_CAT"
-"This is the Catillipac!"
+"This is the Catillipac!\nIt features the Enhances Empathic Vendor and a heat pan like the one in the meso."
 
 TAG "zot_UH"
-"This is the Universal Hub!"
+"This is the Universal Hub!\nIt has eight doors for future expansion by all developers. Contact Zzzzoot if you want to use one.\n\nThe Universal Hub is essential for using any other Children of Capillata rooms, as it connects them to the main ship."
 
 TAG "zot_DAE"
-"This is Daedalus!"
+"This is Daedalus!\nIt features environment control exactly like the one in C3; carrot, lemon, and justanut vendors; and potted plants that grow lemons and justanuts."
