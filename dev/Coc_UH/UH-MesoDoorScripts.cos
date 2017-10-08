@@ -42,6 +42,7 @@ scrp 2 2 24401 1
 				doif dead = 0 and aslp = 0
 					doif tmvf va00 va01 = 1
 						mvsf va00 va01
+						stim writ targ 95 1
 					endi
 				endi
 
@@ -50,6 +51,8 @@ scrp 2 2 24401 1
 	else
 		targ from
 		doif tmvf va00 va01 = 1
+			stim writ targ 95 1
+			stim writ targ 75 1
 			mvsf va00 va01
 		endi
 		targ ownr
@@ -105,6 +108,7 @@ scrp 2 2 24402 1
 				doif dead = 0 and aslp = 0
 					doif tmvf va00 va01 = 1
 						mvsf va00 va01
+						stim writ targ 95 1
 					endi
 				endi
 
@@ -114,6 +118,8 @@ scrp 2 2 24402 1
 		targ from
 		doif tmvf va00 va01 = 1
 			mvsf va00 va01
+			stim writ targ 95 1
+			stim writ targ 75 1
 		endi
 		targ ownr
 	endi

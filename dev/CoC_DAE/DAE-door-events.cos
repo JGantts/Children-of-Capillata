@@ -48,6 +48,7 @@ scrp 2 2 24405 1
 			doif targ <> null
 				doif dead = 0 and aslp = 0
 					mvsf va02 va03
+					stim writ targ 95 1
 				endi
 			endi
 		next
@@ -56,6 +57,7 @@ scrp 2 2 24405 1
 		doif aslp = 0 and dead = 0 and carr = null and aslp = 0
 			mvsf va02 va03
 			stim writ targ 95 1
+			stim writ targ 75 1
 		endi
 		targ ownr
 	endi
