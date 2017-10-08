@@ -45,7 +45,7 @@ subv va91 va93
 flto va90 va91
 **/
 part 3
-ptxt "Universal Hub Version 1.0.2 (Beta testing)"
+ptxt "Universal Hub Version 1.0.3 (Beta testing)"
 part 1
 ptxt read "zot_UH" 0
 

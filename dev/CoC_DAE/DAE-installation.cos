@@ -47,7 +47,7 @@ subv va91 va93
 flto va90 va91
 **/
 part 3
-ptxt "Daedalus Version 1.0.2 (Beta testing)"
+ptxt "Daedalus Version 1.0.3 (Beta testing)"
 
 part 1
 ptxt read "zot_DAE" 0
@@ -697,7 +697,7 @@ scrp 1 2 24403 1000
 ***Actual enviroment changers***
 ***beach area***
 		setv va00 43032
-		setv va01 29663
+		setv va01 29791
 		new: simp 1 1 24402 "blnk" 1 0 0
 * mark it has a light emiter,
 *saves space not having to write
@@ -717,9 +717,14 @@ scrp 1 2 24403 1000
 		new: simp 1 1 24402 "blnk" 1 0 0
 		sets name "type" "water"
 		mvto va00 va01
+		addv va00 100
 		tick 1
 
-***desert area***
+		new: simp 1 1 24402 "blnk" 1 0 0
+		emit 15 .1
+		mvto va00 va01        
+
+***cave area***
 		setv va00 44139
 		setv va01 29895
 		new: simp 1 1 24402 "blnk" 1 0 0
@@ -739,9 +744,14 @@ scrp 1 2 24403 1000
 		new: simp 1 1 24402 "blnk" 1 0 0
 		sets name "type" "water"
 		mvto va00 va01
+		addv va00 100
 		tick 1
 
-***cave area***
+		new: simp 1 1 24402 "blnk" 1 0 0
+		emit 15 .1
+		mvto va00 va01   
+
+***desert area***
 		setv va00 44978
 		setv va01 29633
 		new: simp 1 1 24402 "blnk" 1 0 0
@@ -760,7 +770,12 @@ scrp 1 2 24403 1000
 		new: simp 1 1 24402 "blnk" 1 0 0
 		sets name "type" "water"
 		mvto va00 va01
+		addv va00 100
 		tick 1
+
+		new: simp 1 1 24402 "blnk" 1 0 0
+		emit 17 .1
+		mvto va00 va01
 *			**************
 *			***//Enviro***
 *			**************

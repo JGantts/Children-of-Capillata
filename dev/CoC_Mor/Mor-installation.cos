@@ -8,7 +8,7 @@
 *# attach Morpheri.blk cocmordoor.c16 ettin_doors.c16 fav_place_CoC_Mor.c16 lift.c16 Mor.catalogue boi2.wav clik.wav ding.wav
 *# Link MOR-scripts-1.cos MOR-scripts-2.cos
 
-* Script 1 extracted from CoC_UH.agents by Mirality REVELATION
+* Script 1 extracted from Mor.agents by Mirality REVELATION
 * Thank you Mirality! -Zzzzoot
 
 inst
@@ -48,7 +48,7 @@ subv va91 va93
 flto va90 va91
 **/
 part 3
-ptxt "Morpheri 1.0.2 (Beta testing)"
+ptxt "Morpheri 1.0.3 (Beta testing)"
 part 1
 ptxt read "zot_Mor" 0
 
@@ -326,6 +326,10 @@ scrp 1 2 24403 1000
 		setv va00 0
 
 		setv va01 30376
+** Norn Home (only at the top)
+		new: simp 1 1 24402 "blnk" 1 0 0
+		emit 15 .1
+		mvto 40091 va01
 		reps 3
 ** Water
 			new: simp 1 1 167 "blnk" 1 va00 0
