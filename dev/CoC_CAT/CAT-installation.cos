@@ -1,9 +1,9 @@
 **CAOS2PRAY
 *# Pray-File "CoC_CAT.agents"
-*# DS-Name "CoC - Catallipac"
+*# DS-Name "CoC - The Catallipac"
 *# Agent Animation File = "fav_place_coccat.c16"
 *# Agent Sprite First Image = 1
-*# desc = "This is the Catallipac. It is a whole new room to explore!the Universal Hub!by Silvakby Zzzzoot"
+*# desc = "This is the Catallipac. It is a whole new room to explore!\n\nRequires the Universal Hub!\n\nPart of Children of Capillata.\nDesigned by and images by Silvak.\nMaintained by and code by Zzzzoot."
 
 *# attach coc_cat.blk coccatdoor.c16 coccatvendor.c16 coccatvendormouth.c16 fav_place_coccat.c16 lift.c16 sealift.c16
 *# Link CAT-door-events.cos CAT-empathic-vendor.cos CAT-lift-events.cos
@@ -47,13 +47,17 @@ subv va91 va93
 flto va90 va91
 **/
 part 3
-ptxt "Catilipac Version 1.0.1 (Beta testing)"
+ptxt "Catilipac Version 1.0.2 (Beta testing)"
 part 1
 ptxt read "zot_CAT" 0
 
+*kill dialog
+scrp 1 2 24403 1001
+    kill ownr
+endm
+
 ***close text box and install the agent
 scrp 1 2 24403 1000
-	dbg: outs "begin cat-installation's button click script"
 	inst
 	part 2
 	anim [0 1 0]
@@ -61,8 +65,20 @@ scrp 1 2 24403 1000
 	inst
 
 *	inject
-	doif game "UH" = 1
-		dbg: outs "UH is installed"
+	doif game "CoC_CAT" = 1
+		targ ownr
+		pat: kill 2
+		pat: butt 2 "useful_screen" 13 2 122 290 0 [0 1 255] 1001 0
+		part 1
+		ptxt "The Catilipac is already injected."
+	elif game "CoC_UH" = 0
+*		oops, UH isn't installed
+		targ ownr
+		pat: kill 2
+		pat: butt 2 "useful_screen" 13 2 122 290 0 [0 1 255] 1001 0
+		part 1
+		ptxt "You need to inject the Universal Hub first. Go to this webpage to get it:\n\nhttp://creatures.wikia.com/wiki/Universal_Hub"
+	else
 *			*********
 *			***MAP***
 *			*********
@@ -428,89 +444,9 @@ scrp 1 2 24403 1000
 *			************
 *			***//Robot**
 *			************
-
-		kill ownr
-*		oops, UH isn't installed
-	else
-		targ ownr
-		pat: kill 2
-		pat: butt 2 "useful_screen" 2 2 237 24 0 [] 1000 0
-		part 1
-		ptxt "You need to install the Universal Hub. Go to this webpage to get it:\n\nhttp://creatures.wikia.com/wiki/Universal_Hub"
-	endi
-	kill ownr
-endm
-*********
-*********
-***page down
-scrp 1 2 24403 1001
-	part 1
-	setv va99 page
-	setv va06 npgs
-	addv va99 1
-
-	doif va99 < npgs
-		part 4
-		anim [ 2 2 2 ]
-		over
-		part 1
-		page va99
-	endi
-
-* set page counter
-	mesg writ ownr 1003
-endm
-*********
-***page up
-scrp 1 2 24403 1002
-	part 1
-	setv va99 page
-
-	doif va99 > 0
-		part 5
-		anim [ 2 2 2 ]
-		over
-		part 1
-		subv va99 1
-		page va99
-	endi
-
-* set page counter
-	mesg writ ownr 1003
-endm
-
-* set page counter
-scrp 1 2 24403 1003
-	inst
-
-* get number of pages and current page
-	part 1
-	setv va06 npgs
-	setv va07 page
-	addv va07 1
-
-* set page number text
-	sets va08 vtos va07
-	adds va08 "/"
-	adds va08 vtos va06
-	part 6
-	ptxt va08
-
-* set pgup button
-	part 5
-	doif va07 = 1
-		anim [0]
-	else
-		anim [1]
-	endi
-
-* set pgdn button
-	part 4
-	doif va07 = va06
-		anim [0]
-	else
-		anim [1]
-	endi
+		setv game "CoC_CAT" 1
+        kill ownr
+    endi
 endm
 
 *rscr

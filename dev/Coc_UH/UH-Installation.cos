@@ -3,7 +3,7 @@
 *# DS-Name "CoC - Universal Hub"
 *# Agent Animation File = "fav_place_cocuh.c16"
 *# Agent Sprite First Image = 1
-*# desc = "This is the Universal Hub. It is a room with eight doors. It also has a door to the Norn Meso. If you would like to use a door please contact Zzzzoot."
+*# desc = "A room of blank doors with one fixed door leading to the Norn Meso.\nIf you would like to use a door for your metaroom please contact Zzzzoot.\n\nPart of Children of Capillata.\nDesigned by and images by Silvak.\nMaintained by and code by Zzzzoot."
 
 *# attach CoC.catalogue coc_uh.blk coc_uh_door_overlay.c16 cocuhdoor.c16 fav_place_cocuh.c16
 *# Link UH-MesoDoorScripts.cos
@@ -12,6 +12,7 @@
 * Thank you Mirality! -Zzzzoot
 
 inst
+reaf
 
 enum 1 2 24403
 	kill targ
@@ -44,10 +45,14 @@ subv va91 va93
 flto va90 va91
 **/
 part 3
-ptxt "Universal Hub Version 1.0.1 (Beta testing)"
+ptxt "Universal Hub Version 1.0.2 (Beta testing)"
 part 1
 ptxt read "zot_UH" 0
-setv name "try" 1
+
+*kill dialog
+scrp 1 2 24403 1001
+    kill ownr
+endm
 
 ***close text box and install the agent
 scrp 1 2 24403 1000
@@ -57,7 +62,13 @@ scrp 1 2 24403 1000
 	over
 	inst
 
-*	inject
+	doif game "CoC_UH" = 1
+		targ ownr
+		pat: kill 2
+		pat: butt 2 "useful_screen" 13 2 122 290 0 [0 1 255] 1001 0
+		part 1
+		ptxt "The Universal Hub is already injected."
+	else
 *	*********
 *	***Map***
 *	*********
@@ -67,109 +78,109 @@ scrp 1 2 24403 1000
 * Addon file: deletes existing metarooms at the same place, same background name
 * 1 metarooms, 16 rooms, 16 doors
 
-	mapd 100000 100000
+		mapd 100000 100000
 
-	setv game "mapeditortmp" addm 41096 29360 1204 608 "coc_uh"
-	mmsc 41698 29664 ""
-	setv va00 addr game "mapeditortmp" 41134 41371 29550 29550 29739 29739
-	rtyp va00 0
-	rmsc 41252 29644 ""
-	setv game "mapeditortmp_600" va00
-	setv va00 addr game "mapeditortmp" 41428 41634 29550 29550 29739 29739
-	rtyp va00 0
-	rmsc 41531 29644 ""
-	setv game "mapeditortmp_601" va00
-	setv va00 addr game "mapeditortmp" 41765 41962 29550 29550 29739 29739
-	rtyp va00 0
-	rmsc 41863 29644 ""
-	setv game "mapeditortmp_602" va00
-	setv va00 addr game "mapeditortmp" 42023 42258 29550 29550 29739 29739
-	rtyp va00 0
-	rmsc 42140 29644 ""
-	setv game "mapeditortmp_603" va00
-	setv va00 addr game "mapeditortmp" 41962 42023 29550 29550 29739 29739
-	rtyp va00 0
-	rmsc 41992 29644 ""
-	setv game "mapeditortmp_604" va00
-	setv va00 addr game "mapeditortmp" 41634 41765 29550 29550 29739 29739
-	rtyp va00 0
-	rmsc 41699 29644 ""
-	setv game "mapeditortmp_605" va00
-	setv va00 addr game "mapeditortmp" 41371 41428 29550 29550 29739 29739
-	rtyp va00 0
-	rmsc 41399 29644 ""
-	setv game "mapeditortmp_606" va00
-	setv va00 addr game "mapeditortmp" 41371 41428 29739 29739 29764 29764
-	rtyp va00 0
-	rmsc 41399 29751 ""
-	setv game "mapeditortmp_607" va00
-	setv va00 addr game "mapeditortmp" 41371 41428 29764 29764 29950 29950
-	rtyp va00 0
-	rmsc 41399 29857 ""
-	setv game "mapeditortmp_608" va00
-	setv va00 addr game "mapeditortmp" 41134 41371 29764 29764 29950 29950
-	rtyp va00 0
-	rmsc 41252 29857 ""
-	setv game "mapeditortmp_609" va00
-	setv va00 addr game "mapeditortmp" 41428 41660 29764 29764 29950 29950
-	rtyp va00 0
-	rmsc 41544 29857 ""
-	setv game "mapeditortmp_610" va00
-	setv va00 addr game "mapeditortmp" 41660 41731 29764 29764 29950 29950
-	rtyp va00 0
-	rmsc 41695 29857 ""
-	setv game "mapeditortmp_611" va00
-	setv va00 addr game "mapeditortmp" 41731 41962 29764 29764 29950 29950
-	rtyp va00 0
-	rmsc 41846 29857 ""
-	setv game "mapeditortmp_612" va00
-	setv va00 addr game "mapeditortmp" 41962 42023 29739 29739 29764 29764
-	rtyp va00 0
-	rmsc 41992 29751 ""
-	setv game "mapeditortmp_613" va00
-	setv va00 addr game "mapeditortmp" 41962 42023 29764 29764 29950 29950
-	rtyp va00 0
-	rmsc 41992 29857 ""
-	setv game "mapeditortmp_614" va00
-	setv va00 addr game "mapeditortmp" 42023 42258 29764 29764 29950 29950
-	rtyp va00 0
-	rmsc 42140 29857 ""
-	setv game "mapeditortmp_615" va00
+		setv game "mapeditortmp" addm 41096 29360 1204 608 "coc_uh"
+		mmsc 41698 29664 ""
+		setv va00 addr game "mapeditortmp" 41134 41371 29550 29550 29739 29739
+		rtyp va00 0
+		rmsc 41252 29644 ""
+		setv game "mapeditortmp_600" va00
+		setv va00 addr game "mapeditortmp" 41428 41634 29550 29550 29739 29739
+		rtyp va00 0
+		rmsc 41531 29644 ""
+		setv game "mapeditortmp_601" va00
+		setv va00 addr game "mapeditortmp" 41765 41962 29550 29550 29739 29739
+		rtyp va00 0
+		rmsc 41863 29644 ""
+		setv game "mapeditortmp_602" va00
+		setv va00 addr game "mapeditortmp" 42023 42258 29550 29550 29739 29739
+		rtyp va00 0
+		rmsc 42140 29644 ""
+		setv game "mapeditortmp_603" va00
+		setv va00 addr game "mapeditortmp" 41962 42023 29550 29550 29739 29739
+		rtyp va00 0
+		rmsc 41992 29644 ""
+		setv game "mapeditortmp_604" va00
+		setv va00 addr game "mapeditortmp" 41634 41765 29550 29550 29739 29739
+		rtyp va00 0
+		rmsc 41699 29644 ""
+		setv game "mapeditortmp_605" va00
+		setv va00 addr game "mapeditortmp" 41371 41428 29550 29550 29739 29739
+		rtyp va00 0
+		rmsc 41399 29644 ""
+		setv game "mapeditortmp_606" va00
+		setv va00 addr game "mapeditortmp" 41371 41428 29739 29739 29764 29764
+		rtyp va00 0
+		rmsc 41399 29751 ""
+		setv game "mapeditortmp_607" va00
+		setv va00 addr game "mapeditortmp" 41371 41428 29764 29764 29950 29950
+		rtyp va00 0
+		rmsc 41399 29857 ""
+		setv game "mapeditortmp_608" va00
+		setv va00 addr game "mapeditortmp" 41134 41371 29764 29764 29950 29950
+		rtyp va00 0
+		rmsc 41252 29857 ""
+		setv game "mapeditortmp_609" va00
+		setv va00 addr game "mapeditortmp" 41428 41660 29764 29764 29950 29950
+		rtyp va00 0
+		rmsc 41544 29857 ""
+		setv game "mapeditortmp_610" va00
+		setv va00 addr game "mapeditortmp" 41660 41731 29764 29764 29950 29950
+		rtyp va00 0
+		rmsc 41695 29857 ""
+		setv game "mapeditortmp_611" va00
+		setv va00 addr game "mapeditortmp" 41731 41962 29764 29764 29950 29950
+		rtyp va00 0
+		rmsc 41846 29857 ""
+		setv game "mapeditortmp_612" va00
+		setv va00 addr game "mapeditortmp" 41962 42023 29739 29739 29764 29764
+		rtyp va00 0
+		rmsc 41992 29751 ""
+		setv game "mapeditortmp_613" va00
+		setv va00 addr game "mapeditortmp" 41962 42023 29764 29764 29950 29950
+		rtyp va00 0
+		rmsc 41992 29857 ""
+		setv game "mapeditortmp_614" va00
+		setv va00 addr game "mapeditortmp" 42023 42258 29764 29764 29950 29950
+		rtyp va00 0
+		rmsc 42140 29857 ""
+		setv game "mapeditortmp_615" va00
 
-	door game "mapeditortmp_600" game "mapeditortmp_606" 100
-	door game "mapeditortmp_601" game "mapeditortmp_605" 100
-	door game "mapeditortmp_601" game "mapeditortmp_606" 100
-	door game "mapeditortmp_602" game "mapeditortmp_604" 100
-	door game "mapeditortmp_602" game "mapeditortmp_605" 100
-	door game "mapeditortmp_603" game "mapeditortmp_604" 100
-	door game "mapeditortmp_604" game "mapeditortmp_613" 50
-	door game "mapeditortmp_606" game "mapeditortmp_607" 50
-	door game "mapeditortmp_607" game "mapeditortmp_608" 100
-	door game "mapeditortmp_608" game "mapeditortmp_609" 100
+		door game "mapeditortmp_600" game "mapeditortmp_606" 100
+		door game "mapeditortmp_601" game "mapeditortmp_605" 100
+		door game "mapeditortmp_601" game "mapeditortmp_606" 100
+		door game "mapeditortmp_602" game "mapeditortmp_604" 100
+		door game "mapeditortmp_602" game "mapeditortmp_605" 100
+		door game "mapeditortmp_603" game "mapeditortmp_604" 100
+		door game "mapeditortmp_604" game "mapeditortmp_613" 50
+		door game "mapeditortmp_606" game "mapeditortmp_607" 50
+		door game "mapeditortmp_607" game "mapeditortmp_608" 100
+		door game "mapeditortmp_608" game "mapeditortmp_609" 100
 
-	door game "mapeditortmp_608" game "mapeditortmp_610" 100
-	door game "mapeditortmp_610" game "mapeditortmp_611" 100
-	door game "mapeditortmp_611" game "mapeditortmp_612" 100
-	door game "mapeditortmp_612" game "mapeditortmp_614" 100
-	door game "mapeditortmp_613" game "mapeditortmp_614" 100
-	door game "mapeditortmp_614" game "mapeditortmp_615" 100
+		door game "mapeditortmp_608" game "mapeditortmp_610" 100
+		door game "mapeditortmp_610" game "mapeditortmp_611" 100
+		door game "mapeditortmp_611" game "mapeditortmp_612" 100
+		door game "mapeditortmp_612" game "mapeditortmp_614" 100
+		door game "mapeditortmp_613" game "mapeditortmp_614" 100
+		door game "mapeditortmp_614" game "mapeditortmp_615" 100
 
-	delg "mapeditortmp_600"
-	delg "mapeditortmp_601"
-	delg "mapeditortmp_602"
-	delg "mapeditortmp_603"
-	delg "mapeditortmp_604"
-	delg "mapeditortmp_605"
-	delg "mapeditortmp_606"
-	delg "mapeditortmp_607"
-	delg "mapeditortmp_608"
-	delg "mapeditortmp_609"
-	delg "mapeditortmp_610"
-	delg "mapeditortmp_611"
-	delg "mapeditortmp_612"
-	delg "mapeditortmp_613"
-	delg "mapeditortmp_614"
-	delg "mapeditortmp_615"
+		delg "mapeditortmp_600"
+		delg "mapeditortmp_601"
+		delg "mapeditortmp_602"
+		delg "mapeditortmp_603"
+		delg "mapeditortmp_604"
+		delg "mapeditortmp_605"
+		delg "mapeditortmp_606"
+		delg "mapeditortmp_607"
+		delg "mapeditortmp_608"
+		delg "mapeditortmp_609"
+		delg "mapeditortmp_610"
+		delg "mapeditortmp_611"
+		delg "mapeditortmp_612"
+		delg "mapeditortmp_613"
+		delg "mapeditortmp_614"
+		delg "mapeditortmp_615"
 
 *	***********
 *	***//Map***
@@ -178,11 +189,11 @@ scrp 1 2 24403 1000
 *	***************
 *	***Fav Place***
 *	***************
-	new: simp 1 3 24402 "fav_place_CoCUH" 1 0 1
-	attr 272
-	mvto 41696 29684
-	cmrt 0
-	tick 10
+		new: simp 1 3 24402 "fav_place_CoCUH" 1 0 1
+		attr 272
+		mvto 41696 29684
+		cmrt 0
+		tick 10
 *	*****************
 *	***//Fav Place***
 *	*****************
@@ -191,25 +202,22 @@ scrp 1 2 24403 1000
 *	***Door***
 *	**********
 * set the Empathetic vendor to plne 1 so I can put door behind it
-	setv va00 0
-	rtar 2 23 3
-	doif plne < 1
-		plne 1
-	endi
+		setv va00 0
+		rtar 2 23 3
+		doif plne < 1
+			plne 1
+		endi
 
-	dbg: outs "makin' ds side door"
 * DS side door
-	new: comp 2 2 24401 "CoCUHdoor" 6 0 0
-	tint 140 140 140 127 127
-	mvto 1590 9128
-	setv va00 room targ
+		new: comp 2 2 24401 "CoCUHdoor" 6 0 0
+		tint 140 140 140 127 127
+		mvto 1590 9128
+		setv va00 room targ
 
-	dbg: outs "makin' uh side door"
 * UH side door
-	new: comp 2 2 24402 "CoCUHdoor" 4 5 0
-	mvto 41666 29622
-	link va00 room targ 100
-	dbg: outs "done with doors"
+		new: comp 2 2 24402 "CoCUHdoor" 4 5 0
+		mvto 41666 29622
+		link va00 room targ 100
 
 *	************
 *	***//Door***
@@ -218,100 +226,24 @@ scrp 1 2 24403 1000
 *	*****************
 *	***Dummy Doors***
 *	*****************
-	setv va00 41174
-	setv va01 29604
-	setv va10 0
-	reps 2
-		reps 4
-			new: simp 5 5 24401 "CoC_UH_door_overlay" 1 0 0
-			mvto va00 va01
-			addv va00 296
-			addv va10 1
-			setv ov00 va10
-		repe
 		setv va00 41174
-		addv va01 210
-	repe
+		setv va01 29604
+		setv va10 0
+		reps 2
+			reps 4
+				new: simp 5 5 24401 "CoC_UH_door_overlay" 1 0 0
+				mvto va00 va01
+				addv va00 296
+				addv va10 1
+				setv ov00 va10
+			repe
+			setv va00 41174
+			addv va01 210
+		repe
 *	*******************
 *	***//Dummy Doors***
 *	*******************
-	setv game "UH" 1
-	kill ownr
-
-
-
-endm
-
-
-*********
-*********
-***page down
-scrp 1 2 24403 1001
-	part 1
-	setv va99 page
-	setv va06 npgs
-	addv va99 1
-
-	doif va99 < npgs
-		part 4
-		anim [ 2 2 2 ]
-		over
-		part 1
-		page va99
-	endi
-
-* set page counter
-	mesg writ ownr 1003
-endm
-*********
-***page up
-scrp 1 2 24403 1002
-	part 1
-	setv va99 page
-
-	doif va99 > 0
-		part 5
-		anim [ 2 2 2 ]
-		over
-		part 1
-		subv va99 1
-		page va99
-	endi
-
-* set page counter
-	mesg writ ownr 1003
-endm
-
-* set page counter
-scrp 1 2 24403 1003
-	inst
-
-* get number of pages and current page
-	part 1
-	setv va06 npgs
-	setv va07 page
-	addv va07 1
-
-* set page number text
-	sets va08 vtos va07
-	adds va08 "/"
-	adds va08 vtos va06
-	part 6
-	ptxt va08
-
-* set pgup button
-	part 5
-	doif va07 = 1
-		anim [0]
-	else
-		anim [1]
-	endi
-
-* set pgdn button
-	part 4
-	doif va07 = va06
-		anim [0]
-	else
-		anim [1]
+		setv game "CoC_UH" 1
+        kill ownr
 	endi
 endm

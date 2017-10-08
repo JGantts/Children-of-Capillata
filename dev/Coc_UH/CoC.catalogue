@@ -4,10 +4,10 @@ TAG "Agent Help 2 2 24401"
 
 TAG "Agent Help 2 2 24402"
 "Meso Door" 
-"Press this to go back to the meso."
+"Press this to go back to the Meso."
 
 TAG "Agent Help 2 2 24403"
-"Catallipac Door" 
+"Catallipac Door"
 "Press this to go to the Catallipac"
 
 TAG "Agent Help 2 2 24404"
@@ -16,7 +16,7 @@ TAG "Agent Help 2 2 24404"
 
 TAG "Agent Help 2 2 24405"
 "Daedalus Door"
-"Press this to go to the Daedalus"
+"Press this to go to Daedalus"
 
 TAG "Agent Help 2 2 24406"
 "Universal Hub Door"
@@ -51,10 +51,10 @@ TAG "Agent Help 2 4 24402"
 "This is a potted lemon tree. Just wait and they will drop lemons."
 
 TAG "zot_CAT"
-"This is the Catilipac!"
+"This is the Catillipac!"
 
 TAG "zot_UH"
 "This is the Universal Hub!"
 
 TAG "zot_DAE"
-"This is Deadolous!"
+"This is Daedalus!"

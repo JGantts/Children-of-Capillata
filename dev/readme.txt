@@ -1,32 +1,34 @@
+***Children of Capillata series of Metarooms***
+
 ***Universal Hub***
 A room of blank doors with one fixed door leading to the Norn Meso.
-Part of the Children of Capilata series.
 If you would like to use a door for your metaroom please contact Zzzzoot.
 
-***Catilipac***
+***The Catillipac***
 A whole new room to explore!
-Part of the Children of Capilata series.
 Requires the Universal Hub.
-Images by Silvak
-Code by Zzzzoot
 
-***Daedolous***
+***Daedalus***
 A whole new room to explore!
-Part of the Children of Capilata series.
 Requires the Universal Hub.
-Images by Silvak
-Code by Zzzzoot
 
 ***Morpheri***
 A whole new room to explore!
-Part of the Children of Capilata series.
 Requires the Universal Hub.
-Concept for Children of Capilata by Silvak
 Images by Zequr
 Code by Zzzzoot
 
 ***Instalation***
 The Universal Hub must be injected into your world before any of the other metarooms.
 Copy CoC_UH.agents, CoC_CAT.agaents, CoC_DAE.agents, and CoC_MOR.agents to your "My Agents" folder.
+
+***Credits***
+Concept and design of Children of Capillata by Silvak.
+
+Universal Hub, The Catillipac, and Daedalus, are with images by Silvak.
+
+Morpheri is with images by Zequr.
+
+All rooms are coded and maintained by Zzzzoot.
 
 Contact Zzzzoot at gantt42@gmail.com

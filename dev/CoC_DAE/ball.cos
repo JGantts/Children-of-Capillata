@@ -1,0 +1,116 @@
+
+*new: simp 2 21 6 "ball" 17 0 5000
+*attr 199
+*bhvr 35
+*aero 10
+*perm 60
+*accg 2
+*elas 90
+*fric 90
+*mvto 8513 515
+*
+*
+*
+*setv ov61 10
+*
+*
+*new: simp 2 21 6 "ball" 17 0 5000
+*attr 199
+*bhvr 35
+*aero 10
+*perm 60
+*accg 2
+*elas 90
+*fric 90
+*mvto 1070 755
+*setv ov61 10
+
+
+scrp 2 21 6 1
+	inst
+	stim writ from 97 1
+
+	setv va00 posl
+	setv va01 posr
+	addv va00 va01
+	divv va00 2
+	targ from
+	setv va01 posl
+	targ ownr
+	doif va01 lt va00
+		setv va02 rand 15 25
+	else
+		setv va02 rand -25 -15
+	endi
+	anim [0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 255]
+	velo va02 rand -70 -20
+
+endm
+
+
+scrp 2 21 6 2
+	inst
+	stim writ from 97 1
+
+	setv va00 posl
+	setv va01 posr
+	addv va00 va01
+	divv va00 2
+	targ from
+	setv va01 posl
+	targ ownr
+	doif va01 lt va00
+		setv va02 rand 15 25
+	else
+		setv va02 rand -25 -15
+	endi
+	anim [0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 255]
+	velo va02 rand 20 70
+endm
+
+
+scrp 2 21 6 4
+	anim []
+endm
+
+
+scrp 2 21 6 5
+	anim [0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 255]
+endm
+
+
+scrp 2 21 6 6
+	inst
+
+	urge sign 0.5 -1 0.0
+
+	setv va00 vely
+	doif va00 lt 0
+		negv va00
+	endi
+	doif va00 gt 1
+		snde "boi2"
+	endi
+
+	setv va00 _p1_
+	setv va01 _p2_
+	doif va00 lt 0
+		negv va00
+	endi
+	doif va01 lt 0
+		negv va01
+	endi
+	doif va00 lt 3 and va01 lt 3
+		anim []
+	endi
+endm
+
+*rscr
+*enum 2 21 6
+*	kill targ
+*next
+*scrx 2 21 6 1
+*scrx 2 21 6 2
+*scrx 2 21 6 4
+*scrx 2 21 6 5
+*scrx 2 21 6 6
