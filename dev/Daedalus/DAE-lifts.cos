@@ -21,6 +21,11 @@ scrp 2 12 2 1
 
 		doif posy > va51 or posy < va52
 			prt: send 0 0
+			doif pntr = from
+				seta va99 pntr
+			else
+				seta va99 null
+			endi
 			enum 2 12 2
 				doif ov16 = va88
 					pose 0
@@ -31,7 +36,7 @@ scrp 2 12 2 1
 			pose 1
 			setv ov00 1
 			inst
-			mesg wrt+ ov16 1500 unid 0 0
+			mesg wrt+ ov16 1500 unid va99 0
 			slow
 		else
 			anim [1]
@@ -117,8 +122,9 @@ scrp 3 1 1 1500
 		inst
 		setv ov70 _p1_
 
-
-
+		doif _p2_ <> null
+			seta ov99 pntr
+		endi
 
 		snde "clik"
 		tick 1
@@ -132,55 +138,50 @@ scrp 3 1 1 9
 	setv va17 ov70
 	inst
 	doif ov80 = 0
-		etch 4 2 0
-			inst
-			doif targ <> null
-				nohh
+		inst
+		doif ov99 = pntr
+			etch 4 2 0
+				inst
+				doif targ <> null
+					nohh
+					zomb 1
+					pose 80
+					dirn 1
+					wait 4
+					inst
+					doif targ <> null
+						spas ownr targ
+					endi
+					wait 2
+					inst
+					doif targ <> null
+						doif carr = null
+							zomb 0
+						endi
+					endi
+
+				endi
+			next
+			gpas 4 0 0 1
+
+		elif ov99 <> pntr and ov99 <> null
+			targ ov99
+			doif gnus = 2
+				inst
 				zomb 1
 				pose 80
 				dirn 1
 				wait 4
 				inst
-				doif targ <> null
-					spas ownr targ
-				endi
+				spas ownr targ
 				wait 2
 				inst
-				doif targ <> null
-					doif carr = null
-						zomb 0
-					endi
-				endi
-
-
-
-
-
-
-
-
-
+				zomb 0
+			else
+				spas ownr targ
 			endi
-		next
-		inst
-		gpas 4 0 0 1
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+			targ ownr
+		endi
 
 		inst
 		part 1
