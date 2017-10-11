@@ -54,7 +54,7 @@ ptxt read "zot_Mor" 0
 
 *kill dialog
 scrp 1 2 24403 1001
-    kill ownr
+	kill ownr
 endm
 
 ***close text box and install the agent
@@ -152,27 +152,27 @@ scrp 1 2 24403 1000
 		rtyp va00 5
 		rmsc 39922 30784 ""
 		setv game "mapeditortmp_14" va00
-		setv va00 addr game "mapeditortmp" 40163 40285 30854 30854 30942 30939
+		setv va00 addr game "mapeditortmp" 40163 40285 30854 30854 30927 30927
 		rtyp va00 0
 		rmsc 40224 30896 ""
 		setv game "mapeditortmp_15" va00
-		setv va00 addr game "mapeditortmp" 39990 40163 30927 30942 31074 31060
+		setv va00 addr game "mapeditortmp" 39990 40163 30927 30927 31074 31060
 		rtyp va00 6
 		rmsc 40076 30993 ""
 		setv game "mapeditortmp_16" va00
-		setv va00 addr game "mapeditortmp" 39851 39990 30902 30927 31006 31074
+		setv va00 addr game "mapeditortmp" 39851 39990 30895 30927 31015 31074
 		rtyp va00 6
 		rmsc 39920 30988 ""
 		setv game "mapeditortmp_17" va00
-		setv va00 addr game "mapeditortmp" 40163 40387 30942 30936 31060 31045
+		setv va00 addr game "mapeditortmp" 40163 40387 30927 30927 31060 31050
 		rtyp va00 6
 		rmsc 40275 30993 ""
 		setv game "mapeditortmp_18" va00
-		setv va00 addr game "mapeditortmp" 40387 40436 30936 30936 31045 31060
+		setv va00 addr game "mapeditortmp" 40387 40436 30927 30927 31050 31060
 		rtyp va00 6
 		rmsc 40411 30998 ""
 		setv game "mapeditortmp_19" va00
-		setv va00 addr game "mapeditortmp" 40436 40465 30936 30932 31060 31085
+		setv va00 addr game "mapeditortmp" 40436 40465 30927 30932 31060 31085
 		rtyp va00 6
 		rmsc 40450 31010 ""
 		setv game "mapeditortmp_20" va00
@@ -510,11 +510,12 @@ scrp 1 2 24403 1000
 *			***//Lift***
 *			************
 		setv game "CoC_MOR" 1
-        kill ownr
+		kill ownr
 	endi
 endm
 
 *rscr
+*delr gmap 40400 30747 
 *enum 1 2 5
 *	kill targ
 *next
