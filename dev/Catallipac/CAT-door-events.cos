@@ -27,8 +27,12 @@ scrp 2 2 24403 1
 		setv va01 1
 	endi
 	doif va01 = 0
+*		disappoint
 		stim writ from 0 1
 		stop
+	else
+*		wait
+		stim writ from 75 1
 	endi
 ** open
 *	self
@@ -61,18 +65,19 @@ scrp 2 2 24403 1
 			doif targ <> null
 				doif dead = 0 and aslp = 0
 					mvsf va02 va03
-					stim writ targ 95 1
 				endi
-
 			endi
 		next
 	else
 		targ from
-		doif aslp = 0 and dead = 0 and carr = null and aslp = 0
-			mvsf va02 va03
-			stim writ targ 95 1
-			stim writ targ 75 1
+		inst
+		doif targ <> null
+			doif aslp = 0 and dead = 0 and carr = null and aslp = 0
+				mvsf va02 va03
+				stim writ targ 95 1
+			endi
 		endi
+		slow
 		targ ownr
 	endi
 ** close
@@ -132,8 +137,12 @@ scrp 2 2 24404 1
 		setv va01 1
 	endi
 	doif va01 = 0
+*		disappoint
 		stim writ from 0 1
 		stop
+	else
+*		wait
+		stim writ from 75 1
 	endi
 * turn off buttons
 	part 1
@@ -163,18 +172,19 @@ scrp 2 2 24404 1
 			doif targ <> null
 				doif dead = 0 and aslp = 0
 					mvsf va02 va03
-					stim writ targ 95 1
 				endi
-
 			endi
 		next
 	else
 		targ from
-		doif aslp = 0 and dead = 0 and carr = null and aslp = 0
-			mvsf va02 va03
-			stim writ targ 95 1
-			stim writ targ 75 1
+		inst
+		doif targ <> null
+			doif aslp = 0 and dead = 0 and carr = null and aslp = 0
+				mvsf va02 va03
+				stim writ targ 95 1
+			endi
 		endi
+		slow
 	endi
 	targ ownr
 ** close

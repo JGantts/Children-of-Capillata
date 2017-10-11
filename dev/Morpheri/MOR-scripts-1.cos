@@ -45,6 +45,11 @@
 * UH activate
 scrp 2 2 24407 1
 	lock
+	inst
+	doif from <> null
+		stim writ from 75 1
+	endi
+	slow
 ** open
 *	self
 	anim [1 2 3 4 5 6 7 8 9 10 11 12 13]
@@ -64,16 +69,17 @@ scrp 2 2 24407 1
 			doif targ <> null
 				doif dead = 0 and aslp = 0
 					mvsf va02 va03
-					stim writ targ 95 1
 				endi
 			endi
 		next
 	else
 		targ from
-		doif aslp = 0 and dead = 0 and carr = null and aslp = 0
-			mvsf va02 va03
-			stim writ targ 95 1
-			stim writ targ 75 1
+		inst
+		doif targ <> null
+			doif aslp = 0 and dead = 0 and carr = null and aslp = 0
+				mvsf va02 va03
+				stim writ targ 95 1
+			endi
 		endi
 		targ ownr
 	endi
@@ -88,6 +94,11 @@ endm
 * DAE activate
 scrp 2 2 24408 1
 	lock
+	inst
+	doif from <> null
+		stim writ from 75 1
+	endi
+	slow
 ** open
 *	self
 	anim [0 1 2 3]
@@ -107,17 +118,19 @@ scrp 2 2 24408 1
 			doif targ <> null
 				doif dead = 0 and aslp = 0
 					mvsf va02 va03
-					stim writ targ 95 1
 				endi
 			endi
 		next
 	else
 		targ from
-		doif aslp = 0 and dead = 0 and carr = null and aslp = 0
-			mvsf va02 va03
-			stim writ targ 95 1
-			stim writ targ 75 1
+		inst
+		doif targ <> null
+			doif aslp = 0 and dead = 0 and carr = null and aslp = 0
+				mvsf va02 va03
+				stim writ targ 95 1
+			endi
 		endi
+		slow
 		targ ownr
 	endi
 ** close
@@ -131,7 +144,7 @@ endm
 * can't lock, sorry
 scrp 2 2 24407 1000
 	rtar 1 2 10
-	mesg wrt+ targ 126 "Sorry, You can't lock this door" ownr 0
+	mesg wrt+ targ 126 "Sorry, you can't lock this door" ownr 0
 endm
 
 

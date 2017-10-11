@@ -4,7 +4,6 @@
 
 *Constructor
 scrp 2 2 24401 10
-	dbg: outs "constructor ds side door"
 	attr 4
 	clac 0
 	bhvr 1
@@ -14,11 +13,15 @@ scrp 2 2 24401 10
 	pat: dull 1 "CoCUHdoor" 9 52 8 0
 	part 1
 	pose 1
-	dbg: outs "end constructor ds side door"
 endm
 
 scrp 2 2 24401 1
 	lock
+	inst
+	doif from <> null
+		stim writ from 75 1
+	endi
+	slow
 	part 2
 	anim [0 1 2 3]
 	part 1
@@ -42,19 +45,20 @@ scrp 2 2 24401 1
 				doif dead = 0 and aslp = 0
 					doif tmvf va00 va01 = 1
 						mvsf va00 va01
-						stim writ targ 95 1
 					endi
 				endi
-
 			endi
 		next
 	else
 		targ from
-		doif tmvf va00 va01 = 1
-			stim writ targ 95 1
-			stim writ targ 75 1
-			mvsf va00 va01
+		inst
+		doif targ <> null
+			doif tmvf va00 va01 = 1
+				mvsf va00 va01
+				stim writ targ 95 1
+			endi
 		endi
+		slow
 		targ ownr
 	endi
 	part 2
@@ -85,6 +89,11 @@ endm
 
 scrp 2 2 24402 1
 	lock
+	inst
+	doif from <> null
+		stim writ from 75 1
+	endi
+	slow
 	part 1
 	pose 0
 	part 0
@@ -108,7 +117,6 @@ scrp 2 2 24402 1
 				doif dead = 0 and aslp = 0
 					doif tmvf va00 va01 = 1
 						mvsf va00 va01
-						stim writ targ 95 1
 					endi
 				endi
 
@@ -119,7 +127,6 @@ scrp 2 2 24402 1
 		doif tmvf va00 va01 = 1
 			mvsf va00 va01
 			stim writ targ 95 1
-			stim writ targ 75 1
 		endi
 		targ ownr
 	endi
