@@ -875,7 +875,7 @@ scrp 1 2 24403 1000
 *			**********
 *			***Toys***
 *			**********
-		new: simp 2 21 6 "ball" 17 0 5000
+		new: simp 2 21 24401 "ball" 17 0 5000
 		attr 199
 		bhvr 35
 		aero 10
@@ -887,7 +887,7 @@ scrp 1 2 24403 1000
 		setv ov61 10
 
 
-		new: simp 2 21 6 "ball" 17 0 5000
+		new: simp 2 21 24401 "ball" 17 0 5000
 		attr 199
 		bhvr 35
 		aero 10

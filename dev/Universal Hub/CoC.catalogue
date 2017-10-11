@@ -38,9 +38,13 @@ TAG "Agent Help 2 12 24401"
 "Callbutton"
 "Press this to call the lift to this level."
 
+TAG "Agent Help 2 21 24401"
+"Daedalus Ball"
+"This is a bright and bouncy ball that Creatures enjoy playing with...\n\nin Daedalus!"
+
 TAG "Agent Help 2 23 24401"
 "Reverse Empatheic Vendor"
-"Like the normal empathetic vendor, only the exact opposite."
+"Like the normal empathetic vendor, only the exact opposite.\n\nLooking back, I have *no* idea what I meant by this. -Zzzzoot"
 
 TAG "Agent Help 3 1 24401"
 "Lift"

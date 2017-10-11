@@ -1,5 +1,5 @@
 
-*new: simp 2 21 6 "ball" 17 0 5000
+*new: simp 2 21 24401 "ball" 17 0 5000
 *attr 199
 *bhvr 35
 *aero 10
@@ -14,7 +14,7 @@
 *setv ov61 10
 *
 *
-*new: simp 2 21 6 "ball" 17 0 5000
+*new: simp 2 21 24401 "ball" 17 0 5000
 *attr 199
 *bhvr 35
 *aero 10
@@ -26,7 +26,7 @@
 *setv ov61 10
 
 
-scrp 2 21 6 1
+scrp 2 21 24401 1
 	inst
 	stim writ from 97 1
 
@@ -48,7 +48,7 @@ scrp 2 21 6 1
 endm
 
 
-scrp 2 21 6 2
+scrp 2 21 24401 2
 	inst
 	stim writ from 97 1
 
@@ -69,17 +69,17 @@ scrp 2 21 6 2
 endm
 
 
-scrp 2 21 6 4
+scrp 2 21 24401 4
 	anim []
 endm
 
 
-scrp 2 21 6 5
+scrp 2 21 24401 5
 	anim [0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 255]
 endm
 
 
-scrp 2 21 6 6
+scrp 2 21 24401 6
 	inst
 
 	urge sign 0.5 -1 0.0
@@ -106,11 +106,11 @@ scrp 2 21 6 6
 endm
 
 *rscr
-*enum 2 21 6
+*enum 2 21 24401
 *	kill targ
 *next
-*scrx 2 21 6 1
-*scrx 2 21 6 2
-*scrx 2 21 6 4
-*scrx 2 21 6 5
-*scrx 2 21 6 6
+*scrx 2 21 24401 1
+*scrx 2 21 24401 2
+*scrx 2 21 24401 4
+*scrx 2 21 24401 5
+*scrx 2 21 24401 6
