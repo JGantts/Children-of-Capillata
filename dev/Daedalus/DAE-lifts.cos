@@ -83,7 +83,7 @@ scrp 2 12 2 1501
 	setv ov00 0
 endm
 
-scrp 3 1 1 1
+scrp 3 1 24402 1
 	inst
 	seta va99 null
 	targ from
@@ -98,7 +98,7 @@ scrp 3 1 1 1
 	mesg writ ownr 2000
 endm
 
-scrp 3 1 1 2
+scrp 3 1 24402 2
 	inst
 	seta va99 null
 	targ from
@@ -114,7 +114,7 @@ endm
 
 
 
-scrp 3 1 1 1500
+scrp 3 1 24402 1500
 	inst
 	lock
 	doif ov00 eq 0
@@ -133,7 +133,7 @@ scrp 3 1 1 1500
 
 endm
 
-scrp 3 1 1 9
+scrp 3 1 24402 9
 	lock
 	setv va17 ov70
 	inst
@@ -292,7 +292,7 @@ scrp 3 1 1 9
 	endi
 endm
 
-scrp 3 1 1 2000
+scrp 3 1 24402 2000
 	inst
 	doif from = pntr
 		targ pntr
@@ -345,7 +345,7 @@ scrp 3 1 1 2000
 
 endm
 
-scrp 3 1 1 2001
+scrp 3 1 24402 2001
 	inst
 	doif from = pntr
 		targ pntr
@@ -410,15 +410,15 @@ scrp 2 12 2 3
 endm
 
 *rscr
-*enum 3 1 1
+*enum 3 1 24402
 *	kill targ
 *next
-*scrx 3 1 1 1
-*scrx 3 1 1 2
-*scrx 3 1 1 9
-*scrx 3 1 1 1500
-*scrx 3 1 1 2000
-*scrx 3 1 1 2001
+*scrx 3 1 24402 1
+*scrx 3 1 24402 2
+*scrx 3 1 24402 9
+*scrx 3 1 24402 1500
+*scrx 3 1 24402 2000
+*scrx 3 1 24402 2001
 *
 *
 *enum 2 12 2

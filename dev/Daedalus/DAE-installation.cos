@@ -836,7 +836,7 @@ scrp 1 2 24403 1000
 		setv va66 room targ
 		link va66 va67 100
 
-		new: vhcl 3 1 1 "lift" 23 0 50
+		new: vhcl 3 1 24402 "lift" 23 0 50
 		bhvr 3
 		attr 12
 		clac -1
