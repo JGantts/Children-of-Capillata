@@ -164,11 +164,11 @@ scrp 1 2 24403 1000
 		rtyp va00 6
 		rmsc 39920 30988 ""
 		setv game "mapeditortmp_17" va00
-		setv va00 addr game "mapeditortmp" 40163 40387 30927 30927 31060 31050
+		setv va00 addr game "mapeditortmp" 40163 40387 30927 30927 31060 31060
 		rtyp va00 6
 		rmsc 40275 30993 ""
 		setv game "mapeditortmp_18" va00
-		setv va00 addr game "mapeditortmp" 40387 40436 30927 30927 31050 31060
+		setv va00 addr game "mapeditortmp" 40387 40436 30927 30927 31060 31060
 		rtyp va00 6
 		rmsc 40411 30998 ""
 		setv game "mapeditortmp_19" va00
