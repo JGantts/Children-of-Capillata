@@ -1,125 +1,256 @@
+*			**********
+*			***Lift***
+*			**********
+*			Lift
+new: vhcl 3 1 24401 "sealift" 2 0 500
+seta va02 targ
+*Lift not moving
+setv ov00 0
+cabn -5 0 103 134
+mvto 40432 29661
+attr 0
+bhvr 3
+tick 0
+*Button current
+seta ov01 null
+*Button destination
+seta ov02 null
+*int start Y
+setv ov10 0
+*int stop Y
+setv ov11 1
+
+seta va00 null
+*			top
+new: simp 2 12 24401 "lift" 2 14 500
+*link to lift
+seta ov03 va02
+*link to button above
+seta ov01 va00
+seta va00 targ
+doif ov01 <> null
+	targ ov01
+*	link from button above
+	seta ov02 va00
+	targ va00
+endi
+mvto 40399 29478
+*set to "not waiting, no lift"
+setv ov00 0
+*Set target X position
+setv ov10 post
+subv ov10 55
+setv va01 room targ
+attr 4
+bhvr 1
+prt: inew 0 "calift call button in" "useless description" 37 9 0
+prt: onew 0 "calift call button out" "useless description" 38 20
+*			bottom
+new: simp 2 12 24401 "lift" 2 14 500
+*link to lift
+seta ov03 va02
+*link to button above
+seta ov01 va00
+seta va00 targ
+doif ov01 <> null
+	targ ov01
+*	link from button above
+	seta ov02 va00
+	targ va00
+endi
+mvto 40550 29725
+*set to "not waiting, has lift"
+setv ov00 1
+*Set target X position
+setv ov10 post
+subv ov10 66
+link va01 room targ 100
+attr 4
+bhvr 1
+prt: inew 0 "calift call button in" "useless description" 37 9 0
+prt: onew 0 "calift call button out" "useless description" 38 20
+
+*link lift to bottom button
+targ va02
+seta ov01 va00
+
+
+*			************
+*			***//Lift***
+*			************
+
+
+
+
+***!!!COPY INSTALLATION SCRIPT TO MAIN INSTALLATION SCRIPT!!!***
+
+
+
 * Script 3 extracted from CoC_CAT.agents by Mirality REVELATION
 * Thank you Mirality! -Zzzzoot
 
 *call button activate
 scrp 2 12 24401 1
-	doif ov02 = 0
-		doif ov00 = 1
-			setv va02 1
-		endi
-	elif ov02 = 1
-		doif ov00 = 0
-			setv va02 1
-		endi
-	endi
-	doif va02 = 1 and ov01 <> 1
-		rtar 3 1 24401
-		seta va00 targ
-		targ ownr
+	lock
+	doif ov00 = 0
+*	button is "not waiting, does not have lift"
+*	set button to "waiting"
+		setv ov00 2
 		pose 1
-		mesg writ va00 0
+		targ ov03
+		dbg: outs "thinking about poking lift"
+		doif tick = 0
+*	poke the lift if need-be
+			dbg: outs "poking lift"
+			tick 1
+		endi
+		targ from
+		doif targ <> null and fmly = 4
+*			stim Activate button
+			stim writ from 89 1
+*			stim Wait (a bit)
+			stim writ from 75 .5
+		endi
+
+	else
+*	button is already "has lift"
+*	OR button is already "waiting for lift"
+		targ from
+		doif targ <> null and fmly = 4
+*			stim Disappoint
+			stim writ from 0 1
+		endi
 	endi
 endm
 
-*move
+*going up (only by creature)
 scrp 3 1 24401 1
 	lock
-	pose 1
-	targ ov02
-	setv ov01 1
-	targ mv03
-	setv ov01 1
-	targ ownr
-*	go up
+	targ from
+	doif fmly <> 4
+		stop
+	endi
+	inst
 	doif ov00 = 0
-		targ ov02
-		setv ov00 1
-		targ mv03
-		setv ov00 1
-		targ ownr
-		setv ov00 1
-		doif type from <> 3
-			targ from
-			doif carr = null
-				targ ownr
-				spas ownr from
-			endi
+*	lift is waiting
+		targ ov01
+		doif ov01 <> null
+*	there is a button above us, we can go to it!	
+*	set lift to "going up"
+			setv mv00 1
+*	set lift's destination button
+			seta mv02 ov01
+			slow
+*	stim Wait (a bit)
+			stim writ from 75 1
+			spas ownr from
+*	set start and stop Y values
+			targ mv01
+			setv mv10 ov10
+			targ mv02
+			setv mv11 ov10
 			targ ownr
+*	turn on light
+			pose 1
+* Aaaaand, GO!
+			tick 1
 		else
-			gpas 4 0 0 1
+*	there's no button above us!
+*	stim Disappoint
+			stim writ from 0 1
 		endi
-		velo 0 -10
-*		get the position to go to
-		targ ov03
-		setv va00 post
-		subv va00 65
-		targ ownr
-		loop
-			setv va01 post
-			doif va00 > va01
-				velo 0 0
-				dpas 0 0 0
-				pose 0
-				targ ov02
-				setv ov01 0
-				targ mv03
-				setv ov01 0
-* tell the world we're done
-				prt: send 0 1
-				pose 0
-				stop
+	else
+*	the doors are closed man, you're too late
+*	stim Disappoint
+		stim writ from 0 1
+	endi
+
+endm
+
+*going down (only by creature)
+scrp 3 1 24401 2
+endm
+
+scrp 3 1 24401 9
+	lock
+	doif mv02 = null
+		dbg: outs "setting mv02"
+*	no known destination, some button woke us up
+*	find. it.
+*		silence it. (well, move the lift to it)
+
+*		do something besides this, otherwise, can't reuse classifier
+		enum 2 12 24401
+			doif ov00 = 2
+				seta mv02 targ
 			endi
-		ever
-*	go down	
-	elif ov00 = 1
-		targ ov02
-		setv ov00 0
-		targ mv03
-		setv ov00 0
-		targ ownr
-		setv ov00 0
-		doif type from <> 3
-			targ from
-			doif carr = null
-				targ ownr
-				spas ownr from
-			endi
-			targ ownr
+		next
+		setv va99 post
+		targ mv01
+		doif va99 < post
+			setv mv00 1
 		else
-			gpas 4 0 0 1
+			setv mv00 -1
 		endi
-		velo 0 10
-*		get the position to go to
-		targ ov02
-		setv va00 post
-		subv va00 83
-		targ ownr
-		loop
-			setv va01 post
-			doif va00 < va01
-				velo 0 0
-				dpas 0 0 0
-				pose 0
-				targ ov02
-				setv ov01 0
-				pose 0
-* tell the world we're done
-				prt: send 0 1
-				targ mv03
-				setv ov01 0
-				stop
+
+		targ mv01
+		setv mv10 ov10
+		targ mv02
+		setv mv11 ov10
+		pose 1
+	endi
+
+	targ ownr
+
+	setv va00 mv10
+	setv va01 mv11
+
+	subv va00 post
+	subv va01 post
+
+	mulv va01 ov00
+
+	dbg: outv va01
+	doif va01 > 0
+
+*	we have arrived
+		epas 4 0 0
+			doif targ <> null
+* 				stim "you have travelled in a lift"
+				stim writ targ 94 1
 			endi
-		ever
+		next
+		targ ownr
+*	drop everything
+		dpas 0 0 0
+		pose 0
+		stop
+	endi
+
+	absv va00
+	absv va01
+
+	setv va03 va00
+	subv va03 va01
+
+	doif va03 > 0
+*we're closer to source
+		velo 0 ov00
+	else
+*we're closet to destination
+		setv va04 ov00
+		mulv va04 -1
+		velo 0 va04
 	endi
 endm
 
-*rscr
-*enum 3 1 24401
-*	kill targ
-*next
-*enum 2 12 24401
-*	kill targ
-*next
-*enum 2 12 24402
-*	kill targ
-*next
+rscr
+enum 3 1 24401
+	kill targ
+next
+enum 2 12 24401
+	kill targ
+next
+enum 2 12 24402
+	kill targ
+next
