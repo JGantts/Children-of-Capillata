@@ -84,7 +84,7 @@ doif ov01 <> null
 	seta ov02 va00
 	targ va00
 endi
-mvto 794 9561
+mvto 784 9561
 *set to "not waiting, has lift"
 setv ov00 1
 *Set target X position
@@ -152,6 +152,7 @@ endm
 
 *going up (only by creature)
 scrp 3 1 24401 1
+	stop
 	lock
 	targ from
 	doif fmly <> 4
@@ -199,30 +200,38 @@ scrp 3 1 24401 2
 endm
 
 ***activate by call button***
+*Note, because of the LOCK in script 1000, this script might not get
+* called whenver a call button is pressed. *However* at the end of
+* script 1000, it checks for waiting call buttons.
+* So it this script is ignored, doesn't matter
 scrp 3 1 24401 1001
-	
+	targ from
+	doif fmly = 2 and gnus = 12 and spcs = 24401
+		mesg writ ownr 1000
+	endi
 endm
 
 
 
-***main loop***
+***move lift***
 scrp 3 1 24401 1000
 	lock
-	inst
-	doif mv02 = null
-*dbg: outs "lift timer start"
-*	no known destination, some button woke us up
-*	find. it.
-*		silence it. 
-*			(well, move the lift to it)
+	loop
+		inst
+*dbg: outs "looking for a button"
+*	There's probably a button waiting for us. (we're hopeful)
+*	Find it, then move the lift to it
 
 *		on a button, ov01 is button below
 *				 ov02 is button above
 		setv va04 rand 1 2
-		targ mv01
+*	during the check loop, allow script to be blocked
+*		so any new buttons are sure to be noticed
+		unlk
 		reps 2
+			targ mv01
 			loop
-*			get current call button's neighbor. either upper or lower depending on va04
+*		get current call button's neighbor. either upper or lower depending on va04
 				targ avar targ va04
 				doif targ <> null
 					doif ov00 = 2
@@ -231,45 +240,43 @@ scrp 3 1 24401 1000
 					endi
 				endi
 			untl mv02 <> null or targ = null
-*		if va04 is 1, set it to 2, if it's 2, set it to 1
+*	if va04 is 1, set it to 2, if it's 2, set it to 1
 			mulv va04 -1
 			addv va04 3
-*		so, we loop twice even if we already found an answer. This gives a bias to the closest
-*			call buttons. I don't consider that a problem. Almost even a feature. meh
-			targ mv01
+*	so, we loop twice even if we already found an answer. This gives a bias to the closest
+*		call buttons. I don't consider that a problem. Almost even a feature. meh
 		repe
+		lock
 
 		doif mv02 = null
 *		no one wants a lift right now
 *dbg: outs "no one wants a lift"
-			tick 0
 			stop
 		endi
+*dbg: outs "found a button"
 
 		targ ownr
 *		set direction
 		doif avar mv02 10 < posb
 			setv mv00 -1
-*dbg: outs "going up"
+**dbg: outs "going up"
 		else
 			setv mv00 1
-*dbg: outs "going down"
+**dbg: outs "going down"
 		endi
-*		set "speeding up"
-		setv mv03 0
 *set lift original position and desination position
 		setv mv10 posb
 		setv mv11 avar mv02 10
+*	lift button on
 		pose 1
-	endi
 
-	doif mv03 = 0
 *	set origin call button to "not waiting, no lift"
 		targ mv01
 		setv ov00 0
 		targ ownr
 ***speeding up	
-*		starts out as either 1 or -1
+*	starts out as either 1 or -1
+*dbg: outs "speeding up"
 		setv va20 mv00
 		mulv va20 0.5
 		wait rand 0 5
@@ -295,92 +302,140 @@ scrp 3 1 24401 1000
 		mulv va20 1.25
 		wait 3
 		velo 0 va20
+*dbg: outs "sped up"
 
-*	set to "coasting"
-		setv mv03 1
-		tick 10
-	elif mv03 = 1
 ***coasting
-		loop
-			inst
-			targ ownr
-			setv va20 mv11
-			subv va20 posb
-			mulv va20 mv00
-*dbg: outv va20
-			doif va20 > 200
-				wait 1
-*			elif vely > 5 or vely < 5
-*				setv va21 5
-*				mulv va21 mv00
-*				mulv va21 -1
-*				velo 0 va21
-*				wait 1
-*			elif va20 > 150
-*				setv va21 vely
-*				subv va21 mv00
-*				velo 0 va21
-*				wait 1
-*			elif va20 > 100
-*				setv va21 vely
-*				subv va21 mv00
-*				velo 0 va21
-*
-*			elif va20 > 50
-*				setv va21 vely
-*				subv va21 mv00
-*				velo 0 va21
-*			elif va20 > 40
-*				velo 0 0
-*dbg: outv va21
-*				setv va21 vely
-*				mulv va21 0.5
-*				velo 0 va21
-*dbg: outv va21
-*dbg: outs ""
-*				wait 1
-*			elif va20 > 30
-*				setv va21 vely
-*				mulv va21 0.5
-*				velo 0 va21
-*				wait 1
-			elif va20 > 0
-*dbg: outv va20
-*				setv va21 vely
-*				mulv va21 0.25
-*				velo 0 va21
-				wait 1
-			else
-*dbg: outv va20
-*	almost there, set to "slowing down"
-				setv mv03 2
-***slowing down
-				velo 0 0
-*	we have arrived
-				epas 4 0 0
-					doif targ <> null
-* 				stim "you have travelled in a lift"
-						stim writ targ 94 1
-					endi
-				next
-*	set dest call button to "not waiting, has lift"
-				targ mv02
-				setv ov00 1
-*	set self to "waiting"
-				setv mv00 0
-				seta mv01 mv02
-				seta mv02 null
-*	turn off light
-				pose 0
-				targ ownr
-*	drop everything
-				dpas 0 0 0
-				pose 0
-**dbg: outs "lift timer stop"
-				stop
+*	do we even want to coast? or are we so close, we need to panic and start paying attention, like right now?
+		gsub gDst
+		doif va30 > 200
+*	be paranoid for a bit
+*		check every tick
+			setv va40 0
+			loop
+				wait 5
+				gsub gDst
+				addv va40 1
+			untl va30 < 200 or va40 > 10
+			doif va30 > 200
+**	still a ways out
+**		speed up a bit
+*		mulv va20 1.25
+*		velo 0 va20
+*		wait rand 2 3
+*		velo 0 va20
+*		mulv va20 1.25
+*	relax
+*		now just check every little bit
+				loop
+					wait 20
+					gsub gDst
+				untl va30 < 200
 			endi
-		untl 0 = 1
-	endi
+
+		endi
+
+		doif vely > 10 or vely < -10
+*	holy crap we're going fast 
+*				(don't even know how, but whatever. we still need to fix the problem)
+*	put on the brakes!
+			setv va20 10
+			mulv va20 mv00
+			velo 0 va20
+		endi
+		doif vely > 5 or vely < -5
+*	speeding a bit (still don't know how)
+*	tap the brakes
+			setv va20 vely
+			loop
+				addv va20 mv00
+				velo 0 va20
+			untl vely > 5 or vely < -5
+		endi
+
+*dbg: outs "slowing down"
+*	slow down every ~10 pixels starting at 100
+*		but randomize it because I think that makes it look slightly better
+		setv va31 90
+		setv va32 110
+		setv va33 rand va31 va32
+*	also, vely should be 5. slow down by -0.6 each tick to leave at vely at 2
+		setv va36 mv00
+		mulv va36 0.6
+		loop
+			loop
+				wait 1
+				gsub gDst
+			untl va30 < va33
+			subv va20 va36
+			velo 0 va20
+			subv va31 20
+			subv va32 20
+			setv va33 rand va31 va32
+		untl va31 = -10
+*					and va32 would be 10
+*		this should leave us at ~20 pixels out and ~vely 2
+
+		setv va33 rand 8 12
+		loop
+			wait 1
+			inst
+			gsub gDst
+		untl va30 < va33
+
+		velo 0 mv00
+
+		setv va33 rand 8 12
+		loop
+			wait 1
+			inst
+			gsub gDst
+		untl va30 < 2
+		wait 1
+		inst
+***stopping
+*dbg: outs "stopping"
+		velo 0 0
+*move lift to the absolute perfect spot (such things are achievable in games, so why now)
+		setv va29 mv11
+		targ ownr
+		subv va29 hght
+		mvto posl va29
+*	we have arrived
+		epas 4 0 0
+			doif targ <> null
+* 				stim "you have travelled in a lift"
+				stim writ targ 94 1
+			endi
+		next
+*	set dest call button to "not waiting, has lift"
+		targ mv02
+		setv ov00 1
+*	set self to "waiting"
+		setv mv00 0
+		seta mv01 mv02
+		seta mv02 null
+*	turn off light
+		pose 0
+		targ ownr
+*	drop everything
+		dpas 0 0 0
+		pose 0
+***dbg: outs "lift timer stop"
+*loop back again. There we'll check for more waiting buttons
+*	would you *please* pause for 2 friggin' seconds!
+		wait rand 37 43
+*			or thereabouts?
+	ever
+
+*	Gets distance returned as va20
+*	va20, targ
+	subr gDst
+		targ ownr
+		setv va30 mv11
+		subv va30 posb
+		mulv va30 mv00
+	retn
+	
 endm
 
 rscr
