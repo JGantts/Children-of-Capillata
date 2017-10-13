@@ -526,7 +526,7 @@ scrp 1 2 24403 1000
 		bhvr 1
 		tran 0 0
 ** link the rooms, spread the CA around
-		link va00 room targ 100
+		link va00 room targ 5
 		setv ov00 1
 		setv ov01 1
 		setv ov02 1
