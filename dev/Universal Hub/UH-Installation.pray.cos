@@ -217,7 +217,7 @@ scrp 1 2 24403 1000
 * UH side door
 		new: comp 2 2 24402 "CoCUHdoor" 4 5 0
 		mvto 41666 29622
-		link va00 room targ 100
+		link va00 room targ 5
 
 *	************
 *	***//Door***
