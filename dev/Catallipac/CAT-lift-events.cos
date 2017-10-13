@@ -128,13 +128,11 @@ scrp 2 12 24401 1
 *	set button to "waiting"
 		setv ov00 2
 		pose 1
-		targ ov03
-		doif tick = 0
-*	poke the lift if need-be
-			tick 1
-		endi
+*		"Tell him I said "hi." He'll know what it means."
+*		"Ok... Will do."
+		mesg writ ov03 1001
 		targ from
-		doif targ <> null and fmly = 4
+		doif targ <> null
 *			stim Activate button
 			stim writ from 89 1
 *			stim Wait (a bit)
@@ -166,7 +164,7 @@ scrp 3 1 24401 1
 		doif ov01 <> null
 *	there is a button above us, we can go to it!	
 *	set lift to "going up"
-			setv mv00 1
+			setv mv00 -1
 *	set lift's destination button
 			seta mv02 ov01
 			slow
@@ -200,7 +198,15 @@ endm
 scrp 3 1 24401 2
 endm
 
-scrp 3 1 24401 9
+***activate by call button***
+scrp 3 1 24401 1001
+	
+endm
+
+
+
+***main loop***
+scrp 3 1 24401 1000
 	lock
 	inst
 	doif mv02 = null
@@ -243,10 +249,10 @@ scrp 3 1 24401 9
 		targ ownr
 *		set direction
 		doif avar mv02 10 < posb
-			setv mv00 1
+			setv mv00 -1
 *dbg: outs "going up"
 		else
-			setv mv00 -1
+			setv mv00 1
 *dbg: outs "going down"
 		endi
 *		set "speeding up"
@@ -265,7 +271,8 @@ scrp 3 1 24401 9
 ***speeding up	
 *		starts out as either 1 or -1
 		setv va20 mv00
-		mulv va20 -0.5
+		mulv va20 0.5
+		wait rand 0 5
 		velo 0 va20
 		mulv va20 0.75
 		wait rand 1 2
@@ -300,7 +307,6 @@ scrp 3 1 24401 9
 			setv va20 mv11
 			subv va20 posb
 			mulv va20 mv00
-			mulv va20 -1
 *dbg: outv va20
 			doif va20 > 200
 				wait 1
