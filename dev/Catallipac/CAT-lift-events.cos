@@ -2,7 +2,7 @@
 *			***Lift***
 *			**********
 *			Lift
-new: vhcl 3 1 24401 "sealift" 2 0 500
+new: vhcl 3 1 24401 "sealift" 2 0 10
 seta va02 targ
 *Lift not moving
 setv ov00 0
@@ -21,7 +21,7 @@ setv ov11 1
 
 seta va00 null
 *			top
-new: simp 2 12 24401 "lift" 2 14 500
+new: simp 2 12 24401 "lift" 2 14 310
 *link to lift
 seta ov03 va02
 *link to button above
@@ -34,7 +34,7 @@ doif ov01 <> null
 	seta ov02 va00
 	targ va00
 endi
-mvto 782 8867
+mvto 1156 8954
 *set to "not waiting, no lift"
 setv ov00 0
 *Set target X position
@@ -46,7 +46,7 @@ bhvr 1
 prt: inew 0 "calift call button in" "useless description" 37 9 0
 prt: onew 0 "calift call button out" "useless description" 38 20
 *			middle
-new: simp 2 12 24401 "lift" 2 14 500
+new: simp 2 12 24401 "lift" 2 14 310
 *link to lift
 seta ov03 va02
 *link to button above
@@ -59,7 +59,7 @@ doif ov01 <> null
 	seta ov02 va00
 	targ va00
 endi
-mvto 782 9156
+mvto 1432 9185
 *set to "not waiting, no lift"
 setv ov00 0
 *Set target X position
@@ -71,7 +71,7 @@ bhvr 1
 prt: inew 0 "calift call button in" "useless description" 37 9 0
 prt: onew 0 "calift call button out" "useless description" 38 20
 *			bottom
-new: simp 2 12 24401 "lift" 2 14 500
+new: simp 2 12 24401 "lift" 2 14 310
 *link to lift
 seta ov03 va02
 *link to button above
@@ -84,7 +84,7 @@ doif ov01 <> null
 	seta ov02 va00
 	targ va00
 endi
-mvto 784 9561
+mvto 1424 9595
 *set to "not waiting, has lift"
 setv ov00 1
 *Set target X position
@@ -103,7 +103,7 @@ targ va02
 seta ov01 va00
 *move lift to bottom button
 subv va03 hght
-mvto 917 va03
+mvto 1165 va03
 
 
 *			************
@@ -123,18 +123,28 @@ mvto 917 va03
 *call button activate
 scrp 2 12 24401 1
 	lock
-	doif ov00 = 0
+	doif from = pntr and mv00 = 2
+*	pointer is clicking button but it's locked
+*		and already waiting. possibly by a ceature
+*		and ov04 (from) won't be correct
+		seta mv04 pntr
+*		flash off and back on to give user feedback
+		pose 0
+		wait 5
+		pose 1
+	endi
+	doif mv00 = 0
+		doif from = pntr
+			seta mv04 pntr
+		endi
 *	button is "not waiting, does not have lift"
 *	set button to "waiting"
 		setv ov00 2
 		pose 1
-*		"Tell him I said "hi." He'll know what it means."
-*		"Ok... Will do."
+*	kick off lift's main loop
 		mesg writ ov03 1001
-		targ from
-		doif targ <> null
-*			stim Activate button
-			stim writ from 89 1
+		inst
+		doif from <> null
 *			stim Wait (a bit)
 			stim writ from 75 .5
 		endi
@@ -142,8 +152,8 @@ scrp 2 12 24401 1
 	else
 *	button is already "has lift"
 *	OR button is already "waiting for lift"
-		targ from
-		doif targ <> null and fmly = 4
+		inst
+		doif from <> null
 *			stim Disappoint
 			stim writ from 0 1
 		endi
@@ -161,13 +171,12 @@ scrp 3 1 24401 1
 	inst
 	doif ov00 = 0
 *	lift is waiting
-		targ ov01
-		doif ov01 <> null
-*	there is a button above us, we can go to it!	
+		doif avar mv01 1 <> null
+*	there is a button above us, we can go to it!
 *	set lift to "going up"
 			setv mv00 -1
 *	set lift's destination button
-			seta mv02 ov01
+			seta mv02 avar mv01 1
 			slow
 *	stim Wait (a bit)
 			stim writ from 75 1
@@ -180,8 +189,10 @@ scrp 3 1 24401 1
 			targ ownr
 *	turn on light
 			pose 1
+*	remember who you're doing this for
+			seta ov04 from
 * Aaaaand, GO!
-			tick 1
+			mesg writ ownr 1000
 		else
 *	there's no button above us!
 *	stim Disappoint
@@ -213,11 +224,13 @@ endm
 
 
 
-***move lift***
+***main loop***
 scrp 3 1 24401 1000
 	lock
 	loop
 		inst
+
+
 *dbg: outs "looking for a button"
 *	There's probably a button waiting for us. (we're hopeful)
 *	Find it, then move the lift to it
@@ -225,9 +238,6 @@ scrp 3 1 24401 1000
 *		on a button, ov01 is button below
 *				 ov02 is button above
 		setv va04 rand 1 2
-*	during the check loop, allow script to be blocked
-*		so any new buttons are sure to be noticed
-		unlk
 		reps 2
 			targ mv01
 			loop
@@ -237,6 +247,7 @@ scrp 3 1 24401 1000
 					doif ov00 = 2
 *				call button is waiting!
 						seta mv02 targ
+						seta mv04 ov04
 					endi
 				endi
 			untl mv02 <> null or targ = null
@@ -246,7 +257,6 @@ scrp 3 1 24401 1000
 *	so, we loop twice even if we already found an answer. This gives a bias to the closest
 *		call buttons. I don't consider that a problem. Almost even a feature. meh
 		repe
-		lock
 
 		doif mv02 = null
 *		no one wants a lift right now
@@ -269,6 +279,19 @@ scrp 3 1 24401 1000
 		setv mv11 avar mv02 10
 *	lift button on
 		pose 1
+
+		doif ov04 = pntr
+*		hand clicked the call button
+			etch 4 0 0
+				spas ownr targ
+			next
+		else
+*		norn activated the lift
+*			or call button and then got moved :-/
+			doif touc ownr ov04 = 1
+				spas ownr ov04
+			endi
+		endi
 
 *	set origin call button to "not waiting, no lift"
 		targ mv01
@@ -402,7 +425,7 @@ scrp 3 1 24401 1000
 		mvto posl va29
 *	we have arrived
 		epas 4 0 0
-			doif targ <> null
+			doif targ = from
 * 				stim "you have travelled in a lift"
 				stim writ targ 94 1
 			endi
@@ -422,9 +445,6 @@ scrp 3 1 24401 1000
 		pose 0
 ***dbg: outs "lift timer stop"
 *loop back again. There we'll check for more waiting buttons
-*	would you *please* pause for 2 friggin' seconds!
-		wait rand 37 43
-*			or thereabouts?
 	ever
 
 *	Gets distance returned as va20
@@ -435,7 +455,7 @@ scrp 3 1 24401 1000
 		subv va30 posb
 		mulv va30 mv00
 	retn
-	
+
 endm
 
 rscr
