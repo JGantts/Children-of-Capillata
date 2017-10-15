@@ -56,12 +56,12 @@ scrp 2 2 24407 1
 *	partner
 	rtar 2 2 24408
 	anim [0 1 2 3]
-	over
 *	get position of partner
 	setv va02 posx
 	setv va03 posy
 	addv va03 40
 	targ ownr
+	over
 ** move
 	doif from = pntr
 		cmrp va02 va03 0
