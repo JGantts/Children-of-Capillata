@@ -88,6 +88,7 @@ scrp 3 1 24401 1
 			pose 1
 *	remember who you're doing this for
 			seta ov04 from
+			stim writ ov04 75 0
 * Aaaaand, GO!
 			*dbg: outs "callin' da loop"
 			mesg writ ownr 1000
@@ -136,6 +137,7 @@ scrp 3 1 24401 2
 			pose 1
 *	remember who you're doing this for
 			seta ov04 from
+			stim writ ov04 75 0
 * Aaaaand, GO!
 			*dbg: outs "callin' da loop"
 			mesg writ ownr 1000
@@ -350,18 +352,19 @@ scrp 3 1 24401 1000
 ***stopping
 **dbg: outs "stopping"
 		velo 0 0
-*move lift to the absolute perfect spot (such things are achievable in games, so why now)
+*move lift to the absolute perfect spot (such things are achievable in games, so why not?)
 		setv va29 mv11
 		targ ownr
 		subv va29 hght
 		mvto posl va29
 *	we have arrived
-		epas 4 0 0
-			doif targ = from
+		targ ov04
+		doif targ <> null
+			doif carr = ownr
 * 				stim "you have travelled in a lift"
 				stim writ targ 94 1
 			endi
-		next
+		endi
 *	set dest call button to "not waiting, has lift"
 		targ mv02
 		setv ov00 1

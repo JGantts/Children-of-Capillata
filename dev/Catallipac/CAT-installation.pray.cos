@@ -359,6 +359,7 @@ setv ov00 0
 cabn -11 -10 110 134
 attr 0
 bhvr 3
+cabw 12
 *Button current
 seta ov01 null
 *Button destination
