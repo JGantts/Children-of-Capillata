@@ -54,7 +54,7 @@ ptxt read "zot_DAE" 0
 
 *kill dialog
 scrp 1 2 24403 1001
-    kill ownr
+	kill ownr
 endm
 
 ***close text box and install the agent
@@ -229,10 +229,10 @@ scrp 1 2 24403 1000
 		rtyp va00 3
 		rmsc 43417 29488 ""
 		setv game "mapeditortmp_633" va00
-		setv va00 addr game "mapeditortmp" 43305 43362 29399 29399 29461 29506
-		rtyp va00 3
-		rmsc 43333 29452 ""
-		setv game "mapeditortmp_634" va00
+*		setv va00 addr game "mapeditortmp" 43305 43362 29399 29399 29461 29506
+*		rtyp va00 3
+*		rmsc 43333 29452 ""
+*		setv game "mapeditortmp_634" va00
 		setv va00 addr game "mapeditortmp" 43884 44013 29604 29603 29643 29643
 		rtyp va00 2
 		rmsc 43948 29623 ""
@@ -387,7 +387,7 @@ scrp 1 2 24403 1000
 		door game "mapeditortmp_630" game "mapeditortmp_631" 100
 		door game "mapeditortmp_631" game "mapeditortmp_632" 100
 		door game "mapeditortmp_632" game "mapeditortmp_633" 100
-		door game "mapeditortmp_633" game "mapeditortmp_634" 100
+*		door game "mapeditortmp_633" game "mapeditortmp_634" 100
 		door game "mapeditortmp_636" game "mapeditortmp_637" 100
 		door game "mapeditortmp_637" game "mapeditortmp_638" 100
 		door game "mapeditortmp_637" game "mapeditortmp_645" 100
@@ -411,7 +411,7 @@ scrp 1 2 24403 1000
 		door game "mapeditortmp_654" game "mapeditortmp_657" 100
 		door game "mapeditortmp_656" game "mapeditortmp_657" 100
 
-		delg "mapeditortmp_600"
+*		delg "mapeditortmp_600"
 		delg "mapeditortmp_601"
 		delg "mapeditortmp_602"
 		delg "mapeditortmp_603"
@@ -445,7 +445,7 @@ scrp 1 2 24403 1000
 		delg "mapeditortmp_631"
 		delg "mapeditortmp_632"
 		delg "mapeditortmp_633"
-		delg "mapeditortmp_634"
+*		delg "mapeditortmp_634"
 		delg "mapeditortmp_635"
 		delg "mapeditortmp_636"
 		delg "mapeditortmp_637"
@@ -722,7 +722,7 @@ scrp 1 2 24403 1000
 
 		new: simp 1 1 24402 "blnk" 1 0 0
 		emit 15 .1
-		mvto va00 va01        
+		mvto va00 va01
 
 ***cave area***
 		setv va00 44139
@@ -749,7 +749,7 @@ scrp 1 2 24403 1000
 
 		new: simp 1 1 24402 "blnk" 1 0 0
 		emit 15 .1
-		mvto va00 va01   
+		mvto va00 va01
 
 ***desert area***
 		setv va00 44978
@@ -901,7 +901,7 @@ scrp 1 2 24403 1000
 *			***/Toys***
 *			***********
 		setv game "CoC_DAE" 1
-        kill ownr
+		kill ownr
 	endi
 endm
 
