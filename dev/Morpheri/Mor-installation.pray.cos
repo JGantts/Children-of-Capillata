@@ -497,7 +497,7 @@ scrp 1 2 24403 1000
 		anim [5]
 
 		seta va00 targ
-		enum 2 12 2
+		enum 2 12 24402
 			doif ov16 = null
 				seta ov16 va00
 			endi

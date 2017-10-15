@@ -306,7 +306,7 @@ scrp 3 1 24402 2000
 	part 3
 	anim [6]
 	addv va66 ov00
-	enum 2 12 2
+	enum 2 12 24402
 		addv va66 ov00
 	next
 	targ ownr
@@ -315,7 +315,7 @@ scrp 3 1 24402 2000
 		setv va00 unid
 		seta va16 null
 		setv va88 999999
-		enum 2 12 2
+		enum 2 12 24402
 			doif ov16 = ownr
 				setv va50 rely ownr targ
 				doif va50 < 0
@@ -360,7 +360,7 @@ scrp 3 1 24402 2001
 	anim [6]
 	snde "clik"
 	addv va66 ov00
-	enum 2 12 2
+	enum 2 12 24402
 		doif ov16 = ownr
 			addv va66 ov00
 		endi
@@ -372,7 +372,7 @@ scrp 3 1 24402 2001
 		setv va00 unid
 		seta va16 null
 		setv va88 999999
-		enum 2 12 2
+		enum 2 12 24402
 			doif ov16 = ownr
 				setv va50 rely ownr targ
 				doif va50 > 0
@@ -421,7 +421,7 @@ endm
 *scrx 3 1 24402 2001
 *
 *
-*enum 2 12 2
+*enum 2 12 24402
 *	kill targ
 *next
 *scrx 2 12 24402 1
