@@ -782,7 +782,7 @@ scrp 1 2 24403 1000
 *			***********
 *			***Lifts***
 *			***********
-		new: simp 2 12 2 "lift" 2 14 5000
+		new: simp 2 12 24402 "lift" 2 14 5000
 		bhvr 1
 		attr 4
 		perm 10
@@ -800,7 +800,7 @@ scrp 1 2 24403 1000
 		pose 0
 		setv va66 room targ
 
-		new: simp 2 12 2 "lift" 2 14 5000
+		new: simp 2 12 24402 "lift" 2 14 5000
 		bhvr 1
 		attr 4
 		perm 10
@@ -818,7 +818,7 @@ scrp 1 2 24403 1000
 		setv va67 room targ
 		link va66 va67 100
 
-		new: simp 2 12 2 "lift" 2 14 5000
+		new: simp 2 12 24402 "lift" 2 14 5000
 		bhvr 1
 		attr 4
 		perm 10

@@ -1,6 +1,6 @@
 * Script 3 extracted from Mor.agents by Mirality REVELATION
 
-*new: simp 2 12 2 "lift" 2 14 5000
+*new: simp 2 12 24402 "lift" 2 14 5000
 *bhvr 1
 *attr 4
 *perm 10
@@ -18,7 +18,7 @@
 *pose 0
 *setv va66 room targ
 *
-*new: simp 2 12 2 "lift" 2 14 5000
+*new: simp 2 12 24402 "lift" 2 14 5000
 *bhvr 1
 *attr 4
 *perm 10
@@ -36,7 +36,7 @@
 *setv va67 room targ
 *link va66 va67 100
 *
-*new: simp 2 12 2 "lift" 2 14 5000
+*new: simp 2 12 24402 "lift" 2 14 5000
 *bhvr 1
 *attr 4
 *perm 10
@@ -87,7 +87,7 @@
 *part 1
 *anim [7]
 
-scrp 2 12 2 1
+scrp 2 12 24402 1
 	inst
 	lock
 	seta va88 ov16
@@ -129,7 +129,7 @@ scrp 2 12 2 1
 	endi
 endm
 
-scrp 2 12 2 1000
+scrp 2 12 24402 1000
 	inst
 	setv ov70 _p1_
 	setv ov71 ov70
@@ -154,7 +154,7 @@ scrp 2 12 2 1000
 endm
 
 
-scrp 2 12 2 1501
+scrp 2 12 24402 1501
 	inst
 	lock
 	base 0
@@ -489,7 +489,7 @@ endm
 
 
 
-scrp 2 12 2 3
+scrp 2 12 24402 3
 	sndc "hit_"
 	prt: bang rand 60 100
 	stim writ from 92 1
@@ -510,8 +510,8 @@ endm
 *enum 2 12 2
 *	kill targ
 *next
-*scrx 2 12 2 1
-*scrx 2 12 2 2
-*scrx 2 12 2 1500
-*scrx 2 12 2 1501
-*scrx 2 12 2 1000
+*scrx 2 12 24402 1
+*scrx 2 12 24402 2
+*scrx 2 12 24402 1500
+*scrx 2 12 24402 1501
+*scrx 2 12 24402 1000
