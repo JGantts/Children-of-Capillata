@@ -3,7 +3,7 @@
 *# DS-Name "CoC - The Catallipac"
 *# Agent Animation File = "fav_place_coccat.c16"
 *# Agent Sprite First Image = 1
-*# desc = "This is the Catallipac. It is a whole new room to explore!\n\nRequires the Universal Hub!\n\nPart of Children of Capillata.\nDesigned by and images by Silvak.\nMaintained by and code by Zzzzoot."
+*# desc = "This is the Catallipac. It is a whole new room to explore!the Universal Hub!of Children of Capillata.by and images by Silvak.by and code by Zzzzoot."
 
 *# attach coc_cat.blk coccatdoor.c16 coccatvendor.c16 coccatvendormouth.c16 fav_place_coccat.c16 lift.c16 sealift.c16
 *# Link CAT-door-events.cos CAT-empathic-vendor.cos CAT-lift-events.cos
@@ -53,7 +53,7 @@ ptxt read "zot_CAT" 0
 
 *kill dialog
 scrp 1 2 24403 1001
-    kill ownr
+	kill ownr
 endm
 
 ***close text box and install the agent
@@ -351,38 +351,117 @@ scrp 1 2 24403 1000
 *			**********
 *			***Lift***
 *			**********
-*			bottom
-		new: simp 2 12 24401 "lift" 2 14 500
-		mvto 40550 29725
-		setv va00 room targ
-		setv ov00 0
-		attr 4
-		bhvr 1
-		setv ov01 0
-		seta va01 targ
-		prt: inew 0 "calift call button in" "reads in data" 37 9 0
-		prt: onew 0 "calift call button out" "outputs input data or lift call state" 38 20
+
+new: vhcl 3 1 24401 "sealift" 2 0 10
+seta va02 targ
+*Lift not moving
+setv ov00 0
+cabn -11 -10 110 134
+attr 0
+bhvr 3
+*Button current
+seta ov01 null
+*Button destination
+seta ov02 null
+*int start Y
+setv ov10 0
+*int stop Y
+setv ov11 1
+*from
+seta ov04 null
+
+seta va00 null
 *			top
-		new: simp 2 12 24401 "lift" 2 14 500
-		mvto 40399 29478
-		link va00 room targ 100
-		setv ov00 0
-		attr 4
-		bhvr 1
-		setv ov00 0
-		seta va02 targ
-		setv ov02 1
-		prt: inew 0 "calift call button in" "reads in data" 37 9 0
-		prt: onew 0 "calift call button out" "outputs input data or lift call state" 38 20
-*			Lift
-		new: vhcl 3 1 24401 "sealift" 2 0 500
-		cabn -5 0 103 134
-		setv ov00 0
-		mvto 40432 29661
-		attr 4
-		bhvr 1
-		seta ov02 va01
-		seta ov03 va02
+new: simp 2 12 24401 "lift" 2 14 310
+*link to lift
+seta ov03 va02
+*link to button above
+seta ov01 va00
+seta ov02 null
+seta va00 targ
+doif ov01 <> null
+	targ ov01
+*	link from button above
+	seta ov02 va00
+	targ va00
+endi
+mvto 40399 29478
+*from
+seta ov04 null
+*set to "not waiting, no lift"
+setv ov00 0
+*Set target X position
+setv ov10 posb
+subv ov10 0
+setv va01 room targ
+attr 4
+bhvr 1
+prt: inew 0 "calift call button in" "useless description" 37 9 0
+prt: onew 0 "calift call button out" "useless description" 38 20
+*			middle
+new: simp 2 12 24401 "lift" 2 14 310
+*link to lift
+seta ov03 va02
+*link to button above
+seta ov01 va00
+seta ov02 null
+seta va00 targ
+doif ov01 <> null
+	targ ov01
+*	link from button above
+	seta ov02 va00
+	targ va00
+endi
+mvto 40550 29725
+*from
+seta ov04 null
+*set to "not waiting, no lift"
+setv ov00 0
+*Set target X position
+setv ov10 posb
+subv ov10 0
+setv va01 room targ
+attr 4
+bhvr 1
+prt: inew 0 "calift call button in" "useless description" 37 9 0
+prt: onew 0 "calift call button out" "useless description" 38 20
+**			bottom
+*new: simp 2 12 24401 "lift" 2 14 310
+**link to lift
+*seta ov03 va02
+**link to button above
+*seta ov01 va00
+*seta ov02 null
+*seta va00 targ
+*doif ov01 <> null
+*	targ ov01
+**	link from button above
+*	seta ov02 va00
+*	targ va00
+*endi
+*mvto 1424 9595
+**from
+*seta ov04 null
+**set to "not waiting, has lift"
+*setv ov00 1
+**Set target X position
+*setv ov10 posb
+*addv ov10 0
+*link va01 room targ 100
+*attr 4
+*bhvr 1
+*prt: inew 0 "calift call button in" "useless description" 37 9 0
+*prt: onew 0 "calift call button out" "useless description" 38 20
+
+targ va00
+setv va03 ov10
+targ va02
+*link lift to bottom button
+seta ov01 va00
+*move lift to bottom button
+subv va03 hght
+mvto 40432 va03
+
 *			************
 *			***//Lift***
 *			************
@@ -445,8 +524,8 @@ scrp 1 2 24403 1000
 *			***//Robot**
 *			************
 		setv game "CoC_CAT" 1
-        kill ownr
-    endi
+		kill ownr
+	endi
 endm
 
 *rscr

@@ -2,108 +2,7 @@
 *			***Lift***
 *			**********
 *			Lift
-new: vhcl 3 1 24401 "sealift" 2 0 10
-seta va02 targ
-*Lift not moving
-setv ov00 0
-cabn -5 0 103 134
-attr 0
-bhvr 3
-tick 0
-*Button current
-seta ov01 null
-*Button destination
-seta ov02 null
-*int start Y
-setv ov10 0
-*int stop Y
-setv ov11 1
 
-seta va00 null
-*			top
-new: simp 2 12 24401 "lift" 2 14 310
-*link to lift
-seta ov03 va02
-*link to button above
-seta ov01 va00
-seta ov02 null
-seta va00 targ
-doif ov01 <> null
-	targ ov01
-*	link from button above
-	seta ov02 va00
-	targ va00
-endi
-mvto 1156 8954
-*set to "not waiting, no lift"
-setv ov00 0
-*Set target X position
-setv ov10 posb
-subv ov10 0
-setv va01 room targ
-attr 4
-bhvr 1
-prt: inew 0 "calift call button in" "useless description" 37 9 0
-prt: onew 0 "calift call button out" "useless description" 38 20
-*			middle
-new: simp 2 12 24401 "lift" 2 14 310
-*link to lift
-seta ov03 va02
-*link to button above
-seta ov01 va00
-seta ov02 null
-seta va00 targ
-doif ov01 <> null
-	targ ov01
-*	link from button above
-	seta ov02 va00
-	targ va00
-endi
-mvto 1432 9185
-*set to "not waiting, no lift"
-setv ov00 0
-*Set target X position
-setv ov10 posb
-subv ov10 0
-setv va01 room targ
-attr 4
-bhvr 1
-prt: inew 0 "calift call button in" "useless description" 37 9 0
-prt: onew 0 "calift call button out" "useless description" 38 20
-*			bottom
-new: simp 2 12 24401 "lift" 2 14 310
-*link to lift
-seta ov03 va02
-*link to button above
-seta ov01 va00
-seta ov02 null
-seta va00 targ
-doif ov01 <> null
-	targ ov01
-*	link from button above
-	seta ov02 va00
-	targ va00
-endi
-mvto 1424 9595
-*set to "not waiting, has lift"
-setv ov00 1
-*Set target X position
-setv ov10 posb
-addv ov10 0
-link va01 room targ 100
-attr 4
-bhvr 1
-prt: inew 0 "calift call button in" "useless description" 37 9 0
-prt: onew 0 "calift call button out" "useless description" 38 20
-
-targ va00
-setv va03 ov10
-targ va02
-*link lift to bottom button
-seta ov01 va00
-*move lift to bottom button
-subv va03 hght
-mvto 1165 va03
 
 
 *			************
@@ -123,6 +22,7 @@ mvto 1165 va03
 *call button activate
 scrp 2 12 24401 1
 	lock
+	*dbg: outs "call button (activated)"
 	doif from = pntr and mv00 = 2
 *	pointer is clicking button but it's locked
 *		and already waiting. possibly by a ceature
@@ -142,19 +42,16 @@ scrp 2 12 24401 1
 		setv ov00 2
 		pose 1
 *	kick off lift's main loop
+		*dbg: outs "callin' da loop"
 		mesg writ ov03 1001
 		inst
-		doif from <> null
-*			stim Wait (a bit)
-			stim writ from 75 .5
-		endi
-
 	else
 *	button is already "has lift"
 *	OR button is already "waiting for lift"
 		inst
 		doif from <> null
 *			stim Disappoint
+			*dbg: outs "well that was dumb"
 			stim writ from 0 1
 		endi
 	endi
@@ -162,8 +59,8 @@ endm
 
 *going up (only by creature)
 scrp 3 1 24401 1
-	stop
 	lock
+	*dbg: outs "going up (activated)"
 	targ from
 	doif fmly <> 4
 		stop
@@ -192,46 +89,82 @@ scrp 3 1 24401 1
 *	remember who you're doing this for
 			seta ov04 from
 * Aaaaand, GO!
+			*dbg: outs "callin' da loop"
 			mesg writ ownr 1000
 		else
 *	there's no button above us!
 *	stim Disappoint
+			*dbg: outs "well that was dumb"
 			stim writ from 0 1
 		endi
 	else
 *	the doors are closed man, you're too late
 *	stim Disappoint
+		*dbg: outs "well that was dumb"
 		stim writ from 0 1
 	endi
-
 endm
 
 *going down (only by creature)
 scrp 3 1 24401 2
+	lock
+	*dbg: outs "going down (activated)"
+	targ from
+	doif fmly <> 4
+		stop
+	endi
+	inst
+	doif ov00 = 0
+*	lift is waiting
+		doif avar mv01 2 <> null
+*	there is a button above us, we can go to it!
+*	set lift to "going up"
+			setv mv00 -1
+*	set lift's destination button
+			seta mv02 avar mv01 2
+			slow
+*	stim Wait (a bit)
+			stim writ from 75 1
+			spas ownr from
+*	set start and stop Y values
+			targ mv01
+			setv mv10 ov10
+			targ mv02
+			setv mv11 ov10
+			targ ownr
+*	turn on light
+			pose 1
+*	remember who you're doing this for
+			seta ov04 from
+* Aaaaand, GO!
+			*dbg: outs "callin' da loop"
+			mesg writ ownr 1000
+		else
+*	there's no button above us!
+*	stim Disappoint
+			*dbg: outs "well that was dumb"
+			stim writ from 0 1
+		endi
+	else
+*	the doors are closed man, you're too late
+*	stim Disappoint
+		*dbg: outs "well that was dumb"
+		stim writ from 0 1
+	endi
 endm
 
-***activate by call button***
+***main loop***
 *Note, because of the LOCK in script 1000, this script might not get
 * called whenver a call button is pressed. *However* at the end of
 * script 1000, it checks for waiting call buttons.
 * So it this script is ignored, doesn't matter
-scrp 3 1 24401 1001
-	targ from
-	doif fmly = 2 and gnus = 12 and spcs = 24401
-		mesg writ ownr 1000
-	endi
-endm
-
-
-
-***main loop***
 scrp 3 1 24401 1000
 	lock
 	loop
+		*dbg: outs "loopin' da loop"
 		inst
 
-
-*dbg: outs "looking for a button"
+**dbg: outs "looking for a button"
 *	There's probably a button waiting for us. (we're hopeful)
 *	Find it, then move the lift to it
 
@@ -257,22 +190,21 @@ scrp 3 1 24401 1000
 *	so, we loop twice even if we already found an answer. This gives a bias to the closest
 *		call buttons. I don't consider that a problem. Almost even a feature. meh
 		repe
-
 		doif mv02 = null
 *		no one wants a lift right now
-*dbg: outs "no one wants a lift"
+			*dbg: outs "no one wants a lift"
 			stop
 		endi
-*dbg: outs "found a button"
+**dbg: outs "found a button"
 
 		targ ownr
 *		set direction
 		doif avar mv02 10 < posb
+***dbg: outs "going up"
 			setv mv00 -1
-**dbg: outs "going up"
 		else
+***dbg: outs "going down"
 			setv mv00 1
-**dbg: outs "going down"
 		endi
 *set lift original position and desination position
 		setv mv10 posb
@@ -299,7 +231,7 @@ scrp 3 1 24401 1000
 		targ ownr
 ***speeding up	
 *	starts out as either 1 or -1
-*dbg: outs "speeding up"
+**dbg: outs "speeding up"
 		setv va20 mv00
 		mulv va20 0.5
 		wait rand 0 5
@@ -325,7 +257,7 @@ scrp 3 1 24401 1000
 		mulv va20 1.25
 		wait 3
 		velo 0 va20
-*dbg: outs "sped up"
+**dbg: outs "sped up"
 
 ***coasting
 *	do we even want to coast? or are we so close, we need to panic and start paying attention, like right now?
@@ -375,7 +307,7 @@ scrp 3 1 24401 1000
 			untl vely > 5 or vely < -5
 		endi
 
-*dbg: outs "slowing down"
+**dbg: outs "slowing down"
 *	slow down every ~10 pixels starting at 100
 *		but randomize it because I think that makes it look slightly better
 		setv va31 90
@@ -416,7 +348,7 @@ scrp 3 1 24401 1000
 		wait 1
 		inst
 ***stopping
-*dbg: outs "stopping"
+**dbg: outs "stopping"
 		velo 0 0
 *move lift to the absolute perfect spot (such things are achievable in games, so why now)
 		setv va29 mv11
@@ -443,7 +375,11 @@ scrp 3 1 24401 1000
 *	drop everything
 		dpas 0 0 0
 		pose 0
-***dbg: outs "lift timer stop"
+*	reset everything
+		setv mv10 0
+		setv mv11 0
+		seta mv04 null
+****dbg: outs "lift timer stop"
 *loop back again. There we'll check for more waiting buttons
 	ever
 
@@ -455,7 +391,6 @@ scrp 3 1 24401 1000
 		subv va30 posb
 		mulv va30 mv00
 	retn
-
 endm
 
 rscr
