@@ -77,7 +77,7 @@
 *anim [5]
 *
 *seta va00 targ
-*enum 2 12 2
+*enum 2 12 24402
 *	doif ov16 = null
 *		seta ov16 va00
 *	endi
@@ -91,7 +91,7 @@ scrp 2 12 24402 1
 	inst
 	lock
 	seta va88 ov16
-	enum 2 12 2
+	enum 2 12 24402
 		doif ov16 = va88
 			addv va66 ov00
 			addv va66 pose
@@ -108,7 +108,7 @@ scrp 2 12 24402 1
 
 		doif posy > va51 or posy < va52
 			prt: send 0 0
-			enum 2 12 2
+			enum 2 12 24402
 				doif ov16 = va88
 					pose 0
 					setv ov00 0
@@ -135,7 +135,7 @@ scrp 2 12 24402 1000
 	setv ov71 ov70
 	absv ov71
 	seta va16 ov16
-	enum 2 12 2
+	enum 2 12 24402
 		doif ov16 = va16
 			doif pose = 1 or ov00 = 1
 				setv va67 1
@@ -275,7 +275,7 @@ scrp 3 1 24402 9
 		over
 		setv ov80 1
 	endi
-	enum 2 12 2
+	enum 2 12 24402
 		doif ov16 = ownr
 			doif unid = va17
 				seta va16 targ
@@ -361,7 +361,7 @@ scrp 3 1 24402 9
 		part 0
 		anim [0]
 
-		enum 2 12 2
+		enum 2 12 24402
 			doif ov16 = ownr
 				mesg writ targ 1501
 				targ ownr
@@ -392,7 +392,7 @@ scrp 3 1 24402 2000
 	part 3
 	anim [6]
 	addv va66 ov00
-	enum 2 12 2
+	enum 2 12 24402
 		addv va66 ov00
 	next
 	targ ownr
@@ -401,7 +401,7 @@ scrp 3 1 24402 2000
 		setv va00 unid
 		seta va16 null
 		setv va88 999999
-		enum 2 12 2
+		enum 2 12 24402
 			doif ov16 = ownr
 				setv va50 rely ownr targ
 				doif va50 < 0
@@ -446,7 +446,7 @@ scrp 3 1 24402 2001
 	anim [6]
 	snde "clik"
 	addv va66 ov00
-	enum 2 12 2
+	enum 2 12 24402
 		doif ov16 = ownr
 			addv va66 ov00
 		endi
@@ -458,7 +458,7 @@ scrp 3 1 24402 2001
 		setv va00 unid
 		seta va16 null
 		setv va88 999999
-		enum 2 12 2
+		enum 2 12 24402
 			doif ov16 = ownr
 				setv va50 rely ownr targ
 				doif va50 > 0
@@ -507,7 +507,7 @@ endm
 *scrx 3 1 24402 2001
 *
 *
-*enum 2 12 2
+*enum 2 12 24402
 *	kill targ
 *next
 *scrx 2 12 24402 1
