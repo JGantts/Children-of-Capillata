@@ -43,7 +43,7 @@ scrp 2 12 24401 1
 		pose 1
 *	kick off lift's main loop
 		*dbg: outs "callin' da loop"
-		mesg writ ov03 1001
+		mesg writ ov03 1000
 		inst
 	else
 *	button is already "has lift"
