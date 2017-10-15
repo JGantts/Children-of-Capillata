@@ -254,7 +254,7 @@ scrp 3 1 24402 9
 				zomb 0
 			endi
 		next
-		dpas 4 0 0
+		dpas 0 0 0
 
 
 		inst
