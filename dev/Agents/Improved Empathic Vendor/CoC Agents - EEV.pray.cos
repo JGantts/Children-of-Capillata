@@ -808,6 +808,184 @@ scrp 2 23 3 126
 	endi
 endm
 
+** Star Seed Eat Script
+scrp 2 3 15 12
+	lock
+	snde "reat"
+	stim writ from 77 1
+	inst
+	doif from <> null
+		targ from
+		chem 93 .25
+	endi
+	slow
+	kill ownr
+endm
+
+** Yarn Fruit Eat Script
+scrp 2 8 6 12
+	lock
+	snde "chwp"
+	stim writ from 78 1
+	addv ov01 1
+	doif ov01 <= 3
+		pose ov01
+	else
+		kill ownr
+	endi
+	inst
+	doif from <> null
+		targ from
+		chem 92 .15
+	endi
+	slow
+endm
+** Peaking Pie Eat Script
+scrp 2 11 7 12
+	lock
+	snde "reat"
+	stim writ from 79 1
+	addv ov01 1
+	doif ov01 <= 2
+		pose ov01
+	else
+		kill ownr
+	endi
+	inst
+	doif from <> null
+		targ from
+		chem 97 .175
+	endi
+	slow
+endm
+
+** Star Seed Timer
+scrp 2 3 15 9
+	addv ov01 1
+	doif ov01 >= 10 and carr = null and fall = 0
+		lock
+		inst
+		attr 16
+		bhvr 0
+		setv va00 0
+		slow
+		loop
+			alph va00 1
+			addv va00 4
+		untl va00 >= 256
+		setv va01 1
+	endi
+	doif va01 = 1
+		kill ownr
+	endi
+endm
+** Yarn Fruit Timer
+scrp 2 8 6 9
+	addv ov01 1
+	doif ov01 >= 10 and carr = null and fall = 0
+		lock
+		inst
+		attr 16
+		bhvr 0
+		setv va00 0
+		slow
+		loop
+			alph va00 1
+			addv va00 4
+		untl va00 >= 256
+		setv va01 1
+	endi
+	doif va01 = 1
+		kill ownr
+	endi
+endm
+** Peaking Pie Timer
+scrp 2 11 7 9
+	addv ov01 1
+	doif ov01 >= 10 and carr = null and fall = 0
+		lock
+		inst
+		attr 16
+		bhvr 0
+		setv va00 0
+		slow
+		loop
+			alph va00 1
+			addv va00 4
+		untl va00 >= 256
+		setv va01 1
+	endi
+	doif va01 = 1
+		kill ownr
+	endi
+endm
+
+*activate 1
+scrp 2 21 31 1
+	velo rand -10 10 rand -30 -15
+	stim writ from 97 1
+	part 1
+	anim [0 1 2 3 4 5 6 255]
+	tick rand 5 15
+endm
+*activate 2
+scrp 2 21 31 2
+	velo rand -10 10 rand -30 -15
+	stim writ from 97 1
+	part 1
+	anim [0 1 2 3 4 5 6 255]
+	tick rand 5 15
+endm
+*hit
+scrp 2 21 31 3
+	velo rand -10 10 rand -30 -15
+	stim writ from 97 1
+	part 1
+	anim [0 1 2 3 4 5 6 255]
+	tick rand 5 15
+endm
+*drop
+scrp 2 21 31 5
+	part 1
+	anim [0 1 2 3 4 5 6 255]
+	tick rand 5 15
+endm
+*timer for animation
+scrp 2 21 31 9
+	inst
+	doif fall eq 0 or carr ne null
+		part 1
+		anim []
+		tick 0
+	endi
+endm
+
+*collision
+scrp 2 21 31 6
+	inst
+	setv va00 _p1_
+	setv va01 _p2_
+	absv va00
+	absv va01
+	doif va00 gt 20 or va01 gt 20 or rand 0 10 eq 0
+		sndc "dsqu"
+	endi
+endm
+
+
+** Star Seed Collision
+scrp 2 3 15 6
+	snde "dr10"
+endm
+** Yarn Fruit Collision
+scrp 2 8 6 6
+	snde "dr10"
+endm
+** Peaking Pie Collision
+scrp 2 11 7 6
+	snde "dr10"
+endm
+
 ** Remove Script 
 rscr
 ** Remove the Vendor
