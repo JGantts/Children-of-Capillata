@@ -3,7 +3,7 @@
 *# DS-Name "CoC - The Catallipac"
 *# Agent Animation File = "fav_place_coccat.c16"
 *# Agent Sprite First Image = 1
-*# desc = "This is the Catallipac. It is a whole new room to explore!the Universal Hub!of Children of Capillata.by and images by Silvak.by and code by Zzzzoot."
+*# desc = "This is the Catallipac. It is a whole new room to explore!\n\nRequires the Universal Hub!\n\nPart of Children of Capillata.\nDesigned by and images by Silvak.\nMaintained by and code by Zzzzoot."
 
 *# attach coc_cat.blk coccatdoor.c16 coccatvendor.c16 coccatvendormouth.c16 fav_place_coccat.c16 lift.c16 sealift.c16
 *# Link CAT-door-events.cos CAT-empathic-vendor.cos CAT-lift-events.cos
@@ -47,7 +47,7 @@ subv va91 va93
 flto va90 va91
 **/
 part 3
-ptxt "Catilipac Version 1.0.6.3-beta"
+ptxt "Catilipac Version v1.1"
 part 1
 ptxt read "zot_CAT" 0
 
