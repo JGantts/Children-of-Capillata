@@ -735,13 +735,13 @@ scrp 1 2 24403 1000
 			new: simp 1 1 24402 "blnk" 1 1 0
 			mvto va00 va02
 *			emit light, constantly
-			emit 1 .1
+			emit 1 .001
 *		heat emiter
 			new: simp 1 1 24402 "blnk" 1 1 0
 			addv va02 30
 			mvto va00 va02
 *			emit heat, constantly
-			emit 2 .1
+			emit 2 .01
 *		water emiter
 			new: simp 1 1 24402 "blnk" 1 1 0
 			addv va02 30
@@ -749,7 +749,7 @@ scrp 1 2 24403 1000
 *			emit water, constantly
 			emit 3 3
 *			add nutrients, just at begining
-			altr -1 3 .2
+			altr -1 4 .2
 *		setup for 2nd column
 			setv va02 va01
 			addv va00 700
@@ -792,6 +792,7 @@ scrp 1 2 24403 1000
 			setv va02 va01
 			addv va00 500
 		repe
+
 
 **************
 ***//Enviro***
