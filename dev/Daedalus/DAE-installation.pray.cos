@@ -146,7 +146,7 @@ scrp 1 2 24403 1000
 		rmsc 44453 29703 ""
 		setv game "mapeditortmp_612" va00
 		setv va00 addr game "mapeditortmp" 44598 44683 29620 29620 29780 29778
-		rtyp va00 0
+		rtyp va00 4
 		rmsc 44640 29699 ""
 		setv game "mapeditortmp_613" va00
 		setv va00 addr game "mapeditortmp" 44598 44683 29397 29409 29620 29620
@@ -322,7 +322,7 @@ scrp 1 2 24403 1000
 		rmsc 42605 29738 ""
 		setv game "mapeditortmp_656" va00
 		setv va00 addr game "mapeditortmp" 42641 42776 29743 29743 29913 29881
-		rtyp va00 0
+		rtyp va00 6
 		rmsc 42708 29812 ""
 		setv game "mapeditortmp_657" va00
 
@@ -673,111 +673,132 @@ scrp 1 2 24403 1000
 		part 1
 		pose 3
 		setv name "in_dea" 1
-*			************
-*			***//Food***
-*			************
-*			************
-*			***Enviro***
-*			************
-********************Control*********************
+************
+***//Food***
+************
+************
+***Enviro***
+************
+
 ***beach area***
-		setv va00 43032
-		setv va01 29791
-*	light emiter
-		new: simp 1 1 24402 "blnk" 1 0 0
-		mvto va00 va01
-		addv va00 100
-*		emit light, constantly
-		emit 1 .35
+		setv va00 42650
+		setv va01 29750
 
-*	heat emiter
-		new: simp 1 1 24402 "blnk" 1 0 0
-		mvto va00 va01
-		addv va00 100
-*		emit heat, constantly
-		emit 2 .4
-
-*	water emiter
-		new: simp 1 1 24402 "blnk" 1 0 0
-		mvto va00 va01
-		addv va00 100
-*		emit water, constantly
-		emit 3 .5
-*		add nutrients, just at begining
-		altr -1 3 .2
-		
 *	norn home
-		new: simp 3 5 24401 "blnk" 1 0 0		
+		new: simp 3 5 24401 "blnk" 1 1 0
 		emit 15 .1
 		mvto va00 va01
 
+* two columns
+		setv va02 va01
+		addv va00 80
+		reps 2
+*		light emiter
+			new: simp 1 1 24402 "blnk" 1 1 0
+			mvto va00 va02
+*			emit light, constantly
+			emit 1 .8
+*		heat emiter
+			new: simp 1 1 24402 "blnk" 1 1 0
+			addv va02 30
+			mvto va00 va02
+*			emit heat, constantly
+			emit 2 .6
+*		water emiter
+			new: simp 1 1 24402 "blnk" 1 1 0
+			addv va02 30
+			mvto va00 va02
+*			emit water, constantly
+			emit 3 .6
+*			add nutrients, just at begining
+			altr -1 4 .7
+*		setup for 2nd column
+			setv va02 va01
+			addv va00 350
+		repe
+
+
 ***cave area***
-		setv va00 44139
+		setv va00 43520
 		setv va01 29895
-*	light emiter
-		new: simp 1 1 24402 "blnk" 1 0 0
-		mvto va00 va01
-		addv va00 100
-*		emit light, constantly
-		emit 1 .05
 
-*	heat emiter
-		new: simp 1 1 24402 "blnk" 1 0 0
-		mvto va00 va01
-		addv va00 100
-*		emit heat, constantly
-		emit 2 .2
-
-*	water emiter
-		new: simp 1 1 24402 "blnk" 1 0 0
-		mvto va00 va01
-		addv va00 100
-*		emit water, constantly
-		emit 3 .5
-*		add nutrients, just at begining
-		altr -1 3 .2
-		
 *	grendel home
-		new: simp 3 6 24401 "blnk" 1 0 0		
+		new: simp 3 6 24401 "blnk" 1 1 0
 		emit 16 .1
 		mvto va00 va01
+
+* two columns
+		setv va02 va01
+		addv va00 80
+		reps 2
+*		light emiter
+			new: simp 1 1 24402 "blnk" 1 1 0
+			mvto va00 va02
+*			emit light, constantly
+			emit 1 .1
+*		heat emiter
+			new: simp 1 1 24402 "blnk" 1 1 0
+			addv va02 30
+			mvto va00 va02
+*			emit heat, constantly
+			emit 2 .3
+*		water emiter
+			new: simp 1 1 24402 "blnk" 1 1 0
+			addv va02 30
+			mvto va00 va02
+*			emit water, constantly
+			emit 3 3
+*			add nutrients, just at begining
+			altr -1 3 .2
+*		setup for 2nd column
+			setv va02 va01
+			addv va00 700
+		repe
 
 ***desert area***
 		setv va00 44978
 		setv va01 29633
-*	light emiter
-		new: simp 1 1 24402 "blnk" 1 0 0
-		mvto va00 va01
-		addv va00 100
-*		emit light, constantly
-		emit 1 .3
 
-*	heat emiter
-		new: simp 1 1 24402 "blnk" 1 0 0
-		mvto va00 va01
-		addv va00 100
-*		emit heat, constantly
-		emit 2 .5
-
-*	water emiter
-		new: simp 1 1 24402 "blnk" 1 0 0
-		mvto va00 va01
-		addv va00 100
-*		emit water, constantly
-		emit 3 .1
-*		add nutrients, just at begining
-		altr -1 3 .2
-		
 *	ettin home
-		new: simp 3 7 24401 "blnk" 1 0 0		
+		new: simp 3 7 24401 "blnk" 1 1 0
 		emit 17 .1
 		mvto va00 va01
-*			**************
-*			***//Enviro***
-*			**************
-*			***********
-*			***Lifts***
-*			***********
+		addv va00 100
+
+* two columns
+		setv va02 va01
+		addv va00 80
+		reps 2
+*		light emiter
+			new: simp 1 1 24402 "blnk" 1 1 0
+			mvto va00 va02
+*			emit light, constantly
+			emit 1 .65
+*		heat emiter
+			new: simp 1 1 24402 "blnk" 1 1 0
+			addv va02 30
+			mvto va00 va02
+*			emit heat, constantly
+			emit 2 6
+*		water emiter
+			new: simp 1 1 24402 "blnk" 1 1 0
+			addv va02 30
+			mvto va00 va02
+*			emit water, constantly
+			emit 3 .1
+*			add nutrients, just at begining
+			altr -1 4 .1
+*		setup for 2nd column
+			setv va02 va01
+			addv va00 500
+		repe
+
+**************
+***//Enviro***
+**************
+***********
+***Lifts***
+***********
 		new: simp 2 12 24402 "lift" 2 14 5000
 		bhvr 1
 		attr 4
