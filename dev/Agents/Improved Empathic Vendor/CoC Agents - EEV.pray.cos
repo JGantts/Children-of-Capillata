@@ -3,7 +3,7 @@
 *# DS-Name "CoCA-Improved Emph. Vendor"
 *# Agent Animation File = "ds empathic vendor update.c16"
 *# Agent Sprite First Image = 0
-*# desc = "v1.1.0.1-alpha\n\nAdds items to be vended by the original Empathic Vendor. The items added are Bramboo Berries, Tuba, Justanut, Hi-bounce Rubber Ball and Robot Toy.\n\nCoded by Zzzzoot and graphics by Silvak."
+*# desc = "v1.1.0.2-alpha\n\nAdds items to be vended by the original Empathic Vendor. The items added are Bramboo Berries, Tuba, Justanut, Hi-bounce Rubber Ball and Robot Toy.\n\nCoded by Zzzzoot and graphics by Silvak."
 
 *# attach "ds empathic vendor update.c16" coccatvendor.c16
 
