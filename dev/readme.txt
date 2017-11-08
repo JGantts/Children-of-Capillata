@@ -1,4 +1,4 @@
-Children of Capillata v1.1
+Children of Capillata v1.1.0.1-alpha
 A series of metarooms for the game Docking Station
 
 =The Universal Hub=

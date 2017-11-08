@@ -48,7 +48,7 @@ subv va91 va93
 flto va90 va91
 **/
 part 3
-ptxt "Morpheri v1.1"
+ptxt "Morpheri v1.1.0.1-alpha"
 part 1
 ptxt read "zot_Mor" 0
 
