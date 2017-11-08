@@ -1,8 +1,2 @@
-
-dev/CoC_DAE/CoC_DAE.agents
-dev/CoC_CAT/CoC_CAT.agents
-dev/Coc_UH/CoC_UH.agents
-dev/CoC_Mor/CoC_MOR.agents
-dev/Agents/Improved Empathic Vendor/CoC Agents-Improved Empathic Vendor.agents
-dev/Daedalus/CoC_DAE.agents
 release/
+*.agents
