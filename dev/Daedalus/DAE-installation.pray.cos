@@ -47,7 +47,7 @@ subv va91 va93
 flto va90 va91
 **/
 part 3
-ptxt "Daedalus Version v1.1.0.2-alpha"
+ptxt "Daedalus Version v1.1.1.0-beta"
 
 part 1
 ptxt read "zot_DAE" 0
