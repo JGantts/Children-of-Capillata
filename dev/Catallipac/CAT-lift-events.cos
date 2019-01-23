@@ -231,7 +231,7 @@ scrp 3 1 24401 1000
 		targ mv01
 		setv ov00 0
 		targ ownr
-***speeding up	
+***speeding up
 *	starts out as either 1 or -1
 **dbg: outs "speeding up"
 		setv va20 mv00
@@ -292,7 +292,7 @@ scrp 3 1 24401 1000
 		endi
 
 		doif vely > 10 or vely < -10
-*	holy crap we're going fast 
+*	holy crap we're going fast
 *				(don't even know how, but whatever. we still need to fix the problem)
 *	put on the brakes!
 			setv va20 10

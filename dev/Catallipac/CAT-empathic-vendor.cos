@@ -296,7 +296,7 @@ scrp 2 23 24401 1004
 		setv ov48 rand 70 255
 ** ov49 = GENETIC Fruit Rotation
 		setv ov49 rand 0 255
-** ov50 = GENETIC Fruit Swap 
+** ov50 = GENETIC Fruit Swap
 		setv ov50 rand 0 255
 ** Store the genetical height of the parent Bramboo cane
 		setv ov40 rand 6 8
@@ -705,7 +705,7 @@ scrp 2 11 7 6
 endm
 
 
-*** Remove Script 
+*** Remove Script
 *rscr
 *** Remove the Vendor
 *enum 2 23 24401
