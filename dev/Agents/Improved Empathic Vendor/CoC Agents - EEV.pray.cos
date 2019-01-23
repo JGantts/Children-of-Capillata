@@ -5,7 +5,7 @@
 *# Agent Sprite First Image = 0
 *# desc = "v1.2.0.1-alpha\n\nAdds items to be vended by the original Empathic Vendor. The items added are Bramboo Berries, Tuba, Justanut, Hi-bounce Rubber Ball and Robot Toy.\n\nCoded by Zzzzoot and graphics by Silvak."
 
-*# attach "ds empathic vendor update.c16" coccatvendor.c16
+*# attach "ds empathic vendor update.c16" coccatvendor.c16 dsqu.wav
 
 *$Id: empathic040vendor.cos,v 1.16 2001/01/17 09:31:23 mashton Exp $
 *********************************
@@ -14,7 +14,7 @@
 **                             **
 *********************************
 
-** NOTE: The Empathic Vendor communicates with the food pods. 
+** NOTE: The Empathic Vendor communicates with the food pods.
 enum 2 23 3
 	kill targ
 next
@@ -350,7 +350,7 @@ scrp 2 23 3 1004
 		setv ov48 rand 70 255
 ** ov49 = GENETIC Fruit Rotation
 		setv ov49 rand 0 255
-** ov50 = GENETIC Fruit Swap 
+** ov50 = GENETIC Fruit Swap
 		setv ov50 rand 0 255
 ** Store the genetical height of the parent Bramboo cane
 		setv ov40 va40
@@ -986,7 +986,7 @@ scrp 2 11 7 6
 	snde "dr10"
 endm
 
-** Remove Script 
+** Remove Script
 rscr
 ** Remove the Vendor
 enum 2 23 3
