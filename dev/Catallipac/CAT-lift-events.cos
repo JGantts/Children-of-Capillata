@@ -1,17 +1,3 @@
-*			**********
-*			***Lift***
-*			**********
-*			Lift
-
-
-
-*			************
-*			***//Lift***
-*			************
-
-
-
-
 ***!!!COPY INSTALLATION SCRIPT TO MAIN INSTALLATION SCRIPT!!!***
 
 
@@ -19,67 +5,80 @@
 * Script 3 extracted from CoC_CAT.agents by Mirality REVELATION
 * Thank you Mirality! -Zzzzoot
 
-*call button activate
+*ZootLiftButton.Push
 scrp 2 12 24401 1
 	lock
-	*dbg: outs "call button (activated)"
+*!	dbg: outs "call button (activated)"
+*	if(from = pntr && ButtonState = WaitingForLift)
 	doif from = pntr and mv00 = 2
-*	pointer is clicking button but it's locked
-*		and already waiting. possibly by a ceature
-*		and ov04 (from) won't be correct
+*		agnt From = pntr
 		seta mv04 pntr
-*		flash off and back on to give user feedback
+*Flash off and back on to give user feedback.
+*		pose.Off *wait 5 *pose.On
 		pose 0
 		wait 5
 		pose 1
 	endi
+*	if(ButtonState = NoLift)
 	doif mv00 = 0
+*		if(from = pntr)
 		doif from = pntr
+*			agnt From = pntr
 			seta mv04 pntr
 		endi
-*	button is "not waiting, does not have lift"
-*	set button to "waiting"
+*		ButtonState = WaitingForLift
 		setv ov00 2
+*		pose.On
 		pose 1
-*	kick off lift's main loop
-		*dbg: outs "callin' da loop"
+*!		dbg: outs "callin' da loop"
+*		Lift.TimingLoop
 		mesg writ ov03 1000
 		inst
+*	else(ButtonState = HasLift || ButtonState = WaitingForLift)
 	else
-*	button is already "has lift"
-*	OR button is already "waiting for lift"
+*!		dbg: asrt mv00 = 1 or mv00 = 2
 		inst
+*		if(from not = null)
 		doif from <> null
-*			stim Disappoint
-			*dbg: outs "well that was dumb"
+*!			dbg: outs "well that was dumb"
+*			from.Stim(Dissapoint, 1)
 			stim writ from 0 1
 		endi
 	endi
 endm
 
-*going up (only by creature)
+*Going up (only by creature).
+*ZootLift.Push
 scrp 3 1 24401 1
 	lock
-	*dbg: outs "going up (activated)"
+*!	dbg: outs "going up (activated)"
+*
 	targ from
+*	if(family is not Creature)
 	doif fmly <> 4
 		stop
 	endi
+	targ ownr
 	inst
+*	if(LiftState = Stationary)
 	doif ov00 = 0
-*	lift is waiting
+*		if(ButtonCurrent.ButtonAbove != null)
 		doif avar mv01 1 <> null
-*	there is a button above us, we can go to it!
-*	set lift to "going up"
+*There is a button above us, we can go to it!
+*			LiftState = GoingUp
 			setv mv00 -1
-*	set lift's destination button
+*			ButtonDestination = ButtonCurrent.ButtonAbove
 			seta mv02 avar mv01 1
 			slow
-*	stim Wait (a bit)
+*			from.Stim(Wiat, 1)
 			stim writ from 75 1
+*			ownr.PickUp(from)
 			spas ownr from
 *	set start and stop Y values
+*			THINGS ARE SO BROKEN IT'S A BIT HARD TO TELL WHAT'S UP.
+*			 I'LL COME BACK LATER - ZZZZOOT
 			targ mv01
+*			ButtonCurrent.
 			setv mv10 ov10
 			targ mv02
 			setv mv11 ov10
@@ -90,26 +89,30 @@ scrp 3 1 24401 1
 			seta ov04 from
 			stim writ ov04 75 0
 * Aaaaand, GO!
-			*dbg: outs "callin' da loop"
+*!			dbg: outs "callin' da loop"
 			mesg writ ownr 1000
 		else
 *	there's no button above us!
 *	stim Disappoint
-			*dbg: outs "well that was dumb"
+*!			dbg: outs "well that was dumb"
+*			from.Stim(Disappoint, 1)
 			stim writ from 0 1
 		endi
+*	else(LiftState = GoingUp or LiftState = GoingDown)
 	else
-*	the doors are closed man, you're too late
-*	stim Disappoint
-		*dbg: outs "well that was dumb"
+*!		dbg: asrt mv00 = -1 or mv00 = 1
+*The doors are closed man, you're too late.
+*!		dbg: outs "well that was dumb"
+*		from.Stim(Disappoint, 1)
 		stim writ from 0 1
 	endi
 endm
 
 *going down (only by creature)
+*ZootLift.Pull
 scrp 3 1 24401 2
 	lock
-	*dbg: outs "going down (activated)"
+*!	dbg: outs "going down (activated)"
 	targ from
 	doif fmly <> 4
 		stop
@@ -139,18 +142,18 @@ scrp 3 1 24401 2
 			seta ov04 from
 			stim writ ov04 75 0
 * Aaaaand, GO!
-			*dbg: outs "callin' da loop"
+*!			dbg: outs "callin' da loop"
 			mesg writ ownr 1000
 		else
 *	there's no button above us!
 *	stim Disappoint
-			*dbg: outs "well that was dumb"
+*!			dbg: outs "well that was dumb"
 			stim writ from 0 1
 		endi
 	else
 *	the doors are closed man, you're too late
 *	stim Disappoint
-		*dbg: outs "well that was dumb"
+*!		dbg: outs "well that was dumb"
 		stim writ from 0 1
 	endi
 endm
@@ -160,52 +163,72 @@ endm
 * called whenver a call button is pressed. *However* at the end of
 * script 1000, it checks for waiting call buttons.
 * So it this script is ignored, doesn't matter
+*ZootLift.TimingLoop
 scrp 3 1 24401 1000
 	lock
 	loop
-		*dbg: outs "loopin' da loop"
+*!		dbg: outs "loopin' da loop"
 		inst
 
-**dbg: outs "looking for a button"
-*	There's probably a button waiting for us. (we're hopeful)
-*	Find it, then move the lift to it
+*!		dbg: outs "looking for a button"
+*There's probably a button waiting for us. (we're hopeful)
+* Find it, then move the lift to it.
 
 *		on a button, ov01 is button below
 *				 ov02 is button above
+*		numb upOrDown = random(up, down)
 		setv va04 rand 1 2
+*
 		reps 2
+*			targ ButtonCurrent
 			targ mv01
 			loop
 *		get current call button's neighbor. either upper or lower depending on va04
+*				if(upOrDown = up)     agnt nextButtonToCheck = this.ButtonAbove
+*				else(upOrDown = down) agnt nextButtonToCheck = this.ButtonBelow
 				targ avar targ va04
+*				if(nextButtonToCheck != null)
 				doif targ <> null
+*					if(nextButtonToCheck.ButtonState = WaitingForLift)
 					doif ov00 = 2
-*				call button is waiting!
+*Call button is waiting!
+*						ButtonDestination = nextButtonToCheck
 						seta mv02 targ
+*						From = nextButtonToCheck.From
 						seta mv04 ov04
 					endi
 				endi
+*			untl ButtonDestination != null || nextButtonToCheck = null
 			untl mv02 <> null or targ = null
-*	if va04 is 1, set it to 2, if it's 2, set it to 1
+*If va04 is 1, set it to 2, if it's 2, set it to 1.
+*If upOrDown is up, set it to down, if it's down, set it to up.
 			mulv va04 -1
 			addv va04 3
-*	so, we loop twice even if we already found an answer. This gives a bias to the closest
-*		call buttons. I don't consider that a problem. Almost even a feature. meh
+*So, we loop twice even if we already found an answer. This gives a bias to the closest
+* call buttons. I don't consider that a problem. Almost even a feature. meh.
 		repe
+*		if(ButtonDestination = null)
 		doif mv02 = null
-*		no one wants a lift right now
-			*dbg: outs "no one wants a lift"
+*No one wants a lift right now.
+*NOT TRUE IF THERE ARE 3 OR MORE BUTTONS
+*			dbg: outs "no one wants a lift"
 			stop
 		endi
-**dbg: outs "found a button"
+*!		dbg: outs "found a button"
 
+*
 		targ ownr
-*		set direction
+*Set direction.
+*		if(ButtonDestination.TargetX < posb)
 		doif avar mv02 10 < posb
-***dbg: outs "going up"
+*!			dbg: outs "going up"
+*			LiftState = GoingUp
 			setv mv00 -1
+*		else(ButtonDestination.TargetX >= posb)
 		else
-***dbg: outs "going down"
+*!		dbg: asrt avar mv02 10 >= posb
+*!			dbg: outs "going down"
+*			LiftState = GoingDown
 			setv mv00 1
 		endi
 *set lift original position and desination position
