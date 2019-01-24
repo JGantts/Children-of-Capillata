@@ -533,10 +533,8 @@ scrp 3 1 24401 1000
 			subv va32 20
 *			numb brakeDistance = random(min, max)
 			setv va33 rand va31 va32
-*		until(min = -10)
-		untl va31 = -10
-*THIS SHOULD REALLY PROBABLY BE: until(min <= -10)
-* I mean, this is just asking for trouble.
+*		until(min <= -10)
+		untl va31 <= -10
 *And va32 would be 10.
 * This should leave us at ~20 pixels out and ~vely 2.
 
@@ -554,8 +552,6 @@ scrp 3 1 24401 1000
 *		Velocity = (x: 0 y: owner.UpOrDown * 1)
 		velo 0 mv00
 
-*NEXT LINE SHOULD BE REMOVED, va33 IS NEVER USED AGAIN
-		setv va33 rand 8 12
 		loop
 *
 			wait 1
@@ -611,8 +607,7 @@ scrp 3 1 24401 1000
 *	reset everything
 *		StaryY = 0, StopY = 1, From = null
 		setv mv10 0
-*NEXT LINE SHOULD BE 1 TO REFELCT ORIGINAL STATE		
-		setv mv11 0
+		setv mv11 1
 		seta mv04 null
 *!		dbg: outs "lift timer stop"
 *Loop back again. There we'll check for more waiting buttons.
