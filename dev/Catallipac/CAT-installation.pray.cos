@@ -348,130 +348,130 @@ scrp 1 2 24403 1000
 *			***//Heat Pan***
 *			****************
 
-			***************
-			******Lift*****
-			***************
+		***************
+		******Lift*****
+		***************
 
-*new ZootLift
-new: vhcl 3 1 24401 "sealift" 2 0 10
-*agnt lift = targ
-seta va02 targ
-*enum LiftState = Stationary
-setv ov00 0
+*		new ZootLift
+		new: vhcl 3 1 24401 "sealift" 2 0 10
+*		agnt lift = targ
+		seta va02 targ
+*		enum LiftState = Stationary
+		setv ov00 0
 *
-cabn -11 -10 110 134
-*Can't be picked up, Visible to creatures, Doesn't suffer physics
-attr 0
-*Creatures can push and pull
-bhvr 3
+		cabn -11 -10 110 134
+*		Can't be picked up, Visible to creatures, Doesn't suffer physics
+		attr 0
+*		Creatures can push and pull
+		bhvr 3
 *
-cabw 12
-*agnt ButtonCurrent = null
-seta ov01 null
-*agnt ButtonDestination = null
-seta ov02 null
-*numb StartY = 0
-setv ov10 0
-*numb StopY = 1
-setv ov11 1
-*agnt From = null
-seta ov04 null
+		cabw 12
+*		agnt ButtonCurrent = null
+		seta ov01 null
+*		agnt ButtonDestination = null
+		seta ov02 null
+*		numb StartY = 0
+		setv ov10 0
+*		numb StopY = 1
+		setv ov11 1
+*		agnt From = null
+		seta ov04 null
 
-*agnt previousButton = null
-seta va00 null
-****************
-***Top Button***
-****************
-*new ZootLiftButton
-new: simp 2 12 24401 "lift" 2 14 310
-*agnt Lift = lift
-seta ov03 va02
-*agnt ButtonAbove = previousButton
-seta ov01 va00
-*agnt ButtonBelow = null
-seta ov02 null
-*agnt previousButton = targ
-seta va00 targ
-*if(ButtonAbove != null)
-doif ov01 <> null
-*	targ ButtonAbove
-	targ ov01
-*	ButtonAbove.ButtonBellow = previousButton
-	seta ov02 va00
-*	targ PreviousButton
-	targ va00
-endi
+*		agnt previousButton = null
+		seta va00 null
+		****************
+		***Top Button***
+		****************
+*		new ZootLiftButton
+		new: simp 2 12 24401 "lift" 2 14 310
+*		agnt Lift = lift
+		seta ov03 va02
+*		agnt ButtonAbove = previousButton
+		seta ov01 va00
+*		agnt ButtonBelow = null
+		seta ov02 null
+*		agnt previousButton = targ
+		seta va00 targ
+*		if(ButtonAbove != null)
+		doif ov01 <> null
+*			targ ButtonAbove
+			targ ov01
+*			ButtonAbove.ButtonBellow = previousButton
+			seta ov02 va00
+*			targ PreviousButton
+			targ va00
+		endi
 *
-mvto 40399 29478
-*agnt From = null
-seta ov04 null
-*enum ButtonState = NoLift
-setv ov00 0
-*numb TargetX = posb
-setv ov10 posb
-*numb TargetX = self + 10
-addv ov10 10
-*numb Room = room targ
-setv va01 room targ
-*Mouse can activate
-attr 4
-*Creatures can push
-bhvr 1
+		mvto 40399 29478
+*		agnt From = null
+		seta ov04 null
+*		enum ButtonState = NoLift
+		setv ov00 0
+*		numb TargetX = posb
+		setv ov10 posb
+*		numb TargetX = self + 10
+		addv ov10 10
+*		numb Room = room targ
+		setv va01 room targ
+*		Mouse can activate
+		attr 4
+*		Creatures can push
+		bhvr 1
 
-************
-***Bottom***
-************
-*new ZootLiftButton
-new: simp 2 12 24401 "lift" 2 14 310
-*agnt Lift = lift
-seta ov03 va02
-*agnt ButtonAbove = previousButton
-seta ov01 va00
-*agnt ButtonBelow = null
-seta ov02 null
-*agnt previousButton = targ
-seta va00 targ
-*if(ButtonAbove != null)
-doif ov01 <> null
-*	targ ButtonAbove
-	targ ov01
-*	ButtonAbove.ButtonBellow = previousButton
-	seta ov02 va00
-*	targ PreviousButton
-	targ va00
-endi
-mvto 40550 29725
-*agnt From = null
-seta ov04 null
-*enum ButtonState = NoLift
-setv ov00 0
-*numb TargetX = posb
-setv ov10 posb
-*numb TargetX = self  + 10
-addv ov10 10
-*numb Room = room targ
-setv va01 room targ
-*Mouse can activate
-attr 4
-*Creatures can push
-bhvr 1
+		************
+		***Bottom***
+		************
+*		new ZootLiftButton
+		new: simp 2 12 24401 "lift" 2 14 310
+*		agnt Lift = lift
+		seta ov03 va02
+*		agnt ButtonAbove = previousButton
+		seta ov01 va00
+*		agnt ButtonBelow = null
+		seta ov02 null
+*		agnt previousButton = targ
+		seta va00 targ
+*		if(ButtonAbove != null)
+		doif ov01 <> null
+*			targ ButtonAbove
+			targ ov01
+*			ButtonAbove.ButtonBellow = previousButton
+			seta ov02 va00
+*			targ PreviousButton
+			targ va00
+		endi
+		mvto 40550 29725
+*		agnt From = null
+		seta ov04 null
+*		enum ButtonState = NoLift
+		setv ov00 0
+*		numb TargetX = posb
+		setv ov10 posb
+*		numb TargetX = self  + 10
+		addv ov10 10
+*		numb Room = room targ
+		setv va01 room targ
+*		Mouse can activate
+		attr 4
+*		Creatures can push
+		bhvr 1
 
-*targ previousButton
-targ va00
-*numb moveLiftTo = previousbutton.TargetX
-setv va03 ov10
-*targ lift
-targ va02
-*lift.ButtonCurrent = previousButton
-seta ov01 va00
-*numb moveLiftTo = self - lift.hght
-subv va03 hght
-*mvto **** moveLiftTo
-mvto 40432 va03
+*		targ previousButton
+		targ va00
+*		numb moveLiftTo = previousbutton.TargetX
+		setv va03 ov10
+*		targ lift
+		targ va02
+*		lift.ButtonCurrent = previousButton
+		seta ov01 va00
+*		numb moveLiftTo = self - lift.hght
+		subv va03 hght
+*		mvto **** moveLiftTo
+		mvto 40432 va03
 
-			************
-			***//Lift***
-			************
+		************
+		***//Lift***
+		************
 
 *			********************
 *			***EMPHATIC VENDOR**
