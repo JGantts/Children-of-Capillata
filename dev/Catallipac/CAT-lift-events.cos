@@ -7,9 +7,9 @@ seta va02 targ
 setv ov00 0
 *
 cabn -11 -10 110 134
-*Can't be picked up, Visible to creatures, Doesn't suffer physics
+*Can't be picked up *Visible to creatures *Doesn't suffer physics
 attr 0
-*Creatures can push and pull
+*Creatures can push *Creatures can pull
 bhvr 3
 *
 cabw 12
@@ -17,15 +17,17 @@ cabw 12
 seta ov01 null
 *agnt ButtonDestination = null
 seta ov02 null
-*numb StartY = 0
+*num StartY = 0
 setv ov10 0
-*numb StopY = 1
+*num StopY = 1
 setv ov11 1
 *agnt From = null
 seta ov04 null
 
 *agnt previousButton = null
 seta va00 null
+*num? previousButtonsRoom = null
+setv va01 -1
 ****************
 ***Top Button***
 ****************
@@ -45,7 +47,7 @@ doif ov01 <> null
 	targ ov01
 *	ButtonAbove.ButtonBellow = previousButton
 	seta ov02 va00
-*	targ PreviousButton
+*	targ previousButton
 	targ va00
 endi
 *
@@ -54,11 +56,15 @@ mvto 40399 29478
 seta ov04 null
 *enum ButtonState = NoLift
 setv ov00 0
-*numb TargetX = posb
+*num TargetX = posb + 10
 setv ov10 posb
-*numb TargetX = self + 10
 addv ov10 10
-*numb Room = room targ
+*if(previousButtonsRoom != null)
+doif va01 <> -1
+*link previousButoo
+	link va01 room targ 0.75
+endi
+*num previousButtonsRoom = room targ
 setv va01 room targ
 *Mouse can activate
 attr 4
@@ -87,16 +93,21 @@ doif ov01 <> null
 *	targ PreviousButton
 	targ va00
 endi
+*
 mvto 40550 29725
 *agnt From = null
 seta ov04 null
 *enum ButtonState = NoLift
 setv ov00 0
-*numb TargetX = posb
+*num TargetX = posb + 10
 setv ov10 posb
-*numb TargetX = self  + 10
 addv ov10 10
-*numb Room = room targ
+*if(previousButtonsRoom != null)
+doif va01 <> -1
+*link previousButoo
+	link va01 room targ 0.75
+endi
+*num previousButtonsRoom = room targ
 setv va01 room targ
 *Mouse can activate
 attr 4
@@ -105,13 +116,15 @@ bhvr 1
 
 *targ previousButton
 targ va00
-*numb moveLiftTo = previousbutton.TargetX
+*enum previousButton.ButtonState = HasLift
+setv ov00 1
+*num moveLiftTo = previousbutton.TargetX
 setv va03 ov10
 *targ lift
 targ va02
 *lift.ButtonCurrent = previousButton
 seta ov01 va00
-*numb moveLiftTo = self - lift.hght
+*num moveLiftTo = self - lift.hght
 subv va03 hght
 *mvto **** moveLiftTo
 mvto 40432 va03
@@ -153,7 +166,7 @@ scrp 2 12 24401 1
 	else
 *!		dbg: asrt mv00 = 1 or mv00 = 2
 		inst
-*		if(from not = null)
+*		if(from != null)
 		doif from <> null
 *!			dbg: outs "well that was dumb"
 *			from.Stim(Dissapoint, 1)
@@ -256,11 +269,11 @@ scrp 3 1 24401 2
 			spas ownr from
 *
 			targ mv01
-*			StartY = ButtonCurrent.TargetY
+*			StartY = ButtonCurrent.TargetX
 			setv mv10 ov10
 *			
 			targ mv02
-*			StopY = ButtonDestination.TargetY
+*			StopY = ButtonDestination.TargetX
 			setv mv11 ov10
 			targ ownr
 *			pose.On
@@ -307,7 +320,7 @@ scrp 3 1 24401 1000
 
 *		on a button, ov01 is button below
 *				 ov02 is button above
-*		numb upOrDown = random(up, down)
+*		num upOrDown = random(up, down)
 		setv va04 rand 1 2
 *
 		reps 2
