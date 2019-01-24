@@ -169,7 +169,7 @@ scrp 3 1 24401 1
 *!	dbg: outs "going up (activated)"
 *
 	targ from
-*	if(family is not Creature)
+*	if(family != Creature)
 	doif fmly <> 4
 		stop
 	endi
@@ -185,29 +185,33 @@ scrp 3 1 24401 1
 *			ButtonDestination = ButtonCurrent.ButtonAbove
 			seta mv02 avar mv01 1
 			slow
-*			from.Stim(Wiat, 1)
+*			from.Stim(Wait, 1)
 			stim writ from 75 1
 *			ownr.PickUp(from)
 			spas ownr from
-*	set start and stop Y values
-*			THINGS ARE SO BROKEN IT'S A BIT HARD TO TELL WHAT'S UP.
-*			 I'LL COME BACK LATER - ZZZZOOT
+*
 			targ mv01
-*			ButtonCurrent.
+*			StartY = ButtonCurrent.TargetX
 			setv mv10 ov10
+*
 			targ mv02
+*			StopY = ButtonDestination.TargetX
 			setv mv11 ov10
+*
 			targ ownr
-*	turn on light
+*			pose.On
 			pose 1
-*	remember who you're doing this for
+*Remember who you're doing this for.
+*			From = from
 			seta ov04 from
+*			from.stim(Wait, 1)
 			stim writ ov04 75 0
 * Aaaaand, GO!
 *!			dbg: outs "callin' da loop"
+*			self.TimingLoop
 			mesg writ ownr 1000
 		else
-*	there's no button above us!
+*There's no button above us!
 *	stim Disappoint
 *!			dbg: outs "well that was dumb"
 *			from.Stim(Disappoint, 1)
@@ -228,41 +232,53 @@ endm
 scrp 3 1 24401 2
 	lock
 *!	dbg: outs "going down (activated)"
+*
 	targ from
+*	if(family != Creature)
 	doif fmly <> 4
 		stop
 	endi
+	targ ownr
 	inst
+*	if(LiftState = Stationary)
 	doif ov00 = 0
-*	lift is waiting
+*		if(ButtonCurrent.ButtonBelow != null)
 		doif avar mv01 2 <> null
-*	there is a button above us, we can go to it!
-*	set lift to "going up"
+*There is a button below us, we can go to it!
+*			LiftState = GoingDwon
 			setv mv00 -1
-*	set lift's destination button
+*			ButtonDestination = ButtonCurrent.ButtonAbove
 			seta mv02 avar mv01 2
 			slow
-*	stim Wait (a bit)
+*			from.Stim(Wait, 1)
 			stim writ from 75 1
+*			ownr.Pickup(from)
 			spas ownr from
-*	set start and stop Y values
+*
 			targ mv01
+*			StartY = ButtonCurrent.TargetY
 			setv mv10 ov10
+*			
 			targ mv02
+*			StopY = ButtonDestination.TargetY
 			setv mv11 ov10
 			targ ownr
-*	turn on light
+*			pose.On
 			pose 1
-*	remember who you're doing this for
+*Remember who you're doing this for.
+*			From = from
 			seta ov04 from
+*			from.stim(Wait, 1)
 			stim writ ov04 75 0
 * Aaaaand, GO!
 *!			dbg: outs "callin' da loop"
+*			self.TimingLoop
 			mesg writ ownr 1000
 		else
-*	there's no button above us!
+*	there's no button below us!
 *	stim Disappoint
 *!			dbg: outs "well that was dumb"
+*			from.Stim(Dissapoint, 1)
 			stim writ from 0 1
 		endi
 	else
