@@ -7,9 +7,9 @@ seta va02 targ
 setv ov00 0
 *
 cabn -11 -10 110 134
-*Can't be picked up *Visible to creatures *Doesn't suffer physics
+*Can't be picked up, Visible to creatures, Doesn't suffer physics
 attr 0
-*Creatures can push *Creatures can pull
+*Creatures can push, Creatures can pull
 bhvr 3
 *
 cabw 12
@@ -17,16 +17,16 @@ cabw 12
 seta ov01 null
 *agnt ButtonDestination = null
 seta ov02 null
-*num StartY = 0
+*numb StartY = 0
 setv ov10 0
-*num StopY = 1
+*numb StopY = 1
 setv ov11 1
 *agnt From = null
 seta ov04 null
 
 *agnt previousButton = null
 seta va00 null
-*num? previousButtonsRoom = null
+*numb? previousButtonsRoom = null
 setv va01 -1
 ****************
 ***Top Button***
@@ -56,7 +56,7 @@ mvto 40399 29478
 seta ov04 null
 *enum ButtonState = NoLift
 setv ov00 0
-*num TargetX = posb + 10
+*numb TargetX = posb + 10
 setv ov10 posb
 addv ov10 10
 *if(previousButtonsRoom != null)
@@ -64,7 +64,7 @@ doif va01 <> -1
 *link previousButoo
 	link va01 room targ 0.75
 endi
-*num previousButtonsRoom = room targ
+*numb previousButtonsRoom = room targ
 setv va01 room targ
 *Mouse can activate
 attr 4
@@ -99,7 +99,7 @@ mvto 40550 29725
 seta ov04 null
 *enum ButtonState = NoLift
 setv ov00 0
-*num TargetX = posb + 10
+*numb TargetX = posb + 10
 setv ov10 posb
 addv ov10 10
 *if(previousButtonsRoom != null)
@@ -107,7 +107,7 @@ doif va01 <> -1
 *link previousButoo
 	link va01 room targ 0.75
 endi
-*num previousButtonsRoom = room targ
+*numb previousButtonsRoom = room targ
 setv va01 room targ
 *Mouse can activate
 attr 4
@@ -118,13 +118,13 @@ bhvr 1
 targ va00
 *enum previousButton.ButtonState = HasLift
 setv ov00 1
-*num moveLiftTo = previousbutton.TargetX
+*numb moveLiftTo = previousbutton.TargetX
 setv va03 ov10
 *targ lift
 targ va02
 *lift.ButtonCurrent = previousButton
 seta ov01 va00
-*num moveLiftTo = self - lift.hght
+*numb moveLiftTo = moveLiftTo - lift.hght
 subv va03 hght
 *mvto **** moveLiftTo
 mvto 40432 va03
@@ -133,7 +133,7 @@ mvto 40432 va03
 * Script 3 extracted from CoC_CAT.agents by Mirality REVELATION
 * Thank you Mirality! -Zzzzoot
 
-*ZootLiftButton.Push
+*ZootLiftButton.Push-CallLift
 scrp 2 12 24401 1
 	lock
 *!	dbg: outs "call button (activated)"
@@ -142,7 +142,7 @@ scrp 2 12 24401 1
 *		agnt From = pntr
 		seta mv04 pntr
 *Flash off and back on to give user feedback.
-*		pose.Off *wait 5 *pose.On
+*		pose.Off, wait 5, pose.On
 		pose 0
 		wait 5
 		pose 1
@@ -175,14 +175,13 @@ scrp 2 12 24401 1
 	endi
 endm
 
-*Going up (only by creature).
-*ZootLift.Push
+*ZootLift.Push-GoingUp
 scrp 3 1 24401 1
 	lock
 *!	dbg: outs "going up (activated)"
 *
 	targ from
-*	if(family != Creature)
+*	if(from.Family != Creature)
 	doif fmly <> 4
 		stop
 	endi
@@ -200,32 +199,28 @@ scrp 3 1 24401 1
 			slow
 *			from.Stim(Wait, 1)
 			stim writ from 75 1
-*			ownr.PickUp(from)
+*			owner.PickUp(from)
 			spas ownr from
-*
-			targ mv01
 *			StartY = ButtonCurrent.TargetX
+			targ mv01
 			setv mv10 ov10
-*
-			targ mv02
 *			StopY = ButtonDestination.TargetX
+			targ mv02
 			setv mv11 ov10
-*
 			targ ownr
 *			pose.On
 			pose 1
 *Remember who you're doing this for.
 *			From = from
 			seta ov04 from
-*			from.stim(Wait, 1)
+*			from.stim(Wait, 0)
 			stim writ ov04 75 0
 * Aaaaand, GO!
 *!			dbg: outs "callin' da loop"
-*			self.TimingLoop
+*			owner.MoverLoop
 			mesg writ ownr 1000
 		else
 *There's no button above us!
-*	stim Disappoint
 *!			dbg: outs "well that was dumb"
 *			from.Stim(Disappoint, 1)
 			stim writ from 0 1
@@ -240,14 +235,13 @@ scrp 3 1 24401 1
 	endi
 endm
 
-*going down (only by creature)
-*ZootLift.Pull
+*ZootLift.Pull-GoingDown
 scrp 3 1 24401 2
 	lock
 *!	dbg: outs "going down (activated)"
 *
 	targ from
-*	if(family != Creature)
+*	if(from.Family != Creature)
 	doif fmly <> 4
 		stop
 	endi
@@ -260,20 +254,18 @@ scrp 3 1 24401 2
 *There is a button below us, we can go to it!
 *			LiftState = GoingDwon
 			setv mv00 -1
-*			ButtonDestination = ButtonCurrent.ButtonAbove
+*			ButtonDestination = ButtonCurrent.Button
 			seta mv02 avar mv01 2
 			slow
 *			from.Stim(Wait, 1)
 			stim writ from 75 1
-*			ownr.Pickup(from)
+*			owner.Pickup(from)
 			spas ownr from
-*
-			targ mv01
 *			StartY = ButtonCurrent.TargetX
+			targ mv01
 			setv mv10 ov10
-*			
+*			StopY = ButtonDestination.TargetX			
 			targ mv02
-*			StopY = ButtonDestination.TargetX
 			setv mv11 ov10
 			targ ownr
 *			pose.On
@@ -285,7 +277,7 @@ scrp 3 1 24401 2
 			stim writ ov04 75 0
 * Aaaaand, GO!
 *!			dbg: outs "callin' da loop"
-*			self.TimingLoop
+*			owner.MoverLoop
 			mesg writ ownr 1000
 		else
 *	there's no button below us!
@@ -296,8 +288,8 @@ scrp 3 1 24401 2
 		endi
 	else
 *	the doors are closed man, you're too late
-*	stim Disappoint
 *!		dbg: outs "well that was dumb"
+*		from.Stim(Dissapoint, 1)
 		stim writ from 0 1
 	endi
 endm
@@ -307,7 +299,7 @@ endm
 * called whenver a call button is pressed. *However* at the end of
 * script 1000, it checks for waiting call buttons.
 * So it this script is ignored, doesn't matter
-*ZootLift.TimingLoop
+*ZootLift.MoverLoop
 scrp 3 1 24401 1000
 	lock
 	loop
@@ -318,24 +310,20 @@ scrp 3 1 24401 1000
 *There's probably a button waiting for us. (we're hopeful)
 * Find it, then move the lift to it.
 
-*		on a button, ov01 is button below
-*				 ov02 is button above
-*		num upOrDown = random(up, down)
+*		enum upOrDown = random(up, down)
 		setv va04 rand 1 2
 *
 		reps 2
 *			targ ButtonCurrent
 			targ mv01
 			loop
-*		get current call button's neighbor. either upper or lower depending on va04
-*				if(upOrDown = up)     agnt nextButtonToCheck = this.ButtonAbove
-*				else(upOrDown = down) agnt nextButtonToCheck = this.ButtonBelow
+*				if(upOrDown = up)     agnt nextButtonToCheck = ButtonCurrent.ButtonAbove
+*				else(upOrDown = down) agnt nextButtonToCheck = ButtonCurrent.ButtonBelow
 				targ avar targ va04
 *				if(nextButtonToCheck != null)
 				doif targ <> null
 *					if(nextButtonToCheck.ButtonState = WaitingForLift)
 					doif ov00 = 2
-*Call button is waiting!
 *						ButtonDestination = nextButtonToCheck
 						seta mv02 targ
 *						From = nextButtonToCheck.From
@@ -345,16 +333,15 @@ scrp 3 1 24401 1000
 *			untl ButtonDestination != null || nextButtonToCheck = null
 			untl mv02 <> null or targ = null
 *If va04 is 1, set it to 2, if it's 2, set it to 1.
-*If upOrDown is up, set it to down, if it's down, set it to up.
+*If(upOrDown = up)upOrDown = down, else upOrDown = up
 			mulv va04 -1
 			addv va04 3
-*So, we loop twice even if we already found an answer. This gives a bias to the closest
-* call buttons. I don't consider that a problem. Almost even a feature. meh.
 		repe
 *		if(ButtonDestination = null)
 		doif mv02 = null
 *No one wants a lift right now.
-*NOT TRUE IF THERE ARE 3 OR MORE BUTTONS
+*NOT TRUE IF THERE ARE 3 OR MORE BUTTONS.
+* WILL NEVER FIND BUTTON BEYOND NEXT.
 *			dbg: outs "no one wants a lift"
 			stop
 		endi
@@ -362,7 +349,6 @@ scrp 3 1 24401 1000
 
 *
 		targ ownr
-*Set direction.
 *		if(ButtonDestination.TargetX < posb)
 		doif avar mv02 10 < posb
 *!			dbg: outs "going up"
@@ -376,187 +362,267 @@ scrp 3 1 24401 1000
 			setv mv00 1
 		endi
 *set lift original position and desination position
+*		StartY = posb
 		setv mv10 posb
+*		StopY = ButtonDestination.TargetY
 		setv mv11 avar mv02 10
-*	lift button on
+*		Pose.On
 		pose 1
-
+*		if(From = pntr)
 		doif ov04 = pntr
 *		hand clicked the call button
+*			foreach(Creature, All, All)
 			etch 4 0 0
+*				owner.PickUp(targ)
 				spas ownr targ
 			next
 		else
-*		norn activated the lift
-*			or call button and then got moved :-/
+*		A Creature activated the lift
+*			if(AreTouching(owner, owner.From))
 			doif touc ownr ov04 = 1
+*				owner.PickUp(From)
 				spas ownr ov04
 			endi
 		endi
 
-*	set origin call button to "not waiting, no lift"
+*		ButtonCurrent.ButtonState = NoLift
 		targ mv01
 		setv ov00 0
 		targ ownr
 ***speeding up
 *	starts out as either 1 or -1
 **dbg: outs "speeding up"
+*		debug.assert(LiftState = GoingUp || LiftState = GingDown)
+*!		dbg: asrt mv00 = -1 or mv00 = 1
+*		numb velocity = owner.UpOrDown x 0.5
 		setv va20 mv00
 		mulv va20 0.5
+*		Wait(random(0, 5)), Velocity = (x: 0, y: velocity)
 		wait rand 0 5
 		velo 0 va20
+*		velocity *= 0.75
 		mulv va20 0.75
+*		Wait(random(1, 2))), Velocity = (x: 0, y: velocity)
 		wait rand 1 2
 		velo 0 va20
+*		velocity *= 3
 		mulv va20 3
+*		Wait(random(3, 4))), Velocity = (x: 0, y: velocity)
 		wait rand 3 4
 		velo 0 va20
+*		velocity *= 1.5
 		mulv va20 1.5
+*		Wait(random(6, 8))), Velocity = (x: 0, y: velocity)
 		wait rand 6 8
 		velo 0 va20
+*		velocity *= 1.5
 		mulv va20 1.5
+*		Wait(4)),            Velocity = (x: 0, y: velocity)
 		wait 4
 		velo 0 va20
+*		velocity *= 1.25
 		mulv va20 1.25
+*		Wait(7),            Velocity = (x: 0, y: velocity)
 		wait 7
 		velo 0 va20
+*		velocity *= 1.25
 		mulv va20 1.25
+*		Wait(2),            Velocity = (x: 0, y: velocity)
 		wait 2
 		velo 0 va20
+*		velocity *= 1.25
 		mulv va20 1.25
+*		Wait(3),            Velocity = (x: 0, y: velocity)
 		wait 3
 		velo 0 va20
-**dbg: outs "sped up"
+*		dbg: outs "sped up"
 
-***coasting
-*	do we even want to coast? or are we so close, we need to panic and start paying attention, like right now?
+***Coasting***
+*Do we even want to coast? or are we so close, we need to panic and start paying attention, like right now?
+*		distance = gsub(getDistance:gDst())
 		gsub gDst
+*		if(distance > 200)
 		doif va30 > 200
-*	be paranoid for a bit
-*		check every tick
+*Be paranoid for a bit.
+* Check every tick.
+*			numb counter = 0
 			setv va40 0
 			loop
+*
 				wait 5
+*				distance = getDistance:gDst()
 				gsub gDst
+*				counter += 1
 				addv va40 1
+*			until(distance < 200 || counter > 10)
 			untl va30 < 200 or va40 > 10
+*			if(distance > 200)
 			doif va30 > 200
-**	still a ways out
-**		speed up a bit
+*Still a ways out.
+* Speed up a bit.
 *		mulv va20 1.25
 *		velo 0 va20
 *		wait rand 2 3
 *		velo 0 va20
 *		mulv va20 1.25
-*	relax
-*		now just check every little bit
+*Relax.
+* Now just check every little bit.
 				loop
+*
 					wait 20
+*					distance = getDistance:gDst()
 					gsub gDst
+*				until(distance < 200)
 				untl va30 < 200
 			endi
 
 		endi
 
+***Slowing Down***
+*		if(vely > 10 || vely < -10)
 		doif vely > 10 or vely < -10
-*	holy crap we're going fast
-*				(don't even know how, but whatever. we still need to fix the problem)
-*	put on the brakes!
+*Holy crap we're coming in fast.
+* Don't even know how. But whatever, we still need to fix the problem.
+*Put on the brakes!
+*			Volocity = (x: 0 y: 10 * owner.UpOrDown)
 			setv va20 10
 			mulv va20 mv00
 			velo 0 va20
 		endi
+*		if(vely > 5 || vely < -5)
 		doif vely > 5 or vely < -5
-*	speeding a bit (still don't know how)
-*	tap the brakes
+*Speeding a bit. (still don't know how)
+*Tap the brakes.
+*			velocity = vely 
 			setv va20 vely
 			loop
+*				velocity += owner.UpOrDown
 				addv va20 mv00
+*				Velocity = (x: 0, y: velocity)
 				velo 0 va20
+*			until(vely > 5 || vely < -5)
 			untl vely > 5 or vely < -5
 		endi
 
-**dbg: outs "slowing down"
-*	slow down every ~10 pixels starting at 100
-*		but randomize it because I think that makes it look slightly better
+*!		dbg: outs "slowing down"
+*Slow down every ~10 pixels starting at 100.
+* But randomize it because I think that makes it look slightly better.
+*		numb min = 90, max = 110
 		setv va31 90
 		setv va32 110
+*		numb brakeDistance = random(min, max)
 		setv va33 rand va31 va32
-*	also, vely should be 5. slow down by -0.6 each tick to leave at vely at 2
+*Also, vely should be 5. slow down by -0.6 each tick to leave at vely at 2.
+*		numb brakeValue = 0.6 * owner.UpOrDown
 		setv va36 mv00
 		mulv va36 0.6
 		loop
 			loop
+*
 				wait 1
+*				distance = getDistance:gDst()
 				gsub gDst
+*			until(distance < brakeDistance)
 			untl va30 < va33
+*			velocity -= brakeValue
 			subv va20 va36
+*			Velocity = (x: 0 y: velocity)
 			velo 0 va20
+*			min -= 20, max -= 20
 			subv va31 20
 			subv va32 20
+*			numb brakeDistance = random(min, max)
 			setv va33 rand va31 va32
+*		until(min = -10)
 		untl va31 = -10
-*					and va32 would be 10
-*		this should leave us at ~20 pixels out and ~vely 2
+*THIS SHOULD REALLY PROBABLY BE: until(min <= -10)
+* I mean, this is just asking for trouble.
+*And va32 would be 10.
+* This should leave us at ~20 pixels out and ~vely 2.
 
+*		numb brakeDistance = random(min, max)
 		setv va33 rand 8 12
 		loop
+*
 			wait 1
 			inst
+*			distance = getDistance:gDst()
 			gsub gDst
+*		until(distance < brakeDistance )
 		untl va30 < va33
 
+*		Velocity = (x: 0 y: owner.UpOrDown * 1)
 		velo 0 mv00
 
+*NEXT LINE SHOULD BE REMOVED, va33 IS NEVER USED AGAIN
 		setv va33 rand 8 12
 		loop
+*
 			wait 1
 			inst
+*			distance = getDistance:gDst()
 			gsub gDst
+*		until(distance < 2)
 		untl va30 < 2
+*
 		wait 1
 		inst
-***stopping
-**dbg: outs "stopping"
+***Stopping***
+*!		dbg: outs "stopping"
+*		Velocity = (x: 0 y: 0)
 		velo 0 0
-*move lift to the absolute perfect spot (such things are achievable in games, so why not?)
+*Move lift to the absolute perfect spot. (such things are achievable in games, so why not?)
+*		numb tempGoal StopY
 		setv va29 mv11
 		targ ownr
+*		numb goal = tempGoal - hght
 		subv va29 hght
+*		mvto(posl, goal)
 		mvto posl va29
-*	we have arrived
+*We have arrived!
 		targ ov04
+*		if(From != null)
 		doif targ <> null
+*			if(From.IsCarriedBy(ownr))
 			doif carr = ownr
 * 				stim "you have travelled in a lift"
+*				From.Stim(Traveled in lift, 1)
 				stim writ targ 94 1
 			endi
 		endi
-*	set dest call button to "not waiting, has lift"
+*		ButtonDestination.ButtonState = HasLift
 		targ mv02
 		setv ov00 1
 *	set self to "waiting"
+*		LiftState = Stationary
 		setv mv00 0
+*		ButtonCurrent = ButtonDestination
 		seta mv01 mv02
+*		ButtonDestination = null
 		seta mv02 null
-*	turn off light
+*		pose.Off REMOVE NEXT LINE, IT'S DUPLICATED BELOW
 		pose 0
 		targ ownr
 *	drop everything
+*		ownr.Drop(All, All, All)
 		dpas 0 0 0
+*		pose.Off
 		pose 0
 *	reset everything
+*		StaryY = 0, StopY = 1, From = null
 		setv mv10 0
+*NEXT LINE SHOULD BE 1 TO REFELCT ORIGINAL STATE		
 		setv mv11 0
 		seta mv04 null
-****dbg: outs "lift timer stop"
-*loop back again. There we'll check for more waiting buttons
+*!		dbg: outs "lift timer stop"
+*Loop back again. There we'll check for more waiting buttons.
+*SERIOUSLY? DO SOMETHING ELSE
 	ever
 
-*	Gets distance returned as va20
-*	va20, targ
+*	GetDistance:gDst():va30 uses va30, targ
 	subr gDst
 		targ ownr
+*		distance = StopY - posb * UpOrDown
 		setv va30 mv11
 		subv va30 posb
 		mulv va30 mv00
