@@ -3,12 +3,12 @@ TAG "Agent Help 1 4 24404"
 "Click this to go to Morpheri"
 
 TAG "Agent Help 2 2 24407"
-"Morpheri Door" 
+"Morpheri Door"
 "Press this to go to Morpheri"
 
 TAG "Agent Help 2 2 24408"
-"Morpheri Door" 
+"Morpheri Door"
 "Press this to go to the Universal Hub"
 
 TAG "zot_Mor"
-"This is Morpheri (v1.2). It uses Creatures 3 graphics.\n\nImages by Zequr\nCode by Zzzzoot"
+"This is Morpheri (v1.2.0.2-alpha). It uses Creatures 3 graphics.\n\nImages by Zequr\nCode by Zzzzoot"

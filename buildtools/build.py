@@ -13,7 +13,7 @@ releaseTemp = os.path.join(release, "temp")
 
 #read in version from versionFile
 with open(versionfile, 'r') as content_file:
-	version = content_file.read()
+	version = content_file.readline().rstrip()
 print("Building " + version)
 
 #clear out or make release file

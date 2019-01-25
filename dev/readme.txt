@@ -1,4 +1,4 @@
-Children of Capillata v1.2
+Children of Capillata v1.2.0.2-alpha
 A series of metarooms for the game Docking Station
 
 =The Universal Hub=
@@ -36,7 +36,7 @@ Contact Zzzzoot at gantt42@gmail.com
 =License=
 MIT License
 
-Copyright (c) 2017 Jacob Gantt
+Copyright (c) Jacob Gantt
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
