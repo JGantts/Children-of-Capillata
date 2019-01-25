@@ -135,7 +135,7 @@ mvto 40432 va03
 * Script 3 extracted from CoC_CAT.agents by Mirality REVELATION
 * Thank you Mirality! -Zzzzoot
 
-*ZootLiftButton.Push-CallLift
+*ZootLiftButton.CallLift:Push
 scrp 2 12 24401 1
 	lock
 *!	dbg: outs "call button (activated)"
@@ -177,7 +177,7 @@ scrp 2 12 24401 1
 	endi
 endm
 
-*ZootLift.Pull-GoingUp
+*ZootLift.GoUp:Push
 scrp 3 1 24401 1
 	lock
 *!	dbg: outs "going up (activated)"
@@ -237,7 +237,7 @@ scrp 3 1 24401 1
 	endi
 endm
 
-*ZootLift.Pull-GoingDown
+*ZootLift.GoDown:Pull
 scrp 3 1 24401 2
 	lock
 *!	dbg: outs "going down (activated)"
@@ -304,14 +304,13 @@ endm
 *ZootLift.MoverScript
 scrp 3 1 24401 1000
 	lock
-	inst
 
 *There's probably a button waiting for us. (we're hopeful)
 * Find it, then move the lift to it.
 *!dbg: outs "looking for a button"
 
-
-*Continue looking in the same directoin we were just going.
+	inst
+*Looking foor a button in the same directoin we were just going.
 * Then look the other way.
 *	numb directionWeAreLooking = PreviousDirection
 	setv va40 mv20
@@ -335,6 +334,7 @@ scrp 3 1 24401 1000
 				doif ov00 = 2
 *					ButtonDestination = targ
 					seta mv02 targ
+					seta mv04 ov04
 				endi
 			endi
 
@@ -347,7 +347,7 @@ scrp 3 1 24401 1000
 		mulv va40 -1
 *	until(ButtonDestination != null || directionWeAreLooking = PreviousDirection)
 	untl mv02 <> null or va40 = mv20
-
+	slow
 
 *	if(ButtonDestination == null)
 	doif mv02 = null
@@ -599,6 +599,8 @@ scrp 3 1 24401 1000
 *	ButtonDestination.ButtonState = HasLift
 	targ mv02
 	setv ov00 1
+*	ButtonDestination.From = null
+	seta ov04 null
 *	ButtonDestination.Pose.Off
 	pose 0
 	targ ownr
@@ -606,6 +608,8 @@ scrp 3 1 24401 1000
 	setv mv20 mv00
 *	LiftState = Stationary
 	setv mv00 0
+*	From = null
+	seta mv04 null
 *	ButtonCurrent = ButtonDestination
 	seta mv01 mv02
 *	ButtonDestination = null
