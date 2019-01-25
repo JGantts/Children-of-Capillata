@@ -47,7 +47,7 @@ subv va91 va93
 flto va90 va91
 **/
 part 3
-ptxt "Catilipac Version v1.2.0.1-alpha"
+ptxt "Catilipac Version v1.2.0.2-alpha"
 part 1
 ptxt read "zot_CAT" 0
 
