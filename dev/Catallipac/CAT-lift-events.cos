@@ -334,7 +334,12 @@ scrp 3 1 24401 1000
 				doif ov00 = 2
 *					ButtonDestination = targ
 					seta mv02 targ
-					seta mv04 ov04
+*					if(targ.From != null && targ.From = pntr)
+					doif ov04 <> null
+						doif ov04 = pntr
+							seta mv04 ov04
+						endi
+					endi
 				endi
 			endi
 
@@ -620,7 +625,7 @@ scrp 3 1 24401 1000
 *	self.Pose.Off
 	pose 0
 *Reset everything.
-*	StaryY = 0, StopY = 1, From = null
+*	StartY = 0, StopY = 1, From = null
 	setv mv10 0
 	setv mv11 1
 	seta mv04 null
