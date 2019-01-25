@@ -139,7 +139,7 @@ mvto 40432 va03
 scrp 2 12 24401 1
 	lock
 *!	dbg: outs "call button (activated)"
-*	if(from = pntr && ButtonState = WaitingForLift)
+*	if(from == pntr && ButtonState == WaitingForLift)
 	doif from = pntr and mv00 = 2
 *		agnt From = pntr
 		seta mv04 pntr
@@ -149,9 +149,9 @@ scrp 2 12 24401 1
 		wait 2
 		pose 1
 	endi
-*	if(ButtonState = NoLift)
+*	if(ButtonState == NoLift)
 	doif mv00 = 0
-*		if(from = pntr)
+*		if(from == pntr)
 		doif from = pntr
 *			agnt From = pntr
 			seta mv04 pntr
@@ -164,7 +164,7 @@ scrp 2 12 24401 1
 *		Lift.TimingLoop
 		mesg writ ov03 1000
 		inst
-*	else(ButtonState = HasLift || ButtonState = WaitingForLift)
+*	else(ButtonState == HasLift || ButtonState == WaitingForLift)
 	else
 *!		dbg: asrt mv00 = 1 or mv00 = 2
 		inst
@@ -189,7 +189,7 @@ scrp 3 1 24401 1
 	endi
 	targ ownr
 	inst
-*	if(LiftState = Stationary)
+*	if(LiftState == Stationary)
 	doif ov00 = 0
 *		if(ButtonCurrent.ButtonAbove != null)
 		doif avar mv01 1 <> null
@@ -227,7 +227,7 @@ scrp 3 1 24401 1
 *			from.Stim(Disappoint, 1)
 			stim writ from 0 1
 		endi
-*	else(LiftState = GoingUp or LiftState = GoingDown)
+*	else(LiftState == GoingUp or LiftState == GoingDown)
 	else
 *!		dbg: asrt mv00 = -1 or mv00 = 1
 *The doors are closed man, you're too late.
@@ -249,7 +249,7 @@ scrp 3 1 24401 2
 	endi
 	targ ownr
 	inst
-*	if(LiftState = Stationary)
+*	if(LiftState == Stationary)
 	doif ov00 = 0
 *		if(ButtonCurrent.ButtonBelow != null)
 		doif avar mv01 2 <> null
@@ -319,21 +319,21 @@ scrp 3 1 24401 1000
 *		targ ButtonCurrent
 		targ mv01
 		loop
-*	if(PreviousDirction = GoingUp)
+*			if(PreviousDirction == GoingUp)
 			doif va40 = -1
-*		targ ButtonCurrent.ButtonAbove
+*				targ ButtonCurrent.ButtonAbove
 				targ ov01
-*	else(PreviousDirction = GoingDown)
+*			else(PreviousDirction == GoingDown)
 			else
-*!		dbg: asrt va40 = 1
-*		targ ButtonCurrent.ButtonBelow
+*!				dbg: asrt va40 = 1
+*				targ ButtonCurrent.ButtonBelow
 				targ ov02
 			endi
 
-*		if(targ.ButtonState = WaitingForLift)
+*			if(targ!= null && targ.ButtonState == WaitingForLift)
 			doif targ <> null
 				doif ov00 = 2
-*			ButtonDestination = targ
+*					ButtonDestination = targ
 					seta mv02 targ
 				endi
 			endi
@@ -349,7 +349,7 @@ scrp 3 1 24401 1000
 	untl mv02 <> null or va40 = mv20
 
 
-*	if(ButtonDestination = null)
+*	if(ButtonDestination == null)
 	doif mv02 = null
 *No one wants a lift right now.
 *!		dbg: outs "no one wants a lift"
@@ -378,7 +378,7 @@ scrp 3 1 24401 1000
 	setv mv11 avar mv02 10
 *	Pose.On
 	pose 1
-*	if(From = pntr)
+*	if(From == pntr)
 	doif ov04 = pntr
 *	hand clicked the call button
 *		foreach(Creature, All, All)
