@@ -1,41 +1,67 @@
 * Script 4 extracted from CoC_DAE.agents by Mirality REVELATION
 
+*ZootC3LiftButton.CallLift:Push
 scrp 2 12 24402 1
 	inst
 	lock
+*	lift = Lift
 	seta va88 ov16
+*	foreach(ZootLift)
 	enum 2 12 24402
+*		if(targ.Lift = lift)
 		doif ov16 = va88
+*			if(someoneIsActive || targ.IsActive || targ.Is.Pose.1)
+*				someoneIsActive = true
 			addv va66 ov00
 			addv va66 pose
 		endi
 	next
+*IT'S NOT NECESSARILY TRUE THAT targ.Lift == Lift
+*IF LAST BUTTON IS NOT ON OUR SHAFT
+*I'll just assume it is though, for the following comments
 	targ ov16
+*	if(Lift.IsActive)
+*		someoneIsActive = true
 	addv va66 ov00
+*	liftPlus20 = Lift.posy + 20
+*	liftMinus20 = Lift.posy - 20
 	setv va51 posy
 	setv va52 posy
 	targ ownr
 	addv va51 20
 	subv va52 20
+*	if(!someoneIsActive)
 	doif va66 = 0
-
+*		if(self.posy > liftPlus20 || self.posy < liftMinus20)
 		doif posy > va51 or posy < va52
+*
 			prt: send 0 0
+*			if(from != null && from = pntr)
 			doif pntr = from
+*				from? = pntr
 				seta va99 pntr
+*			else
 			else
+*				fromPntr = null
 				seta va99 null
 			endi
+*			foreach(ZootC3LiftButton)
 			enum 2 12 24402
+*				if(targ.Lift = lift)
 				doif ov16 = va88
+*					targ.pose.0
 					pose 0
+*					targ.IsActive = false
 					setv ov00 0
 				endi
 			next
 			snde "but1"
+*			pose.1
 			pose 1
+*			IsActive = true
 			setv ov00 1
 			inst
+*			Lift.ActivateSelf(fromButton: unid, fromPntr?: fromPntr?)
 			mesg wrt+ ov16 1500 unid va99 0
 			slow
 		else
@@ -47,6 +73,8 @@ scrp 2 12 24402 1
 	endi
 endm
 
+*LITERALLY NEVER USED
+*ZootC3LiftButton.DoStuff1
 scrp 2 12 24402 1000
 	inst
 	setv ov70 _p1_
@@ -71,58 +99,77 @@ scrp 2 12 24402 1000
 	endi
 endm
 
-
+*ZootC3LiftButton.DeactivateSelf
 scrp 2 12 24402 1501
 	inst
 	lock
 	base 0
+*	if(IsActive)
 	doif ov00 = 1
 		prt: send 0 255
 	endi
+*	pose.0
 	anim [0]
+*	IsActive = false
 	setv ov00 0
 endm
 
+*ZootC3Lift.GoUp:Push
 scrp 3 1 24402 1
 	inst
+*	fromCreature? = null
 	seta va99 null
 	targ from
+*	if(from.family == Creature)
 	doif fmly eq 4
-
+*		from.Stim(Wait, 0)
 		stim writ targ 75 0
+*		fromCreature? = from
 		seta va99 targ
 	endi
 	targ ownr
+*	self.From? = fromCreature?
 	seta ov99 va99
-
+*	self.DoStuff2()
 	mesg writ ownr 2000
 endm
 
+*ZootC3Lift.GoDown:Pull
 scrp 3 1 24402 2
 	inst
+*	fromCreature? = null
 	seta va99 null
 	targ from
+*	if(from.family == Creature)
 	doif fmly eq 4
-
+*		from.Stim(Wait, 0)
 		stim writ targ 75 0
+*		fromCreature? = from
 		seta va99 targ
 	endi
 	targ ownr
+*	self.From? = fromCreature?
 	seta ov99 va99
+*	self.DoStuff3()
 	mesg writ ownr 2001
 endm
 
 
-
+*ZootC3Lift.ActivateSelf(fromButton, fromPntr?)
 scrp 3 1 24402 1500
 	inst
 	lock
+*	if(Active == true)
 	doif ov00 eq 0
+*		Active = true
 		setv ov00 1
 		inst
+*		FromButton = fromButton
 		setv ov70 _p1_
 
+*		if(fromPntr? != null)
 		doif _p2_ <> null
+*			From? = fromPntr?
 			seta ov99 pntr
 		endi
 
@@ -133,51 +180,70 @@ scrp 3 1 24402 1500
 
 endm
 
+*ZootC3Lift.Timer:Timer
 scrp 3 1 24402 9
 	lock
+*	fromButtonId = FromButtonId
 	setv va17 ov70
 	inst
+*	if(IsMoving = false)
 	doif ov80 = 0
 		inst
+*		if(From? = pntr)
 		doif ov99 = pntr
+*			foreachTouching(Grendel)
 			etch 4 2 0
+*Zombify it and face it forward so it'll fit
 				inst
 				doif targ <> null
+*
 					nohh
+*					targ.Zombify()
 					zomb 1
 					pose 80
 					dirn 1
 					wait 4
 					inst
 					doif targ <> null
+*						ownr.PickUp(targ)
 						spas ownr targ
 					endi
 					wait 2
 					inst
+*					if(targ != null && targ.Carrier == null)
 					doif targ <> null
 						doif carr = null
+*							targ.Unzombify()
 							zomb 0
 						endi
 					endi
 
 				endi
 			next
+*DOES gpas NOT NEED TO targ ownr FIRST?
+*			ownr.PickUp(TouchingCabin(Creatures All All))
 			gpas 4 0 0 1
-
+*		else if(From? != pntr && From? != null)
 		elif ov99 <> pntr and ov99 <> null
 			targ ov99
+*			if(From.Genus = Grendel)
 			doif gnus = 2
+*Zombify it and face it forward so it'll fit
 				inst
+*				From.Zombify()
 				zomb 1
 				pose 80
 				dirn 1
 				wait 4
 				inst
+*				ownr.PickUp(From)				
 				spas ownr targ
 				wait 2
 				inst
+*				From.Unzombify()
 				zomb 0
 			else
+*				ownr.PickUp(From)	
 				spas ownr targ
 			endi
 			targ ownr
@@ -187,13 +253,19 @@ scrp 3 1 24402 9
 		part 1
 		anim [7 6 5 4 3 2 1 0]
 		over
+*		IsMoving = true
 		setv ov80 1
 	endi
+*	foreach(ZootC3Lift)
 	enum 2 12 24402
+*		if(targ.Lift = self)
 		doif ov16 = ownr
+*			if(targ.unid = fromButtonID)
 			doif unid = va17
+*				fromButton = targ
 				seta va16 targ
 				targ ownr
+*				FromButton = FromButton
 				seta ov16 va16
 				setv va02 rely ownr ov16
 				subv va02 20
@@ -292,6 +364,7 @@ scrp 3 1 24402 9
 	endi
 endm
 
+*ZootC3Lift.DoStuff2
 scrp 3 1 24402 2000
 	inst
 	doif from = pntr
@@ -345,6 +418,7 @@ scrp 3 1 24402 2000
 
 endm
 
+*ZootC3Lift.DoStuff3
 scrp 3 1 24402 2001
 	inst
 	doif from = pntr
@@ -402,7 +476,7 @@ scrp 3 1 24402 2001
 endm
 
 
-
+*ZootC3Lift.Hit:Hit
 scrp 2 12 24402 3
 	sndc "hit_"
 	prt: bang rand 60 100
