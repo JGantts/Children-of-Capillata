@@ -369,10 +369,10 @@ scrp 3 1 24402 2000
 		targ ownr
 	endi
 
-*	ButtonUp.Pose.6
+*	UpButton.Pose.6
 	part 2
 	anim [6]
-*	ButtonDown.Pose.6
+*	DownButton.Pose.6
 	part 3
 	anim [6]
 *	IsAnyoneActive = IsActive

@@ -800,86 +800,105 @@ scrp 1 2 24403 1000
 ***********
 ***Lifts***
 ***********
-		new: simp 2 12 24402 "lift" 2 14 5000
-		bhvr 1
-		attr 4
-		perm 10
-		clac 0
-		elas 0
-		setv ov00 0
-		seta ov16 null
-*map position top
-		setv va45 43843
-		mvto va45 29532
-
-		pose 0
-		setv va66 room targ
-
-		new: simp 2 12 24402 "lift" 2 14 5000
-		bhvr 1
-		attr 4
-		perm 10
-		clac 0
-		elas 0
-		setv ov00 0
-		seta ov16 null
-*map position middle
-		mvto va45 29708
-
-		pose 0
-		setv va67 room targ
-		link va66 va67 100
-
-		new: simp 2 12 24402 "lift" 2 14 5000
-		bhvr 1
-		attr 4
-		perm 10
-		clac 0
-		elas 0
-		setv ov00 0
-		seta ov16 null
-*map position bottom
-		mvto va45 29955
-
-		pose 0
-		setv va66 room targ
-		link va66 va67 100
-
+*		new ZootC3Lift()
 		new: vhcl 3 1 24402 "lift" 23 0 50
 		bhvr 3
 		attr 12
 		clac -1
 		elas 0
+*		IsMoving = false
 		setv ov80 0
-		addv va45 45
 *map position lift
-		mvto va45 29630
+		mvto 43888 29630
+*		From? = null		
 		seta ov99 null
+*		IsActive = false
 		setv ov00 0
+*		FromButtonId = 0
 		setv ov70 0
+*		IsMovine = false
+		setv ov80 0
+*		FromButton? = null
 		seta ov16 null
-
+*		Door = newPart()
 		pat: dull 1 "lift" 4 0 0 200
 		cabn 0 0 121 144
 		cabw 5
-
+*		UpButton = newPart()
 		pat: butt 2 "lift" 16 7 52 68 0 [] 2000 1
+*		DownButton = newPart()
 		pat: butt 3 "lift" 16 7 52 82 0 [] 2001 1
+*		UpButton.Pose.4
 		part 2
 		anim [4]
+*		UpButton.Pose.5
 		part 3
 		anim [5]
-
-		seta va00 targ
-		enum 2 12 24402
-			doif ov16 = null
-				seta ov16 va00
-			endi
-		next
-		targ va00
-
+*		Door.Pose.Open
 		part 1
 		anim [7]
+*		lift = targ
+		seta va00 targ
+
+*		new ZootC3LiftButton
+		new: simp 2 12 24402 "lift" 2 14 5000
+		bhvr 1
+		attr 4
+		perm 10
+		clac 0
+		elas 0
+*		IsActive = false
+		setv ov00 0
+*		Lift = lift
+		seta ov16 va00
+*map position top
+		mvto 43843 29532
+*		Pose.Off
+		pose 0
+*		roomId1 = Room()
+		setv va66 room targ
+
+*		new ZootC3LiftButton
+		new: simp 2 12 24402 "lift" 2 14 5000
+		bhvr 1
+		attr 4
+		perm 10
+		clac 0
+		elas 0
+*		IsActive = false
+		setv ov00 0
+*		Lift = lift
+		seta ov16 va00
+*map position middle
+		mvto 43843 29708
+*		Pose.Off
+		pose 0
+*		roomId2 = Room()
+		setv va67 room targ
+*		linkSmells(roomId1, roomId2)
+		link va66 va67 100
+
+*		new ZootC3LiftButton
+		new: simp 2 12 24402 "lift" 2 14 5000
+		bhvr 1
+		attr 4
+		perm 10
+		clac 0
+		elas 0
+*		IsActive = false
+		setv ov00 0
+*		Lift = lift
+		seta ov16 va00
+*map position bottom
+		mvto 43843 29955
+*		Pose.Off
+		pose 0
+*		roomId1 = Room()
+		setv va66 room targ
+*		linkSmells(roomId2, roomId1)
+		link va66 va67 100
+
+
 *			*************
 *			***//Lifts***
 *			*************
