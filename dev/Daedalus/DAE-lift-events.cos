@@ -16,10 +16,7 @@ scrp 2 12 24402 1
 			addv va66 pose
 		endi
 	next
-*IT'S NOT NECESSARILY TRUE THAT targ.Lift == Lift
-*IF LAST BUTTON IS NOT ON OUR SHAFT
-*I'll just assume it is though, for the following comments
-	targ ov16
+	targ mv16
 *	if(Lift.IsActive)
 *		someoneIsActive = true
 	addv va66 ov00
@@ -70,32 +67,6 @@ scrp 2 12 24402 1
 			anim [0]
 			over
 		endi
-	endi
-endm
-
-*LITERALLY NEVER USED
-*ZootC3LiftButton.DoStuff1
-scrp 2 12 24402 1000
-	inst
-	setv ov70 _p1_
-	setv ov71 ov70
-	absv ov71
-	seta va16 ov16
-	enum 2 12 24402
-		doif ov16 = va16
-			doif pose = 1 or ov00 = 1
-				setv va67 1
-			endi
-		endi
-	next
-	doif ov71 > 0
-		doif va67 = 0
-			mesg writ ownr 0
-		endi
-	endi
-	doif ov71 = 0
-		pose 0
-		setv ov00 0
 	endi
 endm
 
@@ -220,7 +191,7 @@ scrp 3 1 24402 9
 
 				endi
 			next
-*DOES gpas NOT NEED TO targ ownr FIRST?
+			targ ownr
 *			ownr.PickUp(TouchingCabin(Creatures All All))
 			gpas 4 0 0 1
 *		else if(From? != pntr && From? != null)
@@ -415,10 +386,11 @@ scrp 3 1 24402 2000
 	addv va66 ov00
 *	foreach(ZootC3Lift)
 	enum 2 12 24402
-*DOES NOT CHECK IT IT'S OUR LIFTBUTTON
-*		if(someoneIsActive || targ.IsActive)
-*			someoneIsActive = true
-		addv va66 ov00
+		doif ov16 = ownr
+*			if(someoneIsActive || targ.IsActive)
+*				someoneIsActive = true
+			addv va66 ov00
+		endi
 	next
 	targ ownr
 	slow
