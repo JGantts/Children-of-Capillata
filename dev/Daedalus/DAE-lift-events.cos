@@ -17,8 +17,6 @@ seta ov99 null
 setv ov00 0
 *		IsMoving = false
 setv ov80 0
-*		FromButton? = null
-seta ov16 null
 *		ButtonCurrent = promiseNotNullAfterInstall
 seta ov30 null
 *		ButtonDestination? = null
@@ -194,8 +192,8 @@ scrp 2 12 24402 1
 *			IsActive = true
 			setv mv00 1
 			inst
-*			Lift.ActivateSelf(fromButton: unid, fromPntr?: fromPntr?)
-			mesg wrt+ mv16 1500 unid va99 0
+*			Lift.ActivateSelf(fromButton: self, fromPntr?: fromPntr?)
+			mesg wrt+ mv16 1500 targ va99 0
 			slow
 		else
 			anim [1]
@@ -246,8 +244,7 @@ scrp 3 1 24402 2
 	mesg writ ownr 2001
 endm
 
-
-*ZootC3Lift.ActivateSelf(fromButtonId, fromPntr?)
+*ZootC3Lift.ActivateSelf(fromButton, fromPntr?)
 scrp 3 1 24402 1500
 	inst
 	lock
@@ -257,7 +254,7 @@ scrp 3 1 24402 1500
 		setv mv00 1
 		inst
 *		FromButtonId = fromButtonId
-		setv mv70 _p1_
+		seta mv31 _p1_
 
 *		if(fromPntr? != null)
 		doif _p2_ <> null
@@ -275,8 +272,6 @@ endm
 *ZootC3Lift.Timer:Timer
 scrp 3 1 24402 9
 	lock
-*	fromButtonId = FromButtonId
-	setv va17 mv70
 	inst
 *	if(IsMoving = false)
 	doif mv80 = 0
@@ -349,49 +344,40 @@ scrp 3 1 24402 9
 *		IsMoving = true
 		setv mv80 1
 	endi
-*	foreach(ZootC3Lift)
-	enum 2 12 24402
-*		if(targ.Lift = self)
-		doif ov16 = ownr
-*			if(targ.unid = fromButtonID)
-			doif unid = va17
-*				FromButton = targ
-				seta mv16 targ
-*				distance = RelativeY(self, FromButton) - 20
-				setv va02 rely ownr mv16
-				subv va02 20
-*				absDistance = AbsoluteValue(distance)
-				setv va03 va02
-				absv va03
-*				if(absDistance > 200)
-				doif va03 > 200
-*					velocity = 10
-					setv va04 10
-					tick 6
-*				else if(absDistance > 100 && absDistance <= 200)
-				elif va03 > 100 and va03 <= 200
-*					velocity = 8
-					setv va04 8
-					tick 4
-*				else if(absDistance > 50 && absDistance <= 100)
-				elif va03 > 50 and va03 <= 100
-*					velocity = 5
-					setv va04 5
-					tick 2
-*				else if(absDistance > 10 && absDistance <= 50)
-				elif va03 > 10 and va03 <= 50
-*					velocity = 3
-					setv va04 3
-					tick 1
-*				else if(absDistance <=10)
-				elif va03 <= 10
-*					velocity = 1
-					setv va04 1
-					tick 1
-				endi
-			endi
-		endi
-	next
+
+*	distance = RelativeY(self, ButtonDestination) - 20
+	setv va02 rely ownr mv31
+	subv va02 20
+*	absDistance = AbsoluteValue(distance)
+	setv va03 va02
+	absv va03
+*	if(absDistance > 200)
+	doif va03 > 200
+*		velocity = 10
+		setv va04 10
+		tick 6
+*	else if(absDistance > 100 && absDistance <= 200)
+	elif va03 > 100 and va03 <= 200
+*		velocity = 8
+		setv va04 8
+		tick 4
+*	else if(absDistance > 50 && absDistance <= 100)
+	elif va03 > 50 and va03 <= 100
+*		velocity = 5
+		setv va04 5
+		tick 2
+*	else if(absDistance > 10 && absDistance <= 50)
+	elif va03 > 10 and va03 <= 50
+*		velocity = 3
+		setv va04 3
+		tick 1
+*	else if(absDistance <=10)
+	elif va03 <= 10
+*		velocity = 1
+		setv va04 1
+		tick 1
+	endi
+
 *Direction is up
 *	if(distance < 0)
 	doif va02 < 0
