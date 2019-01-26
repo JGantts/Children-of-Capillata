@@ -10,10 +10,9 @@ scrp 2 12 24402 1
 	enum 2 12 24402
 *		if(targ.Lift = lift)
 		doif ov16 = va88
-*			if(someoneIsActive || targ.IsActive || targ.Is.Pose.1)
+*			if(someoneIsActive || targ.IsActive)
 *				someoneIsActive = true
 			addv va66 ov00
-			addv va66 pose
 		endi
 	next
 	targ mv16
@@ -32,14 +31,13 @@ scrp 2 12 24402 1
 *		if(self.posy > liftPlus20 || self.posy < liftMinus20)
 		doif posy > va51 or posy < va52
 *
-			prt: send 0 0
 *			if(from != null && from = pntr)
 			doif pntr = from
-*				from? = pntr
+*				From? = pntr
 				seta va99 pntr
 *			else
 			else
-*				fromPntr = null
+*				From? = null
 				seta va99 null
 			endi
 *			foreach(ZootC3LiftButton)
@@ -53,7 +51,7 @@ scrp 2 12 24402 1
 				endi
 			next
 			snde "but1"
-*			pose.1
+*			Pose.1
 			pose 1
 *			IsActive = true
 			setv ov00 1
@@ -74,11 +72,6 @@ endm
 scrp 2 12 24402 1501
 	inst
 	lock
-	base 0
-*	if(IsActive)
-	doif ov00 = 1
-		prt: send 0 255
-	endi
 *	pose.0
 	anim [0]
 *	IsActive = false
@@ -126,7 +119,7 @@ scrp 3 1 24402 2
 endm
 
 
-*ZootC3Lift.ActivateSelf(fromButton, fromPntr?)
+*ZootC3Lift.ActivateSelf(fromButtonId, fromPntr?)
 scrp 3 1 24402 1500
 	inst
 	lock
@@ -135,7 +128,7 @@ scrp 3 1 24402 1500
 *		Active = true
 		setv ov00 1
 		inst
-*		FromButton = fromButton
+*		FromButtonId = fromButtonId
 		setv ov70 _p1_
 
 *		if(fromPntr? != null)
