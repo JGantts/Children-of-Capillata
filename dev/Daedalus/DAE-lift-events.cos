@@ -1,5 +1,103 @@
 * Script 4 extracted from CoC_DAE.agents by Mirality REVELATION
 
+*		new ZootC3Lift()
+new: vhcl 3 1 24402 "lift" 23 0 50
+bhvr 3
+attr 12
+clac -1
+elas 0
+*		IsMoving = false
+setv ov80 0
+*map position lift
+mvto 43888 29630
+*		From? = null		
+seta ov99 null
+*		IsActive = false
+setv ov00 0
+*		FromButtonId = 0
+setv ov70 0
+*		IsMovine = false
+setv ov80 0
+*		FromButton? = null
+seta ov16 null
+*		Door = newPart()
+pat: dull 1 "lift" 4 0 0 200
+cabn 0 0 121 144
+cabw 5
+*		UpButton = newPart()
+pat: butt 2 "lift" 16 7 52 68 0 [] 2000 1
+*		DownButton = newPart()
+pat: butt 3 "lift" 16 7 52 82 0 [] 2001 1
+*		UpButton.Pose.4
+part 2
+anim [4]
+*		UpButton.Pose.5
+part 3
+anim [5]
+*		Door.Pose.Open
+part 1
+anim [7]
+*		lift = targ
+seta va00 targ
+
+*		new ZootC3LiftButton
+new: simp 2 12 24402 "lift" 2 14 5000
+bhvr 1
+attr 4
+perm 10
+clac 0
+elas 0
+*		IsActive = false
+setv ov00 0
+*		Lift = lift
+seta ov16 va00
+*map position top
+mvto 43843 29532
+*		Pose.Off
+pose 0
+*		roomId1 = Room()
+setv va66 room targ
+
+*		new ZootC3LiftButton
+new: simp 2 12 24402 "lift" 2 14 5000
+bhvr 1
+attr 4
+perm 10
+clac 0
+elas 0
+*		IsActive = false
+setv ov00 0
+*		Lift = lift
+seta ov16 va00
+*map position middle
+mvto 43843 29708
+*		Pose.Off
+pose 0
+*		roomId2 = Room()
+setv va67 room targ
+*		linkSmells(roomId1, roomId2)
+link va66 va67 100
+
+*		new ZootC3LiftButton
+new: simp 2 12 24402 "lift" 2 14 5000
+bhvr 1
+attr 4
+perm 10
+clac 0
+elas 0
+*		IsActive = false
+setv ov00 0
+*		Lift = lift
+seta ov16 va00
+*map position bottom
+mvto 43843 29955
+*		Pose.Off
+pose 0
+*		roomId1 = Room()
+setv va66 room targ
+*		linkSmells(roomId2, roomId1)
+link va66 va67 100
+
 *ZootC3LiftButton.CallLift:Push
 scrp 2 12 24402 1
 	inst
@@ -500,23 +598,23 @@ scrp 2 12 24402 3
 	stim writ from 92 1
 endm
 
-*rscr
-*enum 3 1 24402
-*	kill targ
-*next
-*scrx 3 1 24402 1
-*scrx 3 1 24402 2
-*scrx 3 1 24402 9
-*scrx 3 1 24402 1500
-*scrx 3 1 24402 2000
-*scrx 3 1 24402 2001
-*
-*
-*enum 2 12 24402
-*	kill targ
-*next
-*scrx 2 12 24402 1
-*scrx 2 12 24402 2
-*scrx 2 12 24402 1500
-*scrx 2 12 24402 1501
-*scrx 2 12 24402 1000
+rscr
+enum 3 1 24402
+	kill targ
+next
+scrx 3 1 24402 1
+scrx 3 1 24402 2
+scrx 3 1 24402 9
+scrx 3 1 24402 1500
+scrx 3 1 24402 2000
+scrx 3 1 24402 2001
+
+
+enum 2 12 24402
+	kill targ
+next
+scrx 2 12 24402 1
+scrx 2 12 24402 2
+scrx 2 12 24402 1500
+scrx 2 12 24402 1501
+scrx 2 12 24402 1000
