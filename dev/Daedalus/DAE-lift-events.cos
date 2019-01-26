@@ -143,12 +143,10 @@ link va66 va67 100
 scrp 2 12 24402 1
 	inst
 	lock
-*	lift = Lift
-	seta va88 ov16
 *	foreach(ZootLift)
 	enum 2 12 24402
-*		if(targ.Lift = lift)
-		doif ov16 = va88
+*		if(targ.Lift = self.Llift)
+		doif ov16 = mv16
 *			if(someoneIsActive || targ.IsActive)
 *				someoneIsActive = true
 			addv va66 ov00
@@ -181,22 +179,23 @@ scrp 2 12 24402 1
 			endi
 *			foreach(ZootC3LiftButton)
 			enum 2 12 24402
-*				if(targ.Lift = lift)
-				doif ov16 = va88
+*				if(targ.Lift = self.Lift)
+				doif ov16 = mv16
 *					targ.pose.0
 					pose 0
 *					targ.IsActive = false
 					setv ov00 0
 				endi
 			next
+			targ ownr
 			snde "but1"
 *			Pose.1
 			pose 1
 *			IsActive = true
-			setv ov00 1
+			setv mv00 1
 			inst
 *			Lift.ActivateSelf(fromButton: unid, fromPntr?: fromPntr?)
-			mesg wrt+ ov16 1500 unid va99 0
+			mesg wrt+ mv16 1500 unid va99 0
 			slow
 		else
 			anim [1]
@@ -214,25 +213,20 @@ scrp 2 12 24402 1501
 *	pose.0
 	anim [0]
 *	IsActive = false
-	setv ov00 0
+	setv mv00 0
 endm
 
 *ZootC3Lift.GoUp:Push
 scrp 3 1 24402 1
 	inst
-*	fromCreature? = null
-	seta va99 null
 	targ from
 *	if(from.family == Creature)
 	doif fmly eq 4
 *		from.Stim(Wait, 0)
-		stim writ targ 75 0
-*		fromCreature? = from
-		seta va99 targ
+		stim writ from 75 0
+*		self.From? = from
+		seta mv99 from
 	endi
-	targ ownr
-*	self.From? = fromCreature?
-	seta ov99 va99
 *	self.FindButtonUpAndGo()
 	mesg writ ownr 2000
 endm
@@ -240,19 +234,14 @@ endm
 *ZootC3Lift.GoDown:Pull
 scrp 3 1 24402 2
 	inst
-*	fromCreature? = null
-	seta va99 null
 	targ from
 *	if(from.family == Creature)
 	doif fmly eq 4
 *		from.Stim(Wait, 0)
 		stim writ targ 75 0
-*		fromCreature? = from
-		seta va99 targ
+*		self.From? = from
+		seta mv99 from
 	endi
-	targ ownr
-*	self.From? = fromCreature?
-	seta ov99 va99
 *	self.FindButtonDownAndGo()
 	mesg writ ownr 2001
 endm
@@ -263,17 +252,17 @@ scrp 3 1 24402 1500
 	inst
 	lock
 *	if(Active == true)
-	doif ov00 eq 0
+	doif mv00 eq 0
 *		Active = true
-		setv ov00 1
+		setv mv00 1
 		inst
 *		FromButtonId = fromButtonId
-		setv ov70 _p1_
+		setv mv70 _p1_
 
 *		if(fromPntr? != null)
 		doif _p2_ <> null
 *			From? = fromPntr?
-			seta ov99 pntr
+			seta mv99 pntr
 		endi
 
 		snde "clik"
@@ -287,13 +276,13 @@ endm
 scrp 3 1 24402 9
 	lock
 *	fromButtonId = FromButtonId
-	setv va17 ov70
+	setv va17 mv70
 	inst
 *	if(IsMoving = false)
-	doif ov80 = 0
+	doif mv80 = 0
 		inst
 *		if(From? = pntr)
-		doif ov99 = pntr
+		doif mv99 = pntr
 *			foreachTouching(Grendel)
 			etch 4 2 0
 *Zombify it and face it forward so it'll fit
@@ -327,8 +316,8 @@ scrp 3 1 24402 9
 *			ownr.PickUp(TouchingCabin(Creatures All All))
 			gpas 4 0 0 1
 *		else if(From? != pntr && From? != null)
-		elif ov99 <> pntr and ov99 <> null
-			targ ov99
+		elif mv99 <> pntr and mv99 <> null
+			targ mv99
 *			if(From.Genus = Grendel)
 			doif gnus = 2
 *Zombify it and face it forward so it'll fit
@@ -358,7 +347,7 @@ scrp 3 1 24402 9
 		anim [7 6 5 4 3 2 1 0]
 		over
 *		IsMoving = true
-		setv ov80 1
+		setv mv80 1
 	endi
 *	foreach(ZootC3Lift)
 	enum 2 12 24402
@@ -366,13 +355,10 @@ scrp 3 1 24402 9
 		doif ov16 = ownr
 *			if(targ.unid = fromButtonID)
 			doif unid = va17
-*				fromButton = targ
-				seta va16 targ
-				targ ownr
-*				FromButton = FromButton
-				seta ov16 va16
+*				FromButton = targ
+				seta mv16 targ
 *				distance = RelativeY(self, FromButton) - 20
-				setv va02 rely ownr ov16
+				setv va02 rely ownr mv16
 				subv va02 20
 *				absDistance = AbsoluteValue(distance)
 				setv va03 va02
@@ -438,7 +424,7 @@ scrp 3 1 24402 9
 		velo 0 0
 		tick 0
 *		IsMoving = false
-		setv ov80 0
+		setv mv80 0
 		part 1
 *		self.Door.Animate.Open
 		anim [0 1 2 3 4 5 6 7]
@@ -453,6 +439,7 @@ scrp 3 1 24402 9
 				zomb 0
 			endi
 		next
+		targ ownr
 *		ownr.DropPassengers(Creatures All All)
 		dpas 0 0 0
 
@@ -460,9 +447,9 @@ scrp 3 1 24402 9
 		inst
 
 *		if(From? != null)
-		doif ov99 ne null
+		doif mv99 ne null
 *			targ From
-			targ ov99
+			targ mv99
 *			if(From.Family = Creature)			
 			doif fmly eq 4
 *				From.Stim(TraveledInLift, 1)
@@ -470,12 +457,12 @@ scrp 3 1 24402 9
 			endi
 			targ ownr
 *			From? = null
-			seta ov99 null
+			seta mv99 null
 		endi
 
 
 *		IsActive = 0
-		setv ov00 0
+		setv mv00 0
 		part 0
 		anim [0]
 
@@ -515,7 +502,7 @@ scrp 3 1 24402 2000
 	part 3
 	anim [6]
 *	IsAnyoneActive = IsActive
-	addv va66 ov00
+	addv va66 mv00
 *	foreach(ZootC3Lift)
 	enum 2 12 24402
 		doif ov16 = ownr
@@ -589,7 +576,7 @@ scrp 3 1 24402 2001
 	part 3
 	anim [6]
 	snde "clik"
-	addv va66 ov00
+	addv va66 mv00
 	enum 2 12 24402
 		doif ov16 = ownr
 			addv va66 ov00
