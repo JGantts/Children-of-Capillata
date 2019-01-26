@@ -130,7 +130,7 @@ scrp 3 1 24402 1
 	targ ownr
 *	self.From? = fromCreature?
 	seta ov99 va99
-*	self.DoStuff2()
+*	self.FindButtonUpAndGo()
 	mesg writ ownr 2000
 endm
 
@@ -150,7 +150,7 @@ scrp 3 1 24402 2
 	targ ownr
 *	self.From? = fromCreature?
 	seta ov99 va99
-*	self.DoStuff3()
+*	self.FindButtonDownAndGo()
 	mesg writ ownr 2001
 endm
 
@@ -250,6 +250,7 @@ scrp 3 1 24402 9
 		endi
 
 		inst
+*		self.Door.Animate.Close
 		part 1
 		anim [7 6 5 4 3 2 1 0]
 		over
@@ -267,30 +268,45 @@ scrp 3 1 24402 9
 				targ ownr
 *				FromButton = FromButton
 				seta ov16 va16
+*				distance = RelativeY(self, FromButton) - 20
 				setv va02 rely ownr ov16
 				subv va02 20
+*				absDistance = AbsoluteValue(distance)
 				setv va03 va02
 				absv va03
+*				if(absDistance > 200)
 				doif va03 > 200
+*					velocity = 10
 					setv va04 10
 					tick 6
+*				else if(absDistance > 100 && absDistance <= 200)
 				elif va03 > 100 and va03 <= 200
+*					velocity = 8
 					setv va04 8
 					tick 4
+*				else if(absDistance > 50 && absDistance <= 100)
 				elif va03 > 50 and va03 <= 100
+*					velocity = 5
 					setv va04 5
 					tick 2
+*				else if(absDistance > 10 && absDistance <= 50)
 				elif va03 > 10 and va03 <= 50
+*					velocity = 3
 					setv va04 3
 					tick 1
+*				else if(absDistance <=10)
 				elif va03 <= 10
+*					velocity = 1
 					setv va04 1
 					tick 1
 				endi
 			endi
 		endi
 	next
+*Direction is up
+*	if(distance < 0)
 	doif va02 < 0
+*		velocity = -AbsoluteValue(velocity)
 		absv va04
 		negv va04
 		part 0
@@ -301,7 +317,9 @@ scrp 3 1 24402 9
 		part 3
 		anim [6]
 		velo 0 va04
+*	else if(distance < 0)
 	elif va02 > 0
+*		velocity = AbsoluteValue(velocity)
 		absv va04
 		part 0
 		anim [2]
@@ -311,44 +329,58 @@ scrp 3 1 24402 9
 		part 3
 		anim [6]
 		velo 0 va04
+*	else if(distance == 0)
 	elif va02 = 0
+*		Velocity = (x: 0,y: 0)
 		velo 0 0
 		tick 0
+*		IsMoving = false
 		setv ov80 0
 		part 1
+*		self.Door.Animate.Open
 		anim [0 1 2 3 4 5 6 7]
 		over
 
 
 		inst
+*		foreach(Creature All All)
 		epas 4 0 0
 			doif targ <> null
+*				targ.Unzombify()
 				zomb 0
 			endi
 		next
+*		ownr.DropPassengers(Creatures All All)
 		dpas 0 0 0
 
 
 		inst
 
+*		if(From? != null)
 		doif ov99 ne null
+*			targ From
 			targ ov99
+*			if(From.Family = Creature)			
 			doif fmly eq 4
-
+*				From.Stim(TraveledInLift, 1)
 				stim writ targ 94 1
 			endi
 			targ ownr
+*			From? = null
 			seta ov99 null
 		endi
 
 
-
+*		IsActive = 0
 		setv ov00 0
 		part 0
 		anim [0]
 
+*		foreach(ZootC3LiftButton)
 		enum 2 12 24402
+*			if(targ.Lift = self)
 			doif ov16 = ownr
+*				targ.DeactivateSelf()			
 				mesg writ targ 1501
 				targ ownr
 				unlk
@@ -364,7 +396,7 @@ scrp 3 1 24402 9
 	endi
 endm
 
-*ZootC3Lift.DoStuff2
+*ZootC3Lift.FindButtonUpAndGo()
 scrp 3 1 24402 2000
 	inst
 	doif from = pntr
@@ -373,29 +405,46 @@ scrp 3 1 24402 2000
 		targ ownr
 	endi
 
-
+*	ButtonUp.Pose.6
 	part 2
 	anim [6]
+*	ButtonDown.Pose.6
 	part 3
 	anim [6]
+*	IsAnyoneActive = IsActive
 	addv va66 ov00
+*	foreach(ZootC3Lift)
 	enum 2 12 24402
+*DOES NOT CHECK IT IT'S OUR LIFTBUTTON
+*		if(someoneIsActive || targ.IsActive)
+*			someoneIsActive = true
 		addv va66 ov00
 	next
 	targ ownr
 	slow
+*	if(!someoneIsActive)
 	doif va66 = 0
+*		selfId = unid
 		setv va00 unid
+*		destinationButton? = null
 		seta va16 null
+*		closestButton = 999999
 		setv va88 999999
+*		foreach(ZootLiftButton).Where(targ.Lift = self)
 		enum 2 12 24402
 			doif ov16 = ownr
+*				distance = RelativeY(self, targ)
 				setv va50 rely ownr targ
+*				if(distance < 0)
 				doif va50 < 0
+*					absDistance = AbsoluteValue(distance)
 					setv va51 va50
 					absv va51
+*					if(absDistance < closestButton && absDistance > 10)
 					doif va51 < va88 and va51 > 10
+*						closestButton = absDistance
 						setv va88 va51
+*						destinationButton? = targ
 						seta va16 targ
 					endi
 				endi
@@ -403,9 +452,12 @@ scrp 3 1 24402 2000
 		next
 		doif va16 = null
 		endi
+*		if(destinationButton != null)
 		doif va16 <> null
+*			self.Base.Pose.3
 			part 0
 			anim [3]
+*			destinationButton.Push()
 			mesg writ va16 0
 		endi
 
@@ -418,7 +470,7 @@ scrp 3 1 24402 2000
 
 endm
 
-*ZootC3Lift.DoStuff3
+*ZootC3Lift.FindButtonDownAndGo()
 scrp 3 1 24402 2001
 	inst
 	doif from = pntr
