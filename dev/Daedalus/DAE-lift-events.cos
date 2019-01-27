@@ -184,13 +184,6 @@ endm
 scrp 3 1 24402 1
 	inst
 	targ from
-*	if(from.family == Creature)
-	doif fmly eq 4
-*		from.Stim(Wait, 0)
-		stim writ from 75 0
-*		self.From? = from
-		seta mv99 from
-	endi
 	doif from = pntr
 		targ pntr
 		anim [1 0]
@@ -203,6 +196,13 @@ scrp 3 1 24402 1
 	targ mv30
 *	if(!self.IsActive && self.ButtonCurrent.ButtonAbove != null)
 	doif mv00 = 0 and ov20 <> null
+*		if(from.family == Creature)
+		doif fmly eq 4
+*			from.Stim(Wait, 1)
+			stim writ from 75 1
+*			self.From? = from
+			seta mv99 from
+		endi
 		targ ownr
 *		self.Base.Pose.3
 		pose 3
@@ -210,6 +210,13 @@ scrp 3 1 24402 1
 		targ mv30
 *		self.ButtonCurrent.ButtonAbove.Push()
 		mesg writ ov20 0
+	else
+		targ from
+*		if(from.Is(Creature))
+		doif fmly eq 4
+*			from.Stim(Disappoint, 1)
+			stim writ from 0 1
+		endi
 	endi
 endm
 
@@ -217,13 +224,6 @@ endm
 scrp 3 1 24402 2
 	inst
 	targ from
-*	if(from.family == Creature)
-	doif fmly eq 4
-*		from.Stim(Wait, 0)
-		stim writ targ 75 0
-*		self.From? = from
-		seta mv99 from
-	endi
 	doif from = pntr
 		targ pntr
 		anim [1 0]
@@ -236,6 +236,13 @@ scrp 3 1 24402 2
 	targ mv30
 *	if(!self.IsActive && self.ButtonCurrent.ButtonBelow != null)
 	doif mv00 = 0 and ov21 <> null
+*	if(from.family == Creature)
+		doif fmly eq 4
+*		from.Stim(Wait, 1)
+			stim writ targ 75 1
+*		self.From? = from
+			seta mv99 from
+		endi
 		targ ownr
 *		self.Base.Pose.2
 		pose 2
@@ -243,6 +250,13 @@ scrp 3 1 24402 2
 		targ mv30
 *		self.ButtonCurrent.ButtonBelow.Push()
 		mesg writ ov21 0
+	else
+		targ from
+*		if(from.Is(Creature))
+		doif fmly eq 4
+*			from.Stim(Disappoint, 1)
+			stim writ from 0 1
+		endi
 	endi
 endm
 
@@ -417,6 +431,8 @@ scrp 3 1 24402 9
 			doif targ <> null
 *				targ.Unzombify()
 				zomb 0
+*				targ.Strim(TravelledInLift)				
+				stim writ targ 94 1
 			endi
 		next
 		targ ownr
