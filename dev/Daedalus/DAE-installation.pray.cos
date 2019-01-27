@@ -801,7 +801,142 @@ scrp 1 2 24403 1000
 ***Lifts***
 ***********
 
+*Lift
+*		new ZootC3Lift()
+new: vhcl 3 1 24402 "lift" 23 0 50
+*		lift = targ
+seta va00 targ
+bhvr 3
+attr 12
+clac -1
+elas 0
+*map position lift
+mvto 43888 29630
+*		From? = null		
+seta ov99 null
+*		IsActive = false
+setv ov00 0
+*		IsMoving = false
+setv ov80 0
+*We will set ButtonDestination to same as ButtonCurrent when lift is not in use.
+* This way we can always safely assume it isn't null.
+* And if a script ever gets erroneously called, assume we're going to the place
+*  we're already at, isn't the worst thing to do.
+*		ButtonCurrent = promiseNotNullAfterInstall
+seta ov30 null
+*		ButtonDestination = promiseNotNullAfterInstall
+seta ov31 null
+*		Door = newPart()
+pat: dull 1 "lift" 4 0 0 200
+cabn 0 0 121 144
+cabw 5
+*		UpButton = newPart()
+pat: butt 2 "lift" 22 7 52 68 0 [] 0 0
+*		DownButton = newPart()
+pat: butt 3 "lift" 22 7 52 82 0 [] 1 0
+*		Door.Pose.Open
+part 1
+anim [7]
 
+*Top Button
+*		new ZootC3LiftButton
+new: simp 2 12 24402 "lift" 2 14 5000
+*		currentButton = targ
+seta va01 targ
+bhvr 1
+attr 4
+perm 10
+clac 0
+elas 0
+*map position top
+mvto 43843 29532
+*		IsActive = false
+setv ov00 0
+*		Lift = lift
+seta ov16 va00
+*		ButtonAbove? = null
+seta ov20 null
+*		ButtonBelow? = null
+seta ov21 null
+*		Pose.Off
+pose 0
+*		roomId1 = Room()
+setv va66 room targ
+
+*		previousButton = currentButton
+seta va02 va01
+
+*Middle Button
+*		new ZootC3LiftButton
+new: simp 2 12 24402 "lift" 2 14 5000
+*		currentButton = targ
+seta va01 targ
+bhvr 1
+attr 4
+perm 10
+clac 0
+elas 0
+*map position middle
+mvto 43843 29708
+*		IsActive = false
+setv ov00 0
+*		Lift = lift
+seta ov16 va00
+*		ButtonAbove? = previousButton 
+seta ov20 va02
+*		ButtonBelow? = null
+seta ov21 null
+*		previousbutton.ButtonBelow? = currentButton
+targ va02
+seta ov21 va01
+*		lift.ButtonCurrent = currentButton
+*		lift.ButtonDestination = currentButton
+targ va00
+seta ov30 va01
+seta ov31 va01
+*		targ currentButton
+targ va01
+*		Pose.Off
+pose 0
+*		roomId2 = Room()
+setv va67 room targ
+*		linkSmells(roomId1, roomId2)
+link va66 va67 100
+
+*		previousButton = currentButton
+seta va02 va01
+
+*BottomButton
+*		new ZootC3LiftButton
+new: simp 2 12 24402 "lift" 2 14 5000
+*		currentButton = targ
+seta va01 targ
+bhvr 1
+attr 4
+perm 10
+clac 0
+elas 0
+*map position bottom
+mvto 43843 29955
+*		IsActive = false
+setv ov00 0
+*		Lift = lift
+seta ov16 va00
+*		ButtonAbove? = previousButton 
+seta ov20 va02
+*		ButtonBelow? = null
+seta ov21 null
+*		previousbutton.ButtonBelow? = currentButton
+targ va02
+seta ov21 va01
+*		targ currentButton
+targ va01
+*		Pose.Off
+pose 0
+*		roomId1 = Room()
+setv va66 room targ
+*		linkSmells(roomId2, roomId1)
+link va66 va67 100
 
 *			*************
 *			***//Lifts***
