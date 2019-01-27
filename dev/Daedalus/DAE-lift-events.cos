@@ -30,9 +30,9 @@ pat: dull 1 "lift" 4 0 0 200
 cabn 0 0 121 144
 cabw 5
 *		UpButton = newPart()
-pat: butt 2 "lift" 22 7 52 68 0 [] 2000 0
+pat: butt 2 "lift" 22 7 52 68 0 [] 0 0
 *		DownButton = newPart()
-pat: butt 3 "lift" 22 7 52 82 0 [] 2001 0
+pat: butt 3 "lift" 22 7 52 82 0 [] 1 0
 *		Door.Pose.Open
 part 1
 anim [7]
@@ -191,8 +191,26 @@ scrp 3 1 24402 1
 *		self.From? = from
 		seta mv99 from
 	endi
-*	self.FindButtonUpAndGo()
-	mesg writ ownr 2000
+	doif from = pntr
+		targ pntr
+		anim [1 0]
+		targ ownr
+		seta mv99 from
+		over
+	endi
+
+	snde "clik"
+	targ mv30
+*	if(!self.IsActive && self.ButtonCurrent.ButtonAbove != null)
+	doif mv00 = 0 and ov20 <> null
+		targ ownr
+*		self.Base.Pose.3
+		pose 3
+		wait 1
+		targ mv30
+*		self.ButtonCurrent.ButtonAbove.Push()
+		mesg writ ov20 0
+	endi
 endm
 
 *ZootC3Lift.GoDown:Pull
@@ -206,8 +224,26 @@ scrp 3 1 24402 2
 *		self.From? = from
 		seta mv99 from
 	endi
-*	self.FindButtonDownAndGo()
-	mesg writ ownr 2001
+	doif from = pntr
+		targ pntr
+		anim [1 0]
+		targ ownr
+		seta mv99 from
+		over
+	endi
+
+	snde "clik"
+	targ mv30
+*	if(!self.IsActive && self.ButtonCurrent.ButtonBelow != null)
+	doif mv00 = 0 and ov21 <> null
+		targ ownr
+*		self.Base.Pose.2
+		pose 2
+		wait 1
+		targ mv30
+*		self.ButtonCurrent.ButtonBelow.Push()
+		mesg writ ov21 0
+	endi
 endm
 
 *ZootC3Lift.ActivateSelf(fromButton, fromPntr?)
@@ -421,54 +457,6 @@ scrp 3 1 24402 9
 		snde "ding"
 		part 0
 		bhvr 3
-	endi
-endm
-
-*ZootC3Lift.FindButtonUpAndGo()
-scrp 3 1 24402 2000
-	inst
-	doif from = pntr
-		targ pntr
-		anim [1 0]
-		over
-		targ ownr
-	endi
-
-	snde "clik"
-	targ mv30
-*	if(!self.IsActive && self.ButtonCurrent.ButtonAbove != null)
-	doif mv00 = 0 and ov20 <> null
-		targ ownr
-*		self.Base.Pose.3
-		pose 3
-		wait 1
-		targ mv30
-*		self.ButtonCurrent.ButtonAbove.Push()
-		mesg writ ov20 0
-	endi
-endm
-
-*ZootC3Lift.FindButtonDownAndGo()
-scrp 3 1 24402 2001
-	inst
-	doif from = pntr
-		targ pntr
-		anim [1 0]
-		over
-		targ ownr
-	endi
-
-	snde "clik"
-	targ mv30
-*	if(!self.IsActive && self.ButtonCurrent.ButtonBelow != null)
-	doif mv00 = 0 and ov21 <> null
-		targ ownr
-*		self.Base.Pose.2
-		pose 2
-		wait 1
-		targ mv30
-*		self.ButtonCurrent.ButtonBelow.Push()
-		mesg writ ov21 0
 	endi
 endm
 
