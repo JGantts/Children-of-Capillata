@@ -440,7 +440,6 @@ scrp 3 1 24402 2000
 	doif mv00 = 0 and ov20 <> null
 		targ ownr
 *		self.Base.Pose.3
-		part 0
 		pose 3
 		wait 1
 		targ mv30
@@ -465,7 +464,6 @@ scrp 3 1 24402 2001
 	doif mv00 = 0 and ov21 <> null
 		targ ownr
 *		self.Base.Pose.2
-		part 0
 		pose 2
 		wait 1
 		targ mv30
