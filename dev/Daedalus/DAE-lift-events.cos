@@ -182,34 +182,45 @@ endm
 
 *ZootC3Lift.GoUp:Push
 scrp 3 1 24402 1
+	lock
 	inst
-	targ from
-	doif from = pntr
+	seta mv99 from
+*	if(From = pntr)
+	doif mv99 = pntr
 		targ pntr
 		anim [1 0]
-		targ ownr
-		seta mv99 from
-		over
 	endi
 
 	snde "clik"
 	targ mv30
 *	if(!self.IsActive && self.ButtonCurrent.ButtonAbove != null)
 	doif mv00 = 0 and ov20 <> null
-*		if(from.family == Creature)
+*		self.IsActive = true
+		setv mv00 1
+		targ mv99
+*		if(From.family == Creature)
 		doif fmly eq 4
 *			from.Stim(Wait, 1)
 			stim writ from 75 1
-*			self.From? = from
-			seta mv99 from
 		endi
+		slow
+		targ mv30
+*		ButtonDestination = self.ButtonCurrent.ButtonAbove
+		seta mv31 ov20
 		targ ownr
 *		self.Base.Pose.3
 		pose 3
 		wait 1
-		targ mv30
-*		self.ButtonCurrent.ButtonAbove.Push()
-		mesg writ ov20 0
+
+		targ mv31
+		snde "but1"
+*		Pose.1
+		pose 1
+*		IsActive = true
+		setv mv00 1
+
+		targ ownr
+		tick 1
 	else
 		targ from
 *		if(from.Is(Creature))
@@ -222,34 +233,45 @@ endm
 
 *ZootC3Lift.GoDown:Pull
 scrp 3 1 24402 2
+	lock
 	inst
-	targ from
-	doif from = pntr
+	seta mv99 from
+*	if(From = pntr)
+	doif mv99 = pntr
 		targ pntr
 		anim [1 0]
-		targ ownr
-		seta mv99 from
-		over
 	endi
 
 	snde "clik"
 	targ mv30
 *	if(!self.IsActive && self.ButtonCurrent.ButtonBelow != null)
 	doif mv00 = 0 and ov21 <> null
-*	if(from.family == Creature)
+*		self.IsActive = true
+		setv mv00 1
+		targ mv99
+*		if(From.family == Creature)
 		doif fmly eq 4
-*		from.Stim(Wait, 1)
-			stim writ targ 75 1
-*		self.From? = from
-			seta mv99 from
+*			from.Stim(Wait, 1)
+			stim writ from 75 1
 		endi
+		slow
+		targ mv30
+*		ButtonDestination = self.ButtonCurrent.ButtonBelow
+		seta mv31 ov21
 		targ ownr
 *		self.Base.Pose.2
 		pose 2
 		wait 1
-		targ mv30
-*		self.ButtonCurrent.ButtonBelow.Push()
-		mesg writ ov21 0
+
+		targ mv31
+		snde "but1"
+*		Pose.1
+		pose 1
+*		IsActive = true
+		setv mv00 1
+
+		targ ownr
+		tick 1
 	else
 		targ from
 *		if(from.Is(Creature))
@@ -258,31 +280,6 @@ scrp 3 1 24402 2
 			stim writ from 0 1
 		endi
 	endi
-endm
-
-*ZootC3Lift.ActivateSelf(fromButton, fromPntr?)
-scrp 3 1 24402 1500
-	inst
-	lock
-*	if(Active == true)
-	doif mv00 eq 0
-*		Active = true
-		setv mv00 1
-		inst
-*		FromButtonId = fromButtonId
-		seta mv31 _p1_
-
-*		if(fromPntr? != null)
-		doif _p2_ <> null
-*			From? = fromPntr?
-			seta mv99 pntr
-		endi
-
-		snde "clik"
-		tick 1
-		slow
-	endi
-
 endm
 
 *ZootC3Lift.Timer:Timer
