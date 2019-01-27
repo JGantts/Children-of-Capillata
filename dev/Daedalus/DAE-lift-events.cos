@@ -17,9 +17,13 @@ seta ov99 null
 setv ov00 0
 *		IsMoving = false
 setv ov80 0
+*We will set ButtonDestination to same as ButtonCurrent when lift is not in use.
+* This way we can always safely assume it isn't null.
+* And if a script ever gets erroneously called, assume we're going to the place
+*  we're already at, isn't the worst thing to do.
 *		ButtonCurrent = promiseNotNullAfterInstall
 seta ov30 null
-*		ButtonDestination? = null
+*		ButtonDestination = promiseNotNullAfterInstall
 seta ov31 null
 *		Door = newPart()
 pat: dull 1 "lift" 4 0 0 200
@@ -91,8 +95,10 @@ seta ov21 null
 targ va02
 seta ov21 va01
 *		lift.ButtonCurrent = currentButton
+*		lift.ButtonDestination = currentButton
 targ va00
 seta ov30 va01
+seta ov31 va01
 *		targ currentButton
 targ va01
 *		Pose.Off
@@ -413,13 +419,22 @@ scrp 3 1 24402 9
 		endi
 
 
-*		IsActive = 0
-		setv mv00 0
-		part 0
-		anim [0]
+		targ mv31
+*		ButtonDestination.IsActive = 0
+		setv ov00 0
+*		ButtonDestination.Pose.0
+		pose 0
+*		ButtonCurrent = ButtonDestination
+		seta mv30 mv31
 
 		unlk
+
+		targ ownr
+*		IsActive = false
+		setv mv00 0
 		snde "ding"
+		part 0
+		anim [0]
 		part 2
 		anim [4]
 		part 3
