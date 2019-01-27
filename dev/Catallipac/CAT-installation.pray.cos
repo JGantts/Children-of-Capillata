@@ -5,7 +5,7 @@
 *# Agent Sprite First Image = 1
 *# desc = "This is the Catallipac. It is a whole new room to explore!\n\nRequires the Universal Hub!\n\nPart of Children of Capillata.\nDesigned by and images by Silvak.\nMaintained by and code by Zzzzoot."
 
-*# attach coc_cat.blk coccatdoor.c16 coccatvendor.c16 coccatvendormouth.c16 fav_place_coccat.c16 cocSealift.c16
+*# attach coc_cat.blk coccatdoor.c16 coccatvendor.c16 coccatvendormouth.c16 fav_place_coccat.c16 coc_sealift.c16
 *# Link CAT-door-events.cos CAT-empathic-vendor.cos CAT-lift-events.cos
 
 * Script 1 extracted from CoC_UH.agents by Mirality REVELATION
@@ -353,7 +353,7 @@ scrp 1 2 24403 1000
 ***************
 
 *new ZootLift
-		new: vhcl 3 1 24401 "sealift" 2 0 310
+		new: vhcl 3 1 24401 "coc_c3lift" 2 0 310
 *agnt lift = targ
 		seta va02 targ
 *enum LiftState = Stationary
@@ -387,7 +387,7 @@ scrp 1 2 24403 1000
 ***Top Button***
 ****************
 *new ZootLiftButton
-		new: simp 2 12 24401 "sealift" 2 2 310
+		new: simp 2 12 24401 "coc_c3lift" 2 2 310
 *agnt Lift = lift
 		seta ov03 va02
 *agnt ButtonAbove = previousButton
@@ -430,7 +430,7 @@ scrp 1 2 24403 1000
 ***Bottom***
 ************
 *new ZootLiftButton
-		new: simp 2 12 24401 "sealift" 2 2 310
+		new: simp 2 12 24401 "coc_c3lift" 2 2 310
 *agnt Lift = lift
 		seta ov03 va02
 *agnt ButtonAbove = previousButton

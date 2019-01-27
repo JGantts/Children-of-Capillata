@@ -5,7 +5,7 @@
 *# Agent Sprite First Image = 1
 *# desc = "This is Morpheri. It is a whole new room to explore!\n\nRequires the Universal Hub!\n\nPart of Children of Capillata.\nConcept for Children of Capillata by Silvak.\nDesign and images by Zequr.\nMaintained by and code by Zzzzoot."
 
-*# attach Morpheri.blk cocmordoor.c16 ettin_doors.c16 fav_place_CoC_Mor.c16 lift.c16 Mor.catalogue boi2.wav clik.wav ding.wav
+*# attach Morpheri.blk cocmordoor.c16 ettin_doors.c16 fav_place_CoC_Mor.c16 coc_c3lift.c16 Mor.catalogue boi2.wav clik.wav ding.wav
 *# Link MOR-door-events.cos MOR-lift-events.cos
 
 * Script 1 extracted from Mor.agents by Mirality REVELATION
@@ -421,7 +421,7 @@ scrp 1 2 24403 1000
 *			***Lift***
 *			**********
 *		new ZootC3Lift()
-		new: vhcl 3 1 24402 "lift" 4 0 50
+		new: vhcl 3 1 24402 "coc_c3lift" 4 0 50
 *		lift = targ
 		seta va00 targ
 		bhvr 3
@@ -441,26 +441,20 @@ scrp 1 2 24403 1000
 *		ButtonDestination? = null
 		seta ov31 null
 *		Door = newPart()
-		pat: dull 1 "lift" 4 0 0 200
+		pat: dull 1 "coc_c3lift" 4 0 0 200
 		cabn 0 0 121 144
 		cabw 5
 *		UpButton = newPart()
-		pat: butt 2 "lift" 14 1 52 68 0 [] 2000 1
+		pat: butt 2 "coc_c3lift" 14 1 52 68 0 [] 2000 1
 *		DownButton = newPart()
-		pat: butt 3 "lift" 14 1 52 82 0 [] 2001 1
-*		UpButton.Pose.4
-		part 2
-		anim [4]
-*		UpButton.Pose.5
-		part 3
-		anim [5]
+		pat: butt 3 "coc_c3lift" 14 1 52 82 0 [] 2001 1
 *		Door.Pose.Open
 		part 1
-		anim [7]
+		pose 7
 
 *Top Button
 *		new ZootC3LiftButton
-		new: simp 2 12 24402 "lift" 2 12 5000
+		new: simp 2 12 24402 "coc_c3lift" 2 12 5000
 *		currentButton = targ
 		seta va01 targ
 		bhvr 1
@@ -491,7 +485,7 @@ scrp 1 2 24403 1000
 
 *Middle Button
 *		new ZootC3LiftButton
-		new: simp 2 12 24402 "lift" 2 12 5000
+		new: simp 2 12 24402 "coc_c3lift" 2 12 5000
 *		currentButton = targ
 		seta va01 targ
 		bhvr 1
@@ -526,7 +520,7 @@ scrp 1 2 24403 1000
 
 *BottomButton
 *		new ZootC3LiftButton
-		new: simp 2 12 24402 "lift" 2 12 5000
+		new: simp 2 12 24402 "coc_c3lift" 2 12 5000
 *		currentButton = targ
 		seta va01 targ
 		bhvr 1
