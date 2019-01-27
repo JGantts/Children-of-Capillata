@@ -475,23 +475,23 @@ scrp 2 12 24402 3
 	stim writ from 92 1
 endm
 
-rscr
-enum 3 1 24402
-	kill targ
-next
-scrx 3 1 24402 1
-scrx 3 1 24402 2
-scrx 3 1 24402 9
-scrx 3 1 24402 1500
-scrx 3 1 24402 2000
-scrx 3 1 24402 2001
-
-
-enum 2 12 24402
-	kill targ
-next
-scrx 2 12 24402 1
-scrx 2 12 24402 2
-scrx 2 12 24402 1500
-scrx 2 12 24402 1501
-scrx 2 12 24402 1000
+*rscr
+*enum 3 1 24402
+*	kill targ
+*next
+*scrx 3 1 24402 1
+*scrx 3 1 24402 2
+*scrx 3 1 24402 9
+*scrx 3 1 24402 1500
+*scrx 3 1 24402 2000
+*scrx 3 1 24402 2001
+*
+*
+*enum 2 12 24402
+*	kill targ
+*next
+*scrx 2 12 24402 1
+*scrx 2 12 24402 2
+*scrx 2 12 24402 1500
+*scrx 2 12 24402 1501
+*scrx 2 12 24402 1000

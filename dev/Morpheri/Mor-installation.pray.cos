@@ -420,95 +420,148 @@ scrp 1 2 24403 1000
 *			**********
 *			***Lift***
 *			**********
-		new: simp 2 12 24402 "lift" 2 14 5000
-		bhvr 1
-		attr 4
-		perm 10
-		clac 0
-		elas 0
-		setv ov88 2
-		setv ov00 0
-		seta ov16 null
-		prt: inew 0 "lift call button in" "reads in data" 37 9 1000
-		prt: onew 0 "lift call button out" "outputs input data or lift call state" 38 20
-*map position top
-		setv va45 40122
-		mvto va45 30485
-
-		pose 0
-		setv va66 room targ
-
-		new: simp 2 12 24402 "lift" 2 14 5000
-		bhvr 1
-		attr 4
-		perm 10
-		clac 0
-		elas 0
-		setv ov88 2
-		setv ov00 0
-		seta ov16 null
-		prt: inew 0 "lift call button in" "reads in data" 37 9 1000
-		prt: onew 0 "lift call button out" "outputs input data or lift call state" 38 20
-*map position middle
-		mvto va45 30786
-
-		pose 0
-		setv va67 room targ
-		link va66 va67 100
-
-		new: simp 2 12 24402 "lift" 2 14 5000
-		bhvr 1
-		attr 4
-		perm 10
-		clac 0
-		elas 0
-		setv ov88 3
-		setv ov00 0
-		seta ov16 null
-		prt: inew 0 "lift call button in" "reads in data" 37 9 1000
-		prt: onew 0 "lift call button out" "outputs input data or lift call state" 38 20
-*map position bottom
-		mvto va45 30985
-
-		pose 0
-		setv va66 room targ
-		link va66 va67 100
-
+*		new ZootC3Lift()
 		new: vhcl 3 1 24402 "lift" 23 0 50
+*		lift = targ
+		seta va00 targ
 		bhvr 3
 		attr 12
 		clac -1
 		elas 0
-		setv ov80 0
-		addv va45 45
 *map position lift
-		mvto va45 30430
+		mvto 40167 30430
+*		From? = null		
 		seta ov99 null
-
+*		IsActive = false
+		setv ov00 0
+*		IsMoving = false
+		setv ov80 0
+*		ButtonCurrent = promiseNotNullAfterInstall
+		seta ov30 null
+*		ButtonDestination? = null
+		seta ov31 null
+*		Door = newPart()
 		pat: dull 1 "lift" 4 0 0 200
 		cabn 0 0 121 144
 		cabw 5
-
+*		UpButton = newPart()
 		pat: butt 2 "lift" 16 7 52 68 0 [] 2000 1
+*		DownButton = newPart()
 		pat: butt 3 "lift" 16 7 52 82 0 [] 2001 1
+*		UpButton.Pose.4
 		part 2
 		anim [4]
+*		UpButton.Pose.5
 		part 3
 		anim [5]
-
-		seta va00 targ
-		enum 2 12 24402
-			doif ov16 = null
-				seta ov16 va00
-			endi
-		next
-		targ va00
-
+*		Door.Pose.Open
 		part 1
 		anim [7]
+
+*Top Button
+*		new ZootC3LiftButton
+		new: simp 2 12 24402 "lift" 2 14 5000
+*		currentButton = targ
+		seta va01 targ
+		bhvr 1
+		attr 4
+		perm 10
+		clac 0
+		elas 0
+*map position top
+		mvto 40122 30485
+*		IsActive = false
+		setv ov00 0
+*		Lift = lift
+		seta ov16 va00
+*		ButtonAbove? = null
+		seta ov20 null
+*		ButtonBelow? = null
+		seta ov21 null
+*		lift.ButtonCurrent = currentButton
+		targ va00
+		seta ov30 va01
+*		Pose.Off
+		pose 0
+*		roomId1 = Room()
+		setv va66 room targ
+
+*		previousButton = currentButton
+		seta va02 va01
+
+*Middle Button
+*		new ZootC3LiftButton
+		new: simp 2 12 24402 "lift" 2 14 5000
+*		currentButton = targ
+		seta va01 targ
+		bhvr 1
+		attr 4
+		perm 10
+		clac 0
+		elas 0
+*map position middle
+		mvto 40122 30786
+*		IsActive = false
+		setv ov00 0
+*		Lift = lift
+		seta ov16 va00
+*		ButtonAbove? = previousButton 
+		seta ov20 va01
+*		ButtonBelow? = null
+		seta ov21 null
+*		previousbutton.ButtonBelow? = currentButton
+		targ va02
+		seta ov21 va01
+*		targ currentButton
+		targ va01
+*		Pose.Off
+		pose 0
+*		roomId2 = Room()
+		setv va67 room targ
+*		linkSmells(roomId1, roomId2)
+		link va66 va67 100
+
+*		previousButton = currentButton
+		seta va02 va01
+
+*BottomButton
+*		new ZootC3LiftButton
+		new: simp 2 12 24402 "lift" 2 14 5000
+*		currentButton = targ
+		seta va01 targ
+		bhvr 1
+		attr 4
+		perm 10
+		clac 0
+		elas 0
+*map position bottom
+		mvto 40122 30985
+*		IsActive = false
+		setv ov00 0
+*		Lift = lift
+		seta ov16 va00
+*		ButtonAbove? = previousButton 
+		seta ov20 null
+*		ButtonBelow? = null
+		seta ov21 va01
+*		previousbutton.ButtonBelow? = currentButton
+		targ va02
+		seta ov21 va01
+*		targ currentButton
+		targ va01
+*		Pose.Off
+		pose 0
+*		roomId1 = Room()
+		setv va66 room targ
+*		linkSmells(roomId2, roomId1)
+		link va66 va67 100
+
+
 *			************
 *			***//Lift***
 *			************
+
+
 		setv game "CoC_MOR" 1
 		kill ownr
 	endi
