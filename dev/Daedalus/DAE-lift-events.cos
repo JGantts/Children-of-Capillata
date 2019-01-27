@@ -144,29 +144,19 @@ scrp 2 12 24402 1
 	targ mv16
 *	if(Lift.IsActive == false && Lift.ButtonCurrent != self)
 	doif ov00 = 0 and ov30 <> ownr
-*		if(from != null && from = pntr)
-		doif from <> null and from = pntr
-*			From? = pntr
-			seta va99 pntr
-		else
-*			From? = null
-			seta va99 null
-		endi
+*		Lift.IsActive = true
+		setv ov00 1
+*		Lift.ButtonDestination = self
+		seta ov31 ownr
+		tick 1
 		targ ownr
 		snde "but1"
 *		Pose.1
 		pose 1
-*		IsActive = true
-		setv mv00 1
-		inst
-*		Lift.ActivateSelf(fromButton: self, fromPntr?: fromPntr?)
-		mesg wrt+ mv16 1500 targ va99 0
 		slow
 	else
-		anim [1]
-		over
-		anim [0]
-		over
+		targ ownr
+		anim [1 0]
 	endi
 endm
 
@@ -420,6 +410,9 @@ scrp 3 1 24402 9
 *		self.Door.Animate.Open
 		anim [0 1 2 3 4 5 6 7]
 		over
+*		self.Base.Pose.Stationary
+		part 0
+		pose 0
 
 
 		inst
