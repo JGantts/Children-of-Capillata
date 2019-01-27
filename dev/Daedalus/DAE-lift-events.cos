@@ -88,7 +88,7 @@ setv ov00 0
 *		Lift = lift
 seta ov16 va00
 *		ButtonAbove? = previousButton 
-seta ov20 va01
+seta ov20 va02
 *		ButtonBelow? = null
 seta ov21 null
 *		previousbutton.ButtonBelow? = currentButton
@@ -128,9 +128,9 @@ setv ov00 0
 *		Lift = lift
 seta ov16 va00
 *		ButtonAbove? = previousButton 
-seta ov20 null
+seta ov20 va02
 *		ButtonBelow? = null
-seta ov21 va01
+seta ov21 null
 *		previousbutton.ButtonBelow? = currentButton
 targ va02
 seta ov21 va01
@@ -446,42 +446,30 @@ endm
 *ZootC3Lift.FindButtonUpAndGo()
 scrp 3 1 24402 2000
 	inst
+	part 2
+	pose 6
+	part 3
+	pose 6
 	doif from = pntr
 		targ pntr
 		anim [1 0]
+		over
 		targ ownr
 	endi
 
-*	UpButton.Pose.6
-	part 2
-	anim [6]
-*	DownButton.Pose.6
-	part 3
-	anim [6]
 	snde "clik"
-	slow
-
-*	if(!IsActive)
-	doif mv00 = 0
-*		destinationButton? = self.ButtonCurrent.ButtonAbove
+	targ mv30
+*	if(!self.IsActive && self.ButtonCurrent.ButtonAbove != null)
+	doif mv00 = 0 and ov20 <> null
+		targ ownr
+*		self.Base.Pose.3
+		part 0
+		pose 3
+		wait 1
 		targ mv30
-		seta va16 ov20
-*		if(destinationButton? != null)
-		doif va16 <> null
-*			self.Base.Pose.3
-			part 0
-			anim [3]
-*			destinationButton.Push()
-			mesg writ va16 0
-		endi
-
-	else
-		part 2
-		anim [4]
-		part 3
-		anim [5]
+*		self.ButtonCurrent.ButtonAbove.Push()
+		mesg writ ov20 0
 	endi
-
 endm
 
 *ZootC3Lift.FindButtonDownAndGo()
@@ -489,37 +477,25 @@ scrp 3 1 24402 2001
 	inst
 	doif from = pntr
 		targ pntr
-		anim [1 1 1 0]
+		anim [1 0]
+		over
 		targ ownr
 	endi
 
-
-	part 2
-	anim [6]
-	part 3
-	anim [6]
 	snde "clik"
-
-*	if(!IsActive)
-	doif mv00 = 0
-*		destinationButton? = self.ButtonCurrent.ButtonAbove
+	targ mv30
+*	if(!self.IsActive && self.ButtonCurrent.ButtonBelow != null)
+	doif mv00 = 0 and ov21 <> null
+		targ ownr
+*		self.Base.Pose.2
+		part 0
+		pose 2
+		wait 1
 		targ mv30
-		seta va16 ov20
-*		if(destinationButton? != null)
-		doif va16 <> null
-			part 0
-			anim [2]
-			mesg writ va16 0
-		endi
-	else
-		part 2
-		anim [4]
-		part 3
-		anim [5]
+*		self.ButtonCurrent.ButtonBelow.Push()
+		mesg writ ov21 0
 	endi
-
 endm
-
 
 *ZootC3Lift.Hit:Hit
 scrp 2 12 24402 3
