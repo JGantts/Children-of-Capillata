@@ -47,7 +47,7 @@ subv va91 va93
 flto va90 va91
 **/
 part 3
-ptxt "Daedalus Version v1.2.0.2-alpha"
+ptxt "Daedalus Version v1.2.0.3-alpha"
 
 part 1
 ptxt read "zot_DAE" 0
@@ -812,7 +812,7 @@ clac -1
 elas 0
 *map position lift
 mvto 43888 29630
-*		From? = null		
+*		From? = null
 seta ov99 null
 *		IsActive = false
 setv ov00 0
@@ -882,7 +882,7 @@ mvto 43843 29708
 setv ov00 0
 *		Lift = lift
 seta ov16 va00
-*		ButtonAbove? = previousButton 
+*		ButtonAbove? = previousButton
 seta ov20 va02
 *		ButtonBelow? = null
 seta ov21 null
@@ -922,7 +922,7 @@ mvto 43843 29955
 setv ov00 0
 *		Lift = lift
 seta ov16 va00
-*		ButtonAbove? = previousButton 
+*		ButtonAbove? = previousButton
 seta ov20 va02
 *		ButtonBelow? = null
 seta ov21 null
