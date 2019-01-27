@@ -445,9 +445,9 @@ scrp 1 2 24403 1000
 		cabn 0 0 121 144
 		cabw 5
 *		UpButton = newPart()
-		pat: butt 2 "coc_c3lift" 14 1 52 68 0 [] 2000 1
+		pat: butt 2 "coc_c3lift" 14 1 52 68 0 [] 0 1
 *		DownButton = newPart()
-		pat: butt 3 "coc_c3lift" 14 1 52 82 0 [] 2001 1
+		pat: butt 3 "coc_c3lift" 14 1 52 82 0 [] 1 1
 *		Door.Pose.Open
 		part 1
 		pose 7

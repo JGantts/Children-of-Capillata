@@ -353,7 +353,7 @@ scrp 1 2 24403 1000
 ***************
 
 *new ZootLift
-		new: vhcl 3 1 24401 "coc_c3lift" 2 0 310
+		new: vhcl 3 1 24401 "coc_sealift" 2 0 310
 *agnt lift = targ
 		seta va02 targ
 *enum LiftState = Stationary
@@ -387,7 +387,7 @@ scrp 1 2 24403 1000
 ***Top Button***
 ****************
 *new ZootLiftButton
-		new: simp 2 12 24401 "coc_c3lift" 2 2 310
+		new: simp 2 12 24401 "coc_sealift" 2 2 310
 *agnt Lift = lift
 		seta ov03 va02
 *agnt ButtonAbove = previousButton
@@ -430,7 +430,7 @@ scrp 1 2 24403 1000
 ***Bottom***
 ************
 *new ZootLiftButton
-		new: simp 2 12 24401 "coc_c3lift" 2 2 310
+		new: simp 2 12 24401 "coc_sealift" 2 2 310
 *agnt Lift = lift
 		seta ov03 va02
 *agnt ButtonAbove = previousButton
