@@ -30,15 +30,9 @@ pat: dull 1 "lift" 4 0 0 200
 cabn 0 0 121 144
 cabw 5
 *		UpButton = newPart()
-pat: butt 2 "lift" 16 7 52 68 0 [] 2000 1
+pat: butt 2 "lift" 22 7 52 68 0 [] 2000 0
 *		DownButton = newPart()
-pat: butt 3 "lift" 16 7 52 82 0 [] 2001 1
-*		UpButton.Pose.4
-part 2
-anim [4]
-*		UpButton.Pose.5
-part 3
-anim [5]
+pat: butt 3 "lift" 22 7 52 82 0 [] 2001 0
 *		Door.Pose.Open
 part 1
 anim [7]
@@ -359,10 +353,6 @@ scrp 3 1 24402 9
 		part 0
 		anim [3]
 		bhvr 0
-		part 2
-		anim [6]
-		part 3
-		anim [6]
 		velo 0 va04
 *	else if(distance < 0)
 	elif va02 > 0
@@ -371,10 +361,6 @@ scrp 3 1 24402 9
 		part 0
 		anim [2]
 		bhvr 0
-		part 2
-		anim [6]
-		part 3
-		anim [6]
 		velo 0 va04
 *	else if(distance == 0)
 	elif va02 = 0
@@ -434,11 +420,6 @@ scrp 3 1 24402 9
 		setv mv00 0
 		snde "ding"
 		part 0
-		anim [0]
-		part 2
-		anim [4]
-		part 3
-		anim [5]
 		bhvr 3
 	endi
 endm
@@ -446,10 +427,6 @@ endm
 *ZootC3Lift.FindButtonUpAndGo()
 scrp 3 1 24402 2000
 	inst
-	part 2
-	pose 6
-	part 3
-	pose 6
 	doif from = pntr
 		targ pntr
 		anim [1 0]
