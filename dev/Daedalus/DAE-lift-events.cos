@@ -160,16 +160,6 @@ scrp 2 12 24402 1
 	endi
 endm
 
-*ZootC3LiftButton.DeactivateSelf
-scrp 2 12 24402 1501
-	inst
-	lock
-*	pose.0
-	anim [0]
-*	IsActive = false
-	setv mv00 0
-endm
-
 *ZootC3Lift.GoUp:Push
 scrp 3 1 24402 1
 	lock
@@ -270,6 +260,13 @@ scrp 3 1 24402 2
 			stim writ from 0 1
 		endi
 	endi
+endm
+
+*ZootC3Lift.Hit:Hit
+scrp 2 12 24402 3
+	sndc "hit_"
+	prt: bang rand 60 100
+	stim writ from 92 1
 endm
 
 *ZootC3Lift.Timer:Timer
@@ -466,24 +463,14 @@ scrp 3 1 24402 9
 	endi
 endm
 
-*ZootC3Lift.Hit:Hit
-scrp 2 12 24402 3
-	sndc "hit_"
-	prt: bang rand 60 100
-	stim writ from 92 1
-endm
-
 rscr
 enum 3 1 24402
 	kill targ
 next
 scrx 3 1 24402 1
 scrx 3 1 24402 2
+scrx 3 1 24402 3
 scrx 3 1 24402 9
-scrx 3 1 24402 1500
-scrx 3 1 24402 2000
-scrx 3 1 24402 2001
-
 
 enum 2 12 24402
 	kill targ
