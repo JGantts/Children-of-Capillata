@@ -141,66 +141,32 @@ link va66 va67 100
 scrp 2 12 24402 1
 	inst
 	lock
-*	foreach(ZootLift)
-	enum 2 12 24402
-*		if(targ.Lift = self.Llift)
-		doif ov16 = mv16
-*			if(someoneIsActive || targ.IsActive)
-*				someoneIsActive = true
-			addv va66 ov00
-		endi
-	next
 	targ mv16
-*	if(Lift.IsActive)
-*		someoneIsActive = true
-	addv va66 ov00
-*	liftPlus20 = Lift.posy + 20
-*	liftMinus20 = Lift.posy - 20
-	setv va51 posy
-	setv va52 posy
-	targ ownr
-	addv va51 20
-	subv va52 20
-*	if(!someoneIsActive)
-	doif va66 = 0
-*		if(self.posy > liftPlus20 || self.posy < liftMinus20)
-		doif posy > va51 or posy < va52
-*
-*			if(from != null && from = pntr)
-			doif pntr = from
-*				From? = pntr
-				seta va99 pntr
-*			else
-			else
-*				From? = null
-				seta va99 null
-			endi
-*			foreach(ZootC3LiftButton)
-			enum 2 12 24402
-*				if(targ.Lift = self.Lift)
-				doif ov16 = mv16
-*					targ.pose.0
-					pose 0
-*					targ.IsActive = false
-					setv ov00 0
-				endi
-			next
-			targ ownr
-			snde "but1"
-*			Pose.1
-			pose 1
-*			IsActive = true
-			setv mv00 1
-			inst
-*			Lift.ActivateSelf(fromButton: self, fromPntr?: fromPntr?)
-			mesg wrt+ mv16 1500 targ va99 0
-			slow
+*	if(Lift.IsActive == false && Lift.ButtonCurrent != self)
+	doif ov00 = 0 and ov30 <> ownr
+*		if(from != null && from = pntr)
+		doif from <> null and from = pntr
+*			From? = pntr
+			seta va99 pntr
 		else
-			anim [1]
-			over
-			anim [0]
-			over
+*			From? = null
+			seta va99 null
 		endi
+		targ ownr
+		snde "but1"
+*		Pose.1
+		pose 1
+*		IsActive = true
+		setv mv00 1
+		inst
+*		Lift.ActivateSelf(fromButton: self, fromPntr?: fromPntr?)
+		mesg wrt+ mv16 1500 targ va99 0
+		slow
+	else
+		anim [1]
+		over
+		anim [0]
+		over
 	endi
 endm
 
@@ -452,16 +418,6 @@ scrp 3 1 24402 9
 		part 0
 		anim [0]
 
-*		foreach(ZootC3LiftButton)
-		enum 2 12 24402
-*			if(targ.Lift = self)
-			doif ov16 = ownr
-*				targ.DeactivateSelf()			
-				mesg writ targ 1501
-				targ ownr
-				unlk
-			endi
-		next
 		unlk
 		snde "ding"
 		part 2
@@ -487,49 +443,15 @@ scrp 3 1 24402 2000
 *	DownButton.Pose.6
 	part 3
 	anim [6]
-*	IsAnyoneActive = IsActive
-	addv va66 mv00
-*	foreach(ZootC3Lift)
-	enum 2 12 24402
-		doif ov16 = ownr
-*			if(someoneIsActive || targ.IsActive)
-*				someoneIsActive = true
-			addv va66 ov00
-		endi
-	next
-	targ ownr
+	snde "clik"
 	slow
-*	if(!someoneIsActive)
-	doif va66 = 0
-*		selfId = unid
-		setv va00 unid
-*		destinationButton? = null
-		seta va16 null
-*		closestButton = 999999
-		setv va88 999999
-*		foreach(ZootLiftButton).Where(targ.Lift = self)
-		enum 2 12 24402
-			doif ov16 = ownr
-*				distance = RelativeY(self, targ)
-				setv va50 rely ownr targ
-*				if(distance < 0)
-				doif va50 < 0
-*					absDistance = AbsoluteValue(distance)
-					setv va51 va50
-					absv va51
-*					if(absDistance < closestButton && absDistance > 10)
-					doif va51 < va88 and va51 > 10
-*						closestButton = absDistance
-						setv va88 va51
-*						destinationButton? = targ
-						seta va16 targ
-					endi
-				endi
-			endi
-		next
-		doif va16 = null
-		endi
-*		if(destinationButton != null)
+
+*	if(!IsActive)
+	doif mv00 = 0
+*		destinationButton? = self.ButtonCurrent.ButtonAbove
+		targ mv30
+		seta va16 ov20
+*		if(destinationButton? != null)
 		doif va16 <> null
 *			self.Base.Pose.3
 			part 0
@@ -562,34 +484,13 @@ scrp 3 1 24402 2001
 	part 3
 	anim [6]
 	snde "clik"
-	addv va66 mv00
-	enum 2 12 24402
-		doif ov16 = ownr
-			addv va66 ov00
-		endi
-	next
-	targ ownr
-	slow
-	doif va66 = 0
 
-		setv va00 unid
-		seta va16 null
-		setv va88 999999
-		enum 2 12 24402
-			doif ov16 = ownr
-				setv va50 rely ownr targ
-				doif va50 > 0
-					setv va51 va50
-					absv va51
-					doif va51 < va88 and va51 > 20
-						setv va88 va51
-						seta va16 targ
-					endi
-				endi
-			endi
-		next
-		doif va16 = null
-		endi
+*	if(!IsActive)
+	doif mv00 = 0
+*		destinationButton? = self.ButtonCurrent.ButtonAbove
+		targ mv30
+		seta va16 ov20
+*		if(destinationButton? != null)
 		doif va16 <> null
 			part 0
 			anim [2]
