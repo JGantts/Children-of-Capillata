@@ -420,6 +420,7 @@ scrp 1 2 24403 1000
 *			**********
 *			***Lift***
 *			**********
+
 *		new ZootC3Lift()
 		new: vhcl 3 1 24402 "coc_c3lift" 4 0 50
 *		lift = targ
@@ -445,9 +446,9 @@ scrp 1 2 24403 1000
 		cabn 0 0 121 144
 		cabw 5
 *		UpButton = newPart()
-		pat: butt 2 "coc_c3lift" 14 1 52 68 0 [] 0 1
+		pat: butt 2 "coc_c3lift" 14 1 52 68 0 [] 0 0
 *		DownButton = newPart()
-		pat: butt 3 "coc_c3lift" 14 1 52 82 0 [] 1 1
+		pat: butt 3 "coc_c3lift" 14 1 52 82 0 [] 1 0
 *		Door.Pose.Open
 		part 1
 		pose 7
@@ -464,8 +465,8 @@ scrp 1 2 24403 1000
 		elas 0
 *map position top
 		mvto 40122 30485
-*		IsActive = false
-		setv ov00 0
+*		IsActive = true
+		setv ov00 1
 *		Lift = lift
 		seta ov16 va00
 *		ButtonAbove? = null
@@ -475,6 +476,8 @@ scrp 1 2 24403 1000
 *		lift.ButtonCurrent = currentButton
 		targ va00
 		seta ov30 va01
+*		targ currentButton
+		targ va01
 *		Pose.Off
 		pose 0
 *		roomId1 = Room()
@@ -500,7 +503,7 @@ scrp 1 2 24403 1000
 *		Lift = lift
 		seta ov16 va00
 *		ButtonAbove? = previousButton 
-		seta ov20 va01
+		seta ov20 va02
 *		ButtonBelow? = null
 		seta ov21 null
 *		previousbutton.ButtonBelow? = currentButton
@@ -535,9 +538,9 @@ scrp 1 2 24403 1000
 *		Lift = lift
 		seta ov16 va00
 *		ButtonAbove? = previousButton 
-		seta ov20 null
+		seta ov20 va02
 *		ButtonBelow? = null
-		seta ov21 va01
+		seta ov21 null
 *		previousbutton.ButtonBelow? = currentButton
 		targ va02
 		seta ov21 va01
