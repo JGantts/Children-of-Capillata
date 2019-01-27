@@ -186,14 +186,14 @@ scrp 3 1 24402 9
 				dirn 1
 				wait 4
 				inst
-*				ownr.PickUp(From)				
+*				ownr.PickUp(From)
 				spas ownr targ
 				wait 2
 				inst
 *				From.Unzombify()
 				zomb 0
 			else
-*				ownr.PickUp(From)	
+*				ownr.PickUp(From)
 				spas ownr targ
 			endi
 			targ ownr
@@ -281,7 +281,7 @@ scrp 3 1 24402 9
 			doif targ <> null
 *				targ.Unzombify()
 				zomb 0
-*				targ.Strim(TravelledInLift)				
+*				targ.Strim(TravelledInLift)
 				stim writ targ 94 1
 			endi
 		next
@@ -296,7 +296,7 @@ scrp 3 1 24402 9
 		doif mv99 ne null
 *			targ From
 			targ mv99
-*			if(From.Family = Creature)			
+*			if(From.Family = Creature)
 			doif fmly eq 4
 *				From.Stim(TraveledInLift, 1)
 				stim writ targ 94 1
@@ -326,20 +326,23 @@ scrp 3 1 24402 9
 	endi
 endm
 
-rscr
-enum 3 1 24402
-	kill targ
-next
-scrx 3 1 24402 1
-scrx 3 1 24402 2
-scrx 3 1 24402 3
-scrx 3 1 24402 9
-
-enum 2 12 24402
-	kill targ
-next
-scrx 2 12 24402 1
-scrx 2 12 24402 2
-scrx 2 12 24402 1500
-scrx 2 12 24402 1501
-scrx 2 12 24402 1000
+*rscr
+*enum 3 1 24402
+*	kill targ
+*next
+*scrx 3 1 24402 1
+*scrx 3 1 24402 2
+*scrx 3 1 24402 9
+*scrx 3 1 24402 1500
+*scrx 3 1 24402 2000
+*scrx 3 1 24402 2001
+*
+*
+*enum 2 12 24402
+*	kill targ
+*next
+*scrx 2 12 24402 1
+*scrx 2 12 24402 2
+*scrx 2 12 24402 1500
+*scrx 2 12 24402 1501
+*scrx 2 12 24402 1000
