@@ -3,9 +3,9 @@
 *# DS-Name "CoC - The Catallipac"
 *# Agent Animation File = "fav_place_coccat.c16"
 *# Agent Sprite First Image = 1
-*# desc = "This is the Catallipac. It is a whole new room to explore!the Universal Hub!of Children of Capillata.by and images by Silvak.by and code by Zzzzoot."
+*# desc = "This is the Catallipac. It is a whole new room to explore!\n\nRequires the Universal Hub!\n\nPart of Children of Capillata.\nDesigned by and images by Silvak.\nMaintained by and code by Zzzzoot."
 
-*# attach coc_cat.blk coccatdoor.c16 coccatvendor.c16 coccatvendormouth.c16 fav_place_coccat.c16 lift.c16 sealift.c16
+*# attach coc_cat.blk coccatdoor.c16 coccatvendor.c16 coccatvendormouth.c16 fav_place_coccat.c16 coc_sealift.c16
 *# Link CAT-door-events.cos CAT-empathic-vendor.cos CAT-lift-events.cos
 
 * Script 1 extracted from CoC_UH.agents by Mirality REVELATION
@@ -353,136 +353,136 @@ scrp 1 2 24403 1000
 ***************
 
 *new ZootLift
-new: vhcl 3 1 24401 "sealift" 2 0 310
+		new: vhcl 3 1 24401 "coc_sealift" 2 0 310
 *agnt lift = targ
-seta va02 targ
+		seta va02 targ
 *enum LiftState = Stationary
-setv ov00 0
+		setv ov00 0
 *
-cabn -11 -10 110 134
+		cabn -11 -10 110 134
 *Can't be picked up, Visible to creatures, Doesn't suffer physics
-attr 0
+		attr 0
 *Creatures can push, Creatures can pull
-bhvr 3
+		bhvr 3
 *
-cabw 12
+		cabw 12
 *agnt ButtonCurrent = null
-seta ov01 null
+		seta ov01 null
 *agnt ButtonDestination = null
-seta ov02 null
+		seta ov02 null
 *numb StartY = 0
-setv ov10 0
+		setv ov10 0
 *numb StopY = 1
-setv ov11 1
+		setv ov11 1
 *agnt From = null
-seta ov04 null
+		seta ov04 null
 *enum PreviousDirection = GoingUp
-setv ov20 -1
+		setv ov20 -1
 
 *agnt previousButton = null
-seta va00 null
+		seta va00 null
 *numb? previousButtonsRoom = null
-setv va01 -1
+		setv va01 -1
 ****************
 ***Top Button***
 ****************
 *new ZootLiftButton
-new: simp 2 12 24401 "lift" 2 14 310
+		new: simp 2 12 24401 "coc_sealift" 2 2 310
 *agnt Lift = lift
-seta ov03 va02
+		seta ov03 va02
 *agnt ButtonAbove = previousButton
-seta ov01 va00
+		seta ov01 va00
 *agnt ButtonBelow = null
-seta ov02 null
+		seta ov02 null
 *agnt previousButton = targ
-seta va00 targ
+		seta va00 targ
 *if(ButtonAbove != null)
-doif ov01 <> null
+		doif ov01 <> null
 *	targ ButtonAbove
-	targ ov01
+			targ ov01
 *	ButtonAbove.ButtonBellow = previousButton
-	seta ov02 va00
+			seta ov02 va00
 *	targ previousButton
-	targ va00
-endi
+			targ va00
+		endi
 *
-mvto 40399 29478
+		mvto 40399 29478
 *agnt From = null
-seta ov04 null
+		seta ov04 null
 *enum ButtonState = NoLift
-setv ov00 0
+		setv ov00 0
 *numb TargetX = posb + 10
-setv ov10 posb
-addv ov10 10
+		setv ov10 posb
+		addv ov10 10
 *if(previousButtonsRoom != null)
-doif va01 <> -1
+		doif va01 <> -1
 *link previousButoo
-	link va01 room targ 0.75
-endi
+			link va01 room targ 0.75
+		endi
 *numb previousButtonsRoom = room targ
-setv va01 room targ
+		setv va01 room targ
 *Mouse can activate
-attr 4
+		attr 4
 *Creatures can push
-bhvr 1
+		bhvr 1
 
 ************
 ***Bottom***
 ************
 *new ZootLiftButton
-new: simp 2 12 24401 "lift" 2 14 310
+		new: simp 2 12 24401 "coc_sealift" 2 2 310
 *agnt Lift = lift
-seta ov03 va02
+		seta ov03 va02
 *agnt ButtonAbove = previousButton
-seta ov01 va00
+		seta ov01 va00
 *agnt ButtonBelow = null
-seta ov02 null
+		seta ov02 null
 *agnt previousButton = targ
-seta va00 targ
+		seta va00 targ
 *if(ButtonAbove != null)
-doif ov01 <> null
+		doif ov01 <> null
 *	targ ButtonAbove
-	targ ov01
+			targ ov01
 *	ButtonAbove.ButtonBellow = previousButton
-	seta ov02 va00
+			seta ov02 va00
 *	targ PreviousButton
-	targ va00
-endi
+			targ va00
+		endi
 *
-mvto 40550 29725
+		mvto 40550 29725
 *agnt From = null
-seta ov04 null
+		seta ov04 null
 *enum ButtonState = NoLift
-setv ov00 0
+		setv ov00 0
 *numb TargetX = posb + 10
-setv ov10 posb
-addv ov10 10
+		setv ov10 posb
+		addv ov10 10
 *if(previousButtonsRoom != null)
-doif va01 <> -1
+		doif va01 <> -1
 *link previousButoo
-	link va01 room targ 0.75
-endi
+			link va01 room targ 0.75
+		endi
 *numb previousButtonsRoom = room targ
-setv va01 room targ
+		setv va01 room targ
 *Mouse can activate
-attr 4
+		attr 4
 *Creatures can push
-bhvr 1
+		bhvr 1
 
 *targ previousButton
-targ va00
+		targ va00
 *enum previousButton.ButtonState = HasLift
-setv ov00 1
+		setv ov00 1
 *numb moveLiftTo = previousbutton.TargetX
-setv va03 ov10
+		setv va03 ov10
 *targ lift
-targ va02
+		targ va02
 *lift.ButtonCurrent = previousButton
-seta ov01 va00
+		seta ov01 va00
 *numb moveLiftTo = moveLiftTo - lift.hght
-subv va03 hght
+		subv va03 hght
 *mvto **** moveLiftTo
-mvto 40432 va03
+		mvto 40432 va03
 
 ************
 ***//Lift***
