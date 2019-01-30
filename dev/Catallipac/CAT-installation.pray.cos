@@ -1,12 +1,12 @@
 **CAOS2PRAY
 *# Pray-File "CoC_CAT.agents"
 *# DS-Name "CoC - The Catallipac"
-*# Agent Animation File = "fav_place_coccat.c16"
+*# Agent Animation File = "fav_place_coc_cat.c16"
 *# Agent Sprite First Image = 1
 *# desc = "This is the Catallipac. It is a whole new room to explore!\n\nRequires the Universal Hub!\n\nPart of Children of Capillata.\nDesigned by and images by Silvak.\nMaintained by and code by Zzzzoot."
 
-*# attach coc_cat.blk coccatdoor.c16 coccatvendor.c16 coccatvendormouth.c16 fav_place_coccat.c16 coc_sealift.c16
-*# Link CAT-door-events.cos CAT-empathic-vendor.cos CAT-lift-events.cos
+*# attach coc_catallipac.blk coc_cat_uhcat_door.c16 coc_cat_vendor.c16 coc_cat_vendor_mouth.c16 fav_place_coc_cat.c16 coc_lib_sealift.c16
+*# Link CAT-door-events.cos CAT-empathic-vendor-events.cos Lib-sealift-events.cos
 
 * Script 1 extracted from CoC_UH.agents by Mirality REVELATION
 * Thank you Mirality! -Zzzzoot
@@ -90,7 +90,7 @@ scrp 1 2 24403 1000
 
 		mapd 100000 100000
 
-		setv game "mapeditortmp" addm 39802 29359 1292 792 "coc_cat"
+		setv game "mapeditortmp" addm 39802 29359 1292 792 "coc_catallipac"
 		mmsc 40448 29755 ""
 		setv va00 addr game "mapeditortmp" 40104 40286 29585 29585 29798 29798
 		rtyp va00 5
@@ -219,7 +219,7 @@ scrp 1 2 24403 1000
 *			***************
 *			***FAV place***
 *			***************
-		new: simp 1 3 24401 "fav_place_CoCCAT" 1 0 1
+		new: simp 1 3 24401 "fav_place_coc_cat" 1 0 1
 		attr 272
 		mvto 40386 29650
 		cmrt 0
@@ -281,7 +281,7 @@ scrp 1 2 24403 1000
 **			ov01 - grendel entry
 **			ov02 - ettin entry
 * 			UH
-		new: comp 2 2 24403 "CoCCATdoor" 25 0 0
+		new: comp 2 2 24403 "coc_cat_uhcat_door" 25 0 0
 * 			mvto the location of the late dummy door
 		mvto va00 va01
 * 			user can click on door and when s/he does run script 1
@@ -293,9 +293,9 @@ scrp 1 2 24403 1000
 		setv ov00 1
 		setv ov01 1
 		setv ov02 1
-		pat: butt 1 "CoCCATdoor" 14 4 -33 22 0 [] 1000 0
-		pat: butt 2 "CoCCATdoor" 15 3 -33 45 0 [] 1001 0
-		pat: butt 3 "CoCCATdoor" 16 2 -33 70 0 [] 1002 0
+		pat: butt 1 "coc_cat_uhcat_door" 14 4 -33 22 0 [] 1000 0
+		pat: butt 2 "coc_cat_uhcat_door" 15 3 -33 45 0 [] 1001 0
+		pat: butt 3 "coc_cat_uhcat_door" 16 2 -33 70 0 [] 1002 0
 
 *			Catilapac
 		new: comp 2 2 24404 "DS door" 13 43 0
@@ -353,7 +353,7 @@ scrp 1 2 24403 1000
 ***************
 
 *new ZootLift
-		new: vhcl 3 1 24401 "coc_sealift" 2 0 310
+		new: vhcl 3 1 24401 "coc_lib_sealift" 2 0 310
 *agnt lift = targ
 		seta va02 targ
 *enum LiftState = Stationary
@@ -387,7 +387,7 @@ scrp 1 2 24403 1000
 ***Top Button***
 ****************
 *new ZootLiftButton
-		new: simp 2 12 24401 "coc_sealift" 2 2 310
+		new: simp 2 12 24401 "coc_lib_sealift" 2 2 310
 *agnt Lift = lift
 		seta ov03 va02
 *agnt ButtonAbove = previousButton
@@ -430,7 +430,7 @@ scrp 1 2 24403 1000
 ***Bottom***
 ************
 *new ZootLiftButton
-		new: simp 2 12 24401 "coc_sealift" 2 2 310
+		new: simp 2 12 24401 "coc_lib_sealift" 2 2 310
 *agnt Lift = lift
 		seta ov03 va02
 *agnt ButtonAbove = previousButton
@@ -491,18 +491,18 @@ scrp 1 2 24403 1000
 *			********************
 *			***EMPHATIC VENDOR**
 *			********************
-		new: comp 2 23 24401 "CoCCATvendor" 5 0 0
+		new: comp 2 23 24401 "coc_cat_vendor" 5 0 0
 		attr 0
 		bhvr 3
-		pat: butt 1 "CoCCATvendor" 17 7 -108 -45 0 [] 1000 0
-		pat: dull 2 "coccatvendormouth" 0 -111 -12 1
-		pat: butt 3 "CoCCATvendor" 5 2 -60 5 0 [] 1001 1
-		pat: butt 4 "CoCCATvendor" 7 2 -60 31 0 [] 1002 1
-		pat: butt 5 "CoCCATvendor" 9 2 -60 56 0 [] 1003 1
+		pat: butt 1 "coc_cat_vendor" 17 7 -108 -45 0 [] 1000 0
+		pat: dull 2 "coc_cat_vendor_mouth" 0 -111 -12 1
+		pat: butt 3 "coc_cat_vendor" 5 2 -60 5 0 [] 1001 1
+		pat: butt 4 "coc_cat_vendor" 7 2 -60 31 0 [] 1002 1
+		pat: butt 5 "coc_cat_vendor" 9 2 -60 56 0 [] 1003 1
 
-		pat: butt 6 "CoCCATvendor" 11 2 -193 7 0 [] 1004 1
-		pat: butt 7 "CoCCATvendor" 13 2 -193 33 0 [] 1005 1
-		pat: butt 8 "CoCCATvendor" 15 2 -193 58 0 [] 1006 1
+		pat: butt 6 "coc_cat_vendor" 11 2 -193 7 0 [] 1004 1
+		pat: butt 7 "coc_cat_vendor" 13 2 -193 33 0 [] 1005 1
+		pat: butt 8 "coc_cat_vendor" 15 2 -193 58 0 [] 1006 1
 
 		setv ov00 1
 *			** Save Meta Room for Checking for Hungry Creatures

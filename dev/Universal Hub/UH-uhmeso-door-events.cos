@@ -7,10 +7,10 @@ scrp 2 2 24401 10
 	attr 4
 	clac 0
 	bhvr 1
-	pat: dull 2 "CoCUHdoor" 1 34 29 0
+	pat: dull 2 "coc_uh_uhmeso_mesouh_door" 1 34 29 0
 	part 2
 	frat 2
-	pat: dull 1 "CoCUHdoor" 9 52 8 0
+	pat: dull 1 "coc_uh_uhmeso_mesouh_door" 9 52 8 0
 	part 1
 	pose 1
 endm
@@ -77,15 +77,15 @@ endm
 
 *Constructor
 scrp 2 2 24402 10
-	*dbg: outs "constructor uh side door"
+*dbg: outs "constructor uh side door"
 	attr 4
 	clac 0
 	bhvr 1
 	frat 2
-	pat: butt 1 "CoCUHdoor" 11 2 23 -24 0 [] 0 0
+	pat: butt 1 "coc_uh_uhmeso_mesouh_door" 11 2 23 -24 0 [] 0 0
 	part 1
 	pose 1
-	*dbg: outs "end constructor uh side door"
+*dbg: outs "end constructor uh side door"
 endm
 
 scrp 2 2 24402 1

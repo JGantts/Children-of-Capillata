@@ -1,12 +1,12 @@
 **CAOS2PRAY
 *# Pray-File "CoC_DAE.agents"
 *# DS-Name "CoC - Daedalus"
-*# Agent Animation File = "fav_place_cocdae.c16"
+*# Agent Animation File = "fav_place_coc_dae.c16"
 *# Agent Sprite First Image = 1
 *# desc = "This is  Daedalus. It is a whole new room to explore!\n\nRequires the Universal Hub!\n\nPart of Children of Capillata.\nDesigned by and images by Silvak.\nMaintained by and code by Zzzzoot."
 
-*# attach coc_dae.blk ball.c16 cocdaedoor.c16 cocdaepots.c16 fav_place_CoCDAE.c16 coc_c3lift.c16 boi2.wav clik.wav ding.wav env1.wav env2.wav
-*# Link ball.cos DAE-door-events.cos DAE-lift-events.cos DAE-pod-events.cos
+*# attach coc_daedalus.blk ball.c16 coc_dae_uhdae_daeuh_door.c16 coc_agents_pots.c16 fav_place_coc_dae.c16 coc_lib_c3lift.c16 boi2.wav clik.wav ding.wav
+*# Link DAE-ball-events.cos DAE-door-events.cos DAE-pod-events.cos Lib-c3lift-events.cos
 
 * Script 1 extracted from CoC_DAE.agents by Mirality REVELATION
 * Thank you Mirality! -Zzzzoot
@@ -91,7 +91,7 @@ scrp 1 2 24403 1000
 
 		mapd 100000 100000
 
-		setv game "mapeditortmp" addm 42411 29361 3612 808 "coc_dae"
+		setv game "mapeditortmp" addm 42411 29361 3612 808 "coc_daedalus"
 		mmsc 44217 29765 ""
 		setv va00 addr game "mapeditortmp" 42554 42641 29743 29743 29912 29913
 		rtyp va00 6
@@ -476,7 +476,7 @@ scrp 1 2 24403 1000
 *			***************
 *			***Fav Place***
 *			***************
-		new: simp 1 3 24403 "fav_place_CoCDAE" 1 0 1
+		new: simp 1 3 24403 "fav_place_coc_dae" 1 0 1
 		attr 272
 		mvto 44170 29546
 		cmrt 0
@@ -500,7 +500,7 @@ scrp 1 2 24403 1000
 **ov02 - ettin entry
 * UH
 
-		new: comp 2 2 24405 "CoCdaedoor" 14 18 0
+		new: comp 2 2 24405 "coc_dae_uhdae_daeuh_door" 14 18 0
 * mvto the location of the late dummy door
 		addv va00 1
 		mvto va00 va01
@@ -513,12 +513,12 @@ scrp 1 2 24403 1000
 		setv ov00 1
 		setv ov01 1
 		setv ov02 1
-		pat: butt 1 "CoCdaedoor" 14 4 147 22 0 [] 1000 0
-		pat: butt 2 "CoCdaedoor" 15 3 147 45 0 [] 1001 0
-		pat: butt 3 "CoCdaedoor" 16 2 147 70 0 [] 1002 0
+		pat: butt 1 "coc_dae_uhdae_daeuh_door" 14 4 147 22 0 [] 1000 0
+		pat: butt 2 "coc_dae_uhdae_daeuh_door" 15 3 147 45 0 [] 1001 0
+		pat: butt 3 "coc_dae_uhdae_daeuh_door" 16 2 147 70 0 [] 1002 0
 
 * DAE
-		new: comp 2 2 24406 "CoCdaedoor" 14 0 0
+		new: comp 2 2 24406 "coc_dae_uhdae_daeuh_door" 14 0 0
 		mvto 44095 29472
 * user can click on door and when s/he does run script 1
 		attr 4
@@ -531,11 +531,11 @@ scrp 1 2 24403 1000
 		setv ov01 1
 		setv ov02 1
 * norn
-		pat: butt 1 "CoCdaedoor" 14 4 147 22 0 [] 1000 0
+		pat: butt 1 "coc_dae_uhdae_daeuh_door" 14 4 147 22 0 [] 1000 0
 *grendel
-		pat: butt 2 "CoCdaedoor" 15 3 147 45 0 [] 1001 0
+		pat: butt 2 "coc_dae_uhdae_daeuh_door" 15 3 147 45 0 [] 1001 0
 *ettin
-		pat: butt 3 "CoCdaedoor" 16 2 147 70 0 [] 1002 0
+		pat: butt 3 "coc_dae_uhdae_daeuh_door" 16 2 147 70 0 [] 1002 0
 *			************
 *			***//Door***
 *			************
@@ -545,7 +545,7 @@ scrp 1 2 24403 1000
 ***Justanut Pot***
 *make the pot
 		reps 2
-			new: comp 2 4 24401 "cocdaepots" 1 0 rand 300 354
+			new: comp 2 4 24401 "coc_agents_pots" 1 0 rand 300 354
 			puhl 0 50 80
 			mvto rand 44800 45500 29600
 			attr 194
@@ -555,37 +555,37 @@ scrp 1 2 24403 1000
 *make the 7 lemon spots, use va00 for random parts and growth
 			setv name "5x" 15
 			setv name "5y" 17
-			pat: dull 5 "cocdaepots" 1 name "5x" name "5y" 1
+			pat: dull 5 "coc_agents_pots" 1 name "5x" name "5y" 1
 
 			setv name "7x" 15
 			setv name "7y" 35
-			pat: dull 7 "cocdaepots" 1 name "7x" name "7y" 1
+			pat: dull 7 "coc_agents_pots" 1 name "7x" name "7y" 1
 
 			setv name "6x" 43
 			setv name "6y" 10
-			pat: dull 6 "cocdaepots" 1 name "6x" name "6y" 1
+			pat: dull 6 "coc_agents_pots" 1 name "6x" name "6y" 1
 
 			setv name "4x" 40
 			setv name "4y" 30
-			pat: dull 4 "cocdaepots" 1 name "4x" name "4y" 1
+			pat: dull 4 "coc_agents_pots" 1 name "4x" name "4y" 1
 
 			setv name "2x" 30
 			setv name "2y" 53
-			pat: dull 2 "cocdaepots" 1 name "2x" name "2y" 1
+			pat: dull 2 "coc_agents_pots" 1 name "2x" name "2y" 1
 
 			setv name "1x" 66
 			setv name "1y" 26
-			pat: dull 1 "cocdaepots" 1 name "1x" name "1y" 1
+			pat: dull 1 "coc_agents_pots" 1 name "1x" name "1y" 1
 
 			setv name "3x" 56
 			setv name "3y" 46
-			pat: dull 3 "cocdaepots" 1 name "3x" name "3y" 1
+			pat: dull 3 "coc_agents_pots" 1 name "3x" name "3y" 1
 		repe
 
 ***Lemon Pot***
 *make the pod
 		reps 2
-			new: comp 2 4 24402 "cocdaepots" 1 7 rand 300 354
+			new: comp 2 4 24402 "coc_agents_pots" 1 7 rand 300 354
 			puhl 0 50 103
 			mvto rand 42600 43200 29700
 			attr 194
@@ -595,31 +595,31 @@ scrp 1 2 24403 1000
 *make the 7 lemon spots, use va00 for random parts and growth
 			setv name "5x" 15
 			setv name "5y" 13
-			pat: dull 5 "cocdaepots" 8 name "5x" name "5y" 1
+			pat: dull 5 "coc_agents_pots" 8 name "5x" name "5y" 1
 
 			setv name "7x" 15
 			setv name "7y" 33
-			pat: dull 7 "cocdaepots" 8 name "7x" name "7y" 1
+			pat: dull 7 "coc_agents_pots" 8 name "7x" name "7y" 1
 
 			setv name "6x" 43
 			setv name "6y" 8
-			pat: dull 6 "cocdaepots" 8 name "6x" name "6y" 1
+			pat: dull 6 "coc_agents_pots" 8 name "6x" name "6y" 1
 
 			setv name "4x" 40
 			setv name "4y" 27
-			pat: dull 4 "cocdaepots" 8 name "4x" name "4y" 1
+			pat: dull 4 "coc_agents_pots" 8 name "4x" name "4y" 1
 
 			setv name "2x" 30
 			setv name "2y" 50
-			pat: dull 2 "cocdaepots" 8 name "2x" name "2y" 1
+			pat: dull 2 "coc_agents_pots" 8 name "2x" name "2y" 1
 
 			setv name "1x" 66
 			setv name "1y" 23
-			pat: dull 1 "cocdaepots" 8 name "1x" name "1y" 1
+			pat: dull 1 "coc_agents_pots" 8 name "1x" name "1y" 1
 
 			setv name "3x" 56
 			setv name "3y" 43
-			pat: dull 3 "cocdaepots" 8 name "3x" name "3y" 1
+			pat: dull 3 "coc_agents_pots" 8 name "3x" name "3y" 1
 
 		repe
 *			************
@@ -803,7 +803,7 @@ scrp 1 2 24403 1000
 
 *Lift
 *		new ZootC3Lift()
-		new: vhcl 3 1 24402 "coc_c3lift" 4 0 50
+		new: vhcl 3 1 24402 "coc_lib_c3lift" 4 0 50
 *		lift = targ
 		seta va00 targ
 		bhvr 3
@@ -827,20 +827,20 @@ scrp 1 2 24403 1000
 *		ButtonDestination = promiseNotNullAfterInstall
 		seta ov31 null
 *		Door = newPart()
-		pat: dull 1 "coc_c3lift" 4 0 0 200
+		pat: dull 1 "coc_lib_c3lift" 4 0 0 200
 		cabn 0 0 121 144
 		cabw 5
 *		UpButton = newPart()
-		pat: butt 2 "coc_c3lift" 14 1 52 68 0 [] 0 0
+		pat: butt 2 "coc_lib_c3lift" 14 1 52 68 0 [] 0 0
 *		DownButton = newPart()
-		pat: butt 3 "coc_c3lift" 14 1 52 82 0 [] 1 0
+		pat: butt 3 "coc_lib_c3lift" 14 1 52 82 0 [] 1 0
 *		Door.Pose.Open
 		part 1
 		pose 7
 
 *Top Button
 *		new ZootC3LiftButton
-		new: simp 2 12 24402 "coc_c3lift" 2 12 5000
+		new: simp 2 12 24402 "coc_lib_c3lift" 2 12 5000
 *		currentButton = targ
 		seta va01 targ
 		bhvr 1
@@ -868,7 +868,7 @@ scrp 1 2 24403 1000
 
 *Middle Button
 *		new ZootC3LiftButton
-		new: simp 2 12 24402 "coc_c3lift" 2 12 5000
+		new: simp 2 12 24402 "coc_lib_c3lift" 2 12 5000
 *		currentButton = targ
 		seta va01 targ
 		bhvr 1
@@ -908,7 +908,7 @@ scrp 1 2 24403 1000
 
 *BottomButton
 *		new ZootC3LiftButton
-		new: simp 2 12 24402 "coc_c3lift" 2 12 5000
+		new: simp 2 12 24402 "coc_lib_c3lift" 2 12 5000
 *		currentButton = targ
 		seta va01 targ
 		bhvr 1
