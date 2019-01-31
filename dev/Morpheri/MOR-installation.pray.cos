@@ -6,7 +6,7 @@
 *# desc = "This is Morpheri. It is a whole new room to explore!\n\nRequires the Universal Hub!\n\nPart of Children of Capillata.\nConcept for Children of Capillata by Silvak.\nDesign and images by Zequr.\nMaintained by and code by Zzzzoot."
 
 *# attach coc_morpheri.blk coc_mor_moruh_door.c16 coc_mor_uhmor_door.c16 fav_place_coc_mor.c16 coc_lib_c3lift.c16 Mor.catalogue boi2.wav clik.wav ding.wav
-*# Link MOR-door-events.cos Lib-c3lift-events.cos
+*# Link MOR-door-events.cos LIB-c3lift-events.cos
 
 * Script 1 extracted from Mor.agents by Mirality REVELATION
 * Thank you Mirality! -Zzzzoot
