@@ -1,12 +1,12 @@
 **CAOS2PRAY
 *# Pray-File "CoC_MOR.agents"
 *# DS-Name "CoC - Morpheri"
-*# Agent Animation File = "fav_place_CoC_Mor.c16"
+*# Agent Animation File = "fav_place_coc_mor.c16"
 *# Agent Sprite First Image = 1
 *# desc = "This is Morpheri. It is a whole new room to explore!\n\nRequires the Universal Hub!\n\nPart of Children of Capillata.\nConcept for Children of Capillata by Silvak.\nDesign and images by Zequr.\nMaintained by and code by Zzzzoot."
 
-*# attach Morpheri.blk cocmordoor.c16 ettin_doors.c16 fav_place_CoC_Mor.c16 coc_c3lift.c16 Mor.catalogue boi2.wav clik.wav ding.wav
-*# Link MOR-door-events.cos MOR-lift-events.cos
+*# attach coc_morpheri.blk coc_mor_moruh_door.c16 coc_mor_uhmor_door.c16 fav_place_coc_mor.c16 coc_lib_c3lift.c16 Mor.catalogue boi2.wav clik.wav ding.wav
+*# Link MOR-door-events.cos LIB-c3lift-events.cos
 
 * Script 1 extracted from Mor.agents by Mirality REVELATION
 * Thank you Mirality! -Zzzzoot
@@ -90,7 +90,7 @@ scrp 1 2 24403 1000
 
 		mapd 100000 100000
 
-		setv game "mapeditortmp" addm 39803 30310 1260 900 "Morpheri"
+		setv game "mapeditortmp" addm 39803 30310 1260 900 "coc_morpheri"
 		mmsc 40433 30760 ""
 		setv va00 addr game "mapeditortmp" 39877 40138 30458 30319 30560 30560
 		rtyp va00 5
@@ -311,7 +311,7 @@ scrp 1 2 24403 1000
 *			***************
 *			***FAV place***
 *			***************
-		new: simp 1 3 24404 "fav_place_CoC_Mor" 1 0 1
+		new: simp 1 3 24404 "fav_place_coc_mor" 1 0 1
 		attr 272
 		mvto 40416 30789
 		cmrt 0
@@ -381,7 +381,7 @@ scrp 1 2 24403 1000
 
 * UH
 
-		new: comp 2 2 24407 "cocmordoor" 14 0 0
+		new: comp 2 2 24407 "coc_mor_uhmor_door" 14 0 0
 * mvto the location of the late dummy door
 		addv va00 1
 		mvto va00 va01
@@ -394,12 +394,12 @@ scrp 1 2 24403 1000
 		setv ov00 1
 		setv ov01 1
 		setv ov02 1
-		pat: butt 1 "CoCmordoor" 14 4 -35 22 0 [] 1000 0
-		pat: butt 2 "CoCmordoor" 15 3 -35 45 0 [] 1000 0
-		pat: butt 3 "CoCmordoor" 16 2 -35 70 0 [] 1000 0
+		pat: butt 1 "coc_mor_uhmor_door" 14 4 -35 22 0 [] 1000 0
+		pat: butt 2 "coc_mor_uhmor_door" 15 3 -35 45 0 [] 1000 0
+		pat: butt 3 "coc_mor_uhmor_door" 16 2 -35 70 0 [] 1000 0
 
 * MOR
-		new: comp 2 2 24408 "ettin_doors" 4 4 0
+		new: comp 2 2 24408 "coc_mor_moruh_door" 4 4 0
 		mvto 39994 30956
 * user can click on door and when s/he does run script 1
 		attr 4
@@ -422,7 +422,7 @@ scrp 1 2 24403 1000
 *			**********
 
 *		new ZootC3Lift()
-		new: vhcl 3 1 24402 "coc_c3lift" 4 0 50
+		new: vhcl 3 1 24402 "coc_lib_c3lift" 4 0 50
 *		lift = targ
 		seta va00 targ
 		bhvr 3
@@ -442,20 +442,20 @@ scrp 1 2 24403 1000
 *		ButtonDestination? = null
 		seta ov31 null
 *		Door = newPart()
-		pat: dull 1 "coc_c3lift" 4 0 0 200
+		pat: dull 1 "coc_lib_c3lift" 4 0 0 200
 		cabn 0 0 121 144
 		cabw 5
 *		UpButton = newPart()
-		pat: butt 2 "coc_c3lift" 14 1 52 68 0 [] 0 0
+		pat: butt 2 "coc_lib_c3lift" 14 1 52 68 0 [] 0 0
 *		DownButton = newPart()
-		pat: butt 3 "coc_c3lift" 14 1 52 82 0 [] 1 0
+		pat: butt 3 "coc_lib_c3lift" 14 1 52 82 0 [] 1 0
 *		Door.Pose.Open
 		part 1
 		pose 7
 
 *Top Button
 *		new ZootC3LiftButton
-		new: simp 2 12 24402 "coc_c3lift" 2 12 5000
+		new: simp 2 12 24402 "coc_lib_c3lift" 2 12 5000
 *		currentButton = targ
 		seta va01 targ
 		bhvr 1
@@ -488,7 +488,7 @@ scrp 1 2 24403 1000
 
 *Middle Button
 *		new ZootC3LiftButton
-		new: simp 2 12 24402 "coc_c3lift" 2 12 5000
+		new: simp 2 12 24402 "coc_lib_c3lift" 2 12 5000
 *		currentButton = targ
 		seta va01 targ
 		bhvr 1
@@ -523,7 +523,7 @@ scrp 1 2 24403 1000
 
 *BottomButton
 *		new ZootC3LiftButton
-		new: simp 2 12 24402 "coc_c3lift" 2 12 5000
+		new: simp 2 12 24402 "coc_lib_c3lift" 2 12 5000
 *		currentButton = targ
 		seta va01 targ
 		bhvr 1

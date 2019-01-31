@@ -1,12 +1,12 @@
 **CAOS2PRAY
 *# Pray-File "CoC_UH.agents"
 *# DS-Name "CoC - Universal Hub"
-*# Agent Animation File = "fav_place_cocuh.c16"
+*# Agent Animation File = "fav_place_coc_uh.c16"
 *# Agent Sprite First Image = 1
 *# desc = "A room of blank doors with one fixed door leading to the Norn Meso.\nIf you would like to use a door for your metaroom please contact Zzzzoot.\n\nPart of Children of Capillata.\nDesigned by and images by Silvak.\nMaintained by and code by Zzzzoot."
 
-*# attach CoC.catalogue coc_uh.blk coc_uh_door_overlay.c16 cocuhdoor.c16 fav_place_cocuh.c16
-*# Link UH-MesoDoorScripts.cos
+*# attach CoC.catalogue coc_universal_hub.blk coc_uh_door_overlay.c16 coc_uh_uhmeso_mesouh_door.c16 fav_place_coc_uh.c16
+*# Link UH-uhmeso-door-events.cos
 
 * Script 1 extracted from CoC_UH.agents by Mirality REVELATION
 * Thank you Mirality! -Zzzzoot
@@ -51,7 +51,7 @@ ptxt read "zot_UH" 0
 
 *kill dialog
 scrp 1 2 24403 1001
-    kill ownr
+	kill ownr
 endm
 
 ***close text box and install the agent
@@ -80,7 +80,7 @@ scrp 1 2 24403 1000
 
 		mapd 100000 100000
 
-		setv game "mapeditortmp" addm 41096 29360 1204 608 "coc_uh"
+		setv game "mapeditortmp" addm 41096 29360 1204 608 "coc_universal_hub"
 		mmsc 41698 29664 ""
 		setv va00 addr game "mapeditortmp" 41134 41371 29550 29550 29739 29739
 		rtyp va00 0
@@ -189,7 +189,7 @@ scrp 1 2 24403 1000
 *	***************
 *	***Fav Place***
 *	***************
-		new: simp 1 3 24402 "fav_place_CoCUH" 1 0 1
+		new: simp 1 3 24402 "fav_place_coc_uh" 1 0 1
 		attr 272
 		mvto 41696 29684
 		cmrt 0
@@ -209,13 +209,13 @@ scrp 1 2 24403 1000
 		endi
 
 * DS side door
-		new: comp 2 2 24401 "CoCUHdoor" 6 0 0
+		new: comp 2 2 24401 "coc_uh_uhmeso_mesouh_door" 6 0 0
 		tint 140 140 140 127 127
 		mvto 1590 9128
 		setv va00 room targ
 
 * UH side door
-		new: comp 2 2 24402 "CoCUHdoor" 4 5 0
+		new: comp 2 2 24402 "coc_uh_uhmeso_mesouh_door" 4 5 0
 		mvto 41666 29622
 		link va00 room targ 5
 
@@ -244,6 +244,6 @@ scrp 1 2 24403 1000
 *	***//Dummy Doors***
 *	*******************
 		setv game "CoC_UH" 1
-        kill ownr
+		kill ownr
 	endi
 endm
