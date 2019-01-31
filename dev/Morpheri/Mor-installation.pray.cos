@@ -48,7 +48,7 @@ subv va91 va93
 flto va90 va91
 **/
 part 3
-ptxt "Morpheri v1.2.0.3-alpha"
+ptxt "Morpheri v1.2.0.4-alpha"
 part 1
 ptxt read "zot_Mor" 0
 
@@ -502,7 +502,7 @@ scrp 1 2 24403 1000
 		setv ov00 0
 *		Lift = lift
 		seta ov16 va00
-*		ButtonAbove? = previousButton 
+*		ButtonAbove? = previousButton
 		seta ov20 va02
 *		ButtonBelow? = null
 		seta ov21 null
@@ -537,7 +537,7 @@ scrp 1 2 24403 1000
 		setv ov00 0
 *		Lift = lift
 		seta ov16 va00
-*		ButtonAbove? = previousButton 
+*		ButtonAbove? = previousButton
 		seta ov20 va02
 *		ButtonBelow? = null
 		seta ov21 null
