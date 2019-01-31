@@ -417,7 +417,7 @@ scrp 1 2 24403 1000
 *if(previousButtonsRoom != null)
 		doif va01 <> -1
 *link previousButoo
-			link va01 room targ 0.75
+			link va01 room targ 100
 		endi
 *numb previousButtonsRoom = room targ
 		setv va01 room targ
@@ -460,7 +460,7 @@ scrp 1 2 24403 1000
 *if(previousButtonsRoom != null)
 		doif va01 <> -1
 *link previousButoo
-			link va01 room targ 0.75
+			link va01 room targ 100
 		endi
 *numb previousButtonsRoom = room targ
 		setv va01 room targ
