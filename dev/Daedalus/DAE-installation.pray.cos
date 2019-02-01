@@ -5,7 +5,7 @@
 *# Agent Sprite First Image = 1
 *# desc = "This is  Daedalus. It is a whole new room to explore!\n\nRequires the Universal Hub!\n\nPart of Children of Capillata.\nDesigned by and images by Silvak.\nMaintained by and code by Zzzzoot."
 
-*# attach coc_daedalus.blk ball.c16 coc_dae_uhdae_daeuh_door.c16 coc_agents_pots.c16 fav_place_coc_dae.c16 coc_lib_c3lift.c16 boi2.wav clik.wav ding.wav
+*# attach coc_daedalus.blk ball.c16 coc_dae_uhdae_daeuh_door.c16 coc_agents_pots.c16 fav_place_coc_dae.c16 coc_lib_c3lift.c16 boi2.wav but1.wav clik.wav ding.wav hit_.wav
 *# Link DAE-ball-events.cos DAE-door-events.cos DAE-pod-events.cos LIB-c3lift-events.cos
 
 * Script 1 extracted from CoC_DAE.agents by Mirality REVELATION
