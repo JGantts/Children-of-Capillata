@@ -5,7 +5,7 @@
 *# Agent Sprite First Image = 0
 *# desc = "v1.2.0.4-alpha\n\nAdds items to be vended by the original Empathic Vendor. The items added are Bramboo Berries, Tuba, Justanut, Hi-bounce Rubber Ball and Robot Toy.\n\nCoded by Zzzzoot and graphics by Silvak."
 
-*# attach coc_agents_empathic_vendor_update.c16 coc_cat_vendor.c16 dsqu.wav
+*# attach coc_agents_empathic_vendor_update.c16 coc_cat_vendor.c16 4bep.wav chwp.wav dr10.wav dsqu.wav empb.wav empd.wav empv.wav reat.wav
 
 *$Id: empathic040vendor.cos,v 1.16 2001/01/17 09:31:23 mashton Exp $
 *********************************
