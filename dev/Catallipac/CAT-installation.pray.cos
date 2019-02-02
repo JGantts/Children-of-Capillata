@@ -3,7 +3,7 @@
 *# DS-Name "CoC - The Catallipac"
 *# Agent Animation File = "fav_place_coc_cat.c16"
 *# Agent Sprite First Image = 1
-*# desc = "This is the Catallipac. It has an egg hatchery up top.\n\nRequires the Universal Hub!\n\nPart of Children of Capillata.\nDesigned by and images by Silvak.\nMaintained by and code by Zzzzoot."
+*# desc = "This is the Catallipac. It has an egg hatchery up top.\n\nRequires the Universal Hub!\n\nPart of the Children of Capillata. Designed by and images by Silvak. Maintained by and code by Zzzzoot."
 
 *# attach coc_catallipac.blk coc_cat_uhcat_door.c16 coc_cat_vendor.c16 coc_cat_vendor_mouth.c16 fav_place_coc_cat.c16 coc_lib_sealift.c16 4bep.wav chwp.wav dr10.wav empb.wav empd.wav empv.wav reat.wav
 *# Link CAT-door-events.cos CAT-empathic-vendor-events.cos LIB-sealift-events.cos
