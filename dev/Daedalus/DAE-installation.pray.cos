@@ -3,7 +3,7 @@
 *# DS-Name "CoC - Daedalus"
 *# Agent Animation File = "fav_place_coc_dae.c16"
 *# Agent Sprite First Image = 1
-*# desc = "This is  Daedalus. It's a whole new room to explore with something for all creatures!\n\nRequires the Universal Hub!\n\nPart of the Children of Capillata. Designed by and images by Silvak. Maintained by and code by Zzzzoot."
+*# desc = "This is Daedalus. It's a whole new room to explore with something for all creatures!\n\nRequires the Universal Hub!\n\nPart of the Children of Capillata. Designed by and images by Silvak. Maintained by and code by Zzzzoot."
 
 *# attach coc_daedalus.blk ball.c16 coc_dae_uhdae_daeuh_door.c16 coc_agents_pots.c16 fav_place_coc_dae.c16 coc_lib_c3lift.c16 boi2.wav but1.wav clik.wav ding.wav hit_.wav
 *# Link DAE-ball-events.cos DAE-door-events.cos DAE-pod-events.cos LIB-c3lift-events.cos
