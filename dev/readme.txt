@@ -6,15 +6,15 @@ A room of blank doors with one fixed door leading to the Norn Meso.
 If you would like to use a door for your metaroom please contact Zzzzoot.
 
 =The Catillipac=
-A whole new room to explore!
+It has an egg hatchery up top.
 Requires the Universal Hub.
 
 =Daedalus=
-A whole new room to explore!
+A whole new room to explore with something for all creatures!
 Requires the Universal Hub.
 
 =Morpheri=
-A whole new room to explore!
+A quaint little room with some grass.
 Requires the Universal Hub.
 Images by Zequr
 Code by Zzzzoot
