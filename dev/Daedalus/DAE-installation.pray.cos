@@ -741,7 +741,7 @@ scrp 1 2 24403 1000
 			addv va02 30
 			mvto va00 va02
 *			emit heat, constantly
-			emit 2 .01
+			emit 2 .5
 *		water emiter
 			new: simp 1 1 24402 "blnk" 1 0 0
 			addv va02 30

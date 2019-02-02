@@ -344,6 +344,21 @@ scrp 1 2 24403 1000
 		mvto 40666 29531
 		tick 60
 		emit 15 .25
+
+**			CAT Heat Pan Heat
+		new: simp 1 1 24401 "blnk" 1 0 0
+		attr 16
+
+		mvto 40602 29509
+		tick 50
+		emit 2 1
+
+		new: simp 1 1 24401 "blnk" 1 0 0
+		attr 16
+
+		mvto 40666 29511
+		tick 60
+		emit 2 1
 *			****************
 *			***//Heat Pan***
 *			****************
