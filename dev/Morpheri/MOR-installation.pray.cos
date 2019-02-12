@@ -558,6 +558,36 @@ scrp 1 2 24403 1000
 *			***//Lift***
 *			************
 
+*			**********
+*			***Robot**
+*			**********
+		new: simp 2 21 20 "robot_toy" 23 0 2000
+		attr 199
+*			act1, act2, hit, pickup
+		bhvr 43
+		elas 20
+		accg 3
+		aero 10
+		fric 70
+		perm 60
+
+		puhl -1 25 50
+
+		setv ov10 rand 0 1
+		doif ov10 eq 0
+			setv ov10 -1
+		endi
+		doif ov10 lt 0
+			pose 0
+		else
+			pose 12
+		endi
+
+
+		mvsf 40488 30755
+*			************
+*			***//Robot**
+*			************
 
 		setv game "CoC_MOR" 1
 		kill ownr
