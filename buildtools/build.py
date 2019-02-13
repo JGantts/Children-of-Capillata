@@ -27,8 +27,15 @@ def main():
 		assert(versionArrayOld[0].isdigit())
 		assert(versionArrayOld[1].isdigit())
 		assert(versionArrayOld[2].isdigit())
-		assert(versionArrayOld[3].isdigit() or versionArrayOld[3]=="-1")
-		newBuildNumber = str(int(versionArrayOld[3]) + 1)
+		assert(versionArrayOld[3].isdigit()
+			or versionArrayOld[3]=="-1"
+			or versionArrayOld[3]=="x")
+		oldBuildNumber = versionArrayOld[3]
+		if(oldBuildNumber.isdigit() or oldBuildNumber=="-1"):
+			newBuildNumber = str(int(oldBuildNumber) + 1)
+		else:
+# Uninitialized repo clone. Start at 1
+			newBuildNumber = "1"
 		versionArrayOld[3] = newBuildNumber
 		global VersionArray
 		VersionArray = versionArrayOld
@@ -56,6 +63,9 @@ def main():
 	os.makedirs(ReleaseTemp)
 
 	for dirpath, dirnames, filenames in os.walk(Dev):
+		#for filename in [f for f in filenames if f.endswith(FileTypesToParse)]:
+
+
 		for filename in [f for f in filenames if f.endswith(".pray.cos")]:
 	#	Package using Monk
 			fullPathCos = os.path.join(dirpath, filename)
