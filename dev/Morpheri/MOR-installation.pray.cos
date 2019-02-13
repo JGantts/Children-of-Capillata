@@ -48,7 +48,7 @@ subv va91 va93
 flto va90 va91
 **/
 part 3
-ptxt "Morpheri [[<[[Format: version, vA.B, vA.B.C.D-T]]>]]"
+ptxt "Morpheri [[<[[Format: version, vA.B|vA.B.C.D-T]]>]]"
 part 1
 ptxt read "zot_Mor" 0
 

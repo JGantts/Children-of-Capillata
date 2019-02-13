@@ -47,7 +47,7 @@ subv va91 va93
 flto va90 va91
 **/
 part 3
-ptxt "Daedalus Version [[<[[Format: version, vA.B, vA.B.C.D-T]]>]]"
+ptxt "Daedalus Version [[<[[Format: version, vA.B|vA.B.C.D-T]]>]]"
 
 part 1
 ptxt read "zot_DAE" 0
