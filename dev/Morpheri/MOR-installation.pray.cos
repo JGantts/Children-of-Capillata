@@ -77,7 +77,7 @@ scrp 1 2 24403 1000
 		pat: kill 2
 		pat: butt 2 "useful_screen" 13 2 122 290 0 [0 1 255] 1001 0
 		part 1
-		ptxt "You need to inject the Universal Hub first. Go to this webpage to get it:\n\nhttp://creatures.wikia.com/wiki/Universal_Hub"
+		ptxt "You need to inject the Universal Hub first. Go to this webpage to get it:\n\nhttps://creatures.wiki/Universal_Hub"
 	else
 *			*********
 *			***MAP***
@@ -588,6 +588,42 @@ scrp 1 2 24403 1000
 *			************
 *			***//Robot**
 *			************
+
+*			****************
+*			***DS Carrots***
+*			****************
+** Scatter some 
+setv va00 40610
+setv va01 30534
+reps 10
+	inst
+	new: simp 2 11 9 "carr" 0 0 563
+	attr 208
+	bhvr 0
+	perm 64
+	accg 4
+	aero 3
+	elas 20
+	fric 100
+	pose 18
+	mvto va00 va01
+	emit 8 0
+	tick 1
+** Which way does it face?
+	setv va03 rand 0 1
+	doif va03 = 0
+		sets name "direction" "left"
+	elif va03 = 1
+		sets name "direction" "right"
+	endi
+	setv ov00 1
+	addv va00 rand 10 70
+** OV99 = 1 allows me to bypass the environment check just for these initial carrots
+	setv ov99 1
+repe
+*			****************
+*			**//DS Carrots**
+*			****************
 
 		setv game "CoC_MOR" 1
 		kill ownr
