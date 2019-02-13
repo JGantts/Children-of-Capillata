@@ -10,7 +10,7 @@ PathToMonk = r"Jagent\Monk.jar"		#relative to build.py
 Readme = "readme.txt"				#relative to dev
 Versionfile = "version.txt"			#relative to build.py
 
-FileTypesToParse= [".txt",".cos",".pray.cos"]
+FileTypesToParse= (".txt",".cos",".pray.cos")
 
 ReleaseName = "Children of Capillata"
 
@@ -51,7 +51,7 @@ def main():
 	print("         " + Formatter.getFormat("version", "N vW.X|vW.X.Y.Z-T"))
 	print("")
 
-	#clear out or make release file
+	#clear out or make release folder
 	if os.path.exists(Release):
 		for root, dirs, files in os.walk(Release):
 			for f in files:
@@ -63,36 +63,74 @@ def main():
 	os.makedirs(ReleaseTemp)
 
 	for dirpath, dirnames, filenames in os.walk(Dev):
-		#for filename in [f for f in filenames if f.endswith(FileTypesToParse)]:
+		if(len(filenames)!=0):
+			print("Processing " + os.path.join(dirpath))
+# Replace all ReSTing's (Replacement System Thing piece of text) with their parsed outputs.
+# For example:
+	#[[<[[Format: version, vA.B|vA.B.C.D-T]]>]]
+#	may become
+#	v1.3
+#	or
+#	V1.3.0.1-alpha
+		for filename in [f for f in filenames if f.endswith(FileTypesToParse)]:
+			fullPathFile = os.path.join(dirpath, filename)
+			print("Backing up " + fullPathFile)
 
+			with open(fullPathFile, 'r+') as f:
+				text = f.read()
+# Make backup of original file
+				with open(fullPathFile + ".bak", 'w') as backupFile:
+					backupFile.write(text)
+
+				f.seek(0)
+				f.write(Parser.parse(text))
+				f.truncate()
 
 		for filename in [f for f in filenames if f.endswith(".pray.cos")]:
-	#	Package using Monk
+# Package using Monk
 			fullPathCos = os.path.join(dirpath, filename)
-			print("Packaging " + fullPathCos)
+			print("Packaging  " + fullPathCos)
 			syatemArg = PathToMonk + " " + "\"" + fullPathCos + "\""
 			os.system(syatemArg)
 			for dirpath, dirnames, filenames in os.walk(dirpath):
 				for filename in [f for f in filenames if f.endswith(".agents")]:
-	#	Moving the .agents to the releaseTemp folder
+# Moving the .agents to the releaseTemp folder
 					fullPathAgent = os.path.join(dirpath, filename)
 					newName = os.path.join(ReleaseTemp, filename)
-					print("Moving    " + newName)
+					print("Moving     " + newName)
 					if os.path.exists(newName):
 						os.remove(newName)
 					os.rename(fullPathAgent, newName)
+		if(len(filenames)!=0):
+			print("End        " + os.path.join(dirpath), end="\n\n")
+
 	#	Copy the readme
 	readmeDestination = os.path.join(ReleaseTemp, Readme)
-	print("Copying   " + readmeDestination)
+	print("\nCopying    " + readmeDestination)
 	if os.path.exists(readmeDestination):
 		os.remove(readmeDestination)
 	shutil.copyfile(os.path.join(Dev, Readme), readmeDestination)
 
 	#	Zip up files
 	zipFile = os.path.join(Release, Formatter.getFormat("version", "N vW.X|vW.X.Y.Z-T"))
-	print("Zipping   " + zipFile + ".zip")
+	print("Zipping    " + zipFile + ".zip")
 	shutil.make_archive(zipFile, 'zip', ReleaseTemp)
 	shutil.rmtree(ReleaseTemp)
+
+# Replace original files with backups
+	print("")
+	for dirpath, dirnames, filenames in os.walk(Dev):
+		for filename in [f for f in filenames if f.endswith(".bak")]:
+			fullPathFileWithBak = os.path.join(dirpath, filename)
+			fullPathFileNoBak = fullPathFileWithBak.replace(".bak", "")
+			print("Deleting   " + fullPathFileWithBak)
+			os.remove(fullPathFileNoBak)
+			os.rename(fullPathFileWithBak, fullPathFileNoBak)
+
+class Parser():
+	@staticmethod
+	def parse(fileIn):
+		return(fileIn)
 
 class Formatter():
 	types = ["version", "date"]
@@ -154,6 +192,7 @@ class Formatter():
 					VersionArray[1] )
 			elif(type == cls.ReleaseType.BETA):
 					toReturn = (
+					"v" +
 					VersionArray[0] +
 					"." +
 					VersionArray[1] +
@@ -161,6 +200,7 @@ class Formatter():
 					VersionArray[2] )
 			else:
 					toReturn = (
+					"v" +
 					VersionArray[0] +
 					"." +
 					VersionArray[1] +
