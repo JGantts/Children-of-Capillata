@@ -2,59 +2,197 @@ import os;
 import time;
 import zipfile
 import shutil
+import traceback
 
-dev = r"..\dev"						#relative to build.py
-release = r"..\release"				#relative to build.py
-pathToMonk = r"Jagent\Monk.jar"		#relative to build.py
-readme = "readme.txt"				#relative to dev
-versionfile = "version.txt"			#relative to build.py
+Dev = r"..\dev"						#relative to build.py
+Release = r"..\release"				#relative to build.py
+PathToMonk = r"Jagent\Monk.jar"		#relative to build.py
+Readme = "readme.txt"				#relative to dev
+Versionfile = "version.txt"			#relative to build.py
 
-releaseTemp = os.path.join(release, "temp")
+FileTypesToParse= [".txt",".cos",".pray.cos"]
 
-#read in version from versionFile
-with open(versionfile, 'r') as content_file:
-	version = content_file.readline().rstrip()
-print("Building " + version)
+ReleaseName = "Children of Capillata"
 
-#clear out or make release file
-if os.path.exists(release):
-	for root, dirs, files in os.walk(release):
-		for f in files:
-			os.unlink(os.path.join(root, f))
-		for d in dirs:
-			shutil.rmtree(os.path.join(root, d))
-else:
-	os.makedirs(release)
-os.makedirs(releaseTemp)
+ReleaseTemp = os.path.join(Release, "temp")
+VersionArray = ["0", "0", "0", "0"]
 
-for dirpath, dirnames, filenames in os.walk(dev):
-	for filename in [f for f in filenames if f.endswith(".pray.cos")]:
-#	Package using Monk
-		fullPathCos = os.path.join(dirpath, filename)
-		print("Packaging " + fullPathCos)
-		syatemArg = pathToMonk + " " + "\"" + fullPathCos + "\""
-		os.system(syatemArg)
-		for dirpath, dirnames, filenames in os.walk(dirpath):
-			for filename in [f for f in filenames if f.endswith(".agents")]:
-#	Moving the .agents to the releaseTemp folder
-				fullPathAgent = os.path.join(dirpath, filename)
-				newName = os.path.join(releaseTemp, filename)
-				print("Moving    " + newName)
-				if os.path.exists(newName):
-					os.remove(newName)
-				os.rename(fullPathAgent, newName)
-#	Copy the readme
-readmeDestination = os.path.join(releaseTemp, readme)
-print("Copying   " + readmeDestination)
-if os.path.exists(readmeDestination):
-	os.remove(readmeDestination)
-shutil.copyfile(os.path.join(dev, readme), readmeDestination)
+def main():
+	#read in version from versionFile, update it, and save it to versionFile
+	with open(Versionfile, 'r+') as f:
+		versionFileLineOld = f.readline().rstrip()
+	#Find last build number and add 1 to it
+		versionArrayOld = versionFileLineOld.split(".")
+		assert(len(versionArrayOld) == 4)
+		assert(versionArrayOld[0].isdigit())
+		assert(versionArrayOld[1].isdigit())
+		assert(versionArrayOld[2].isdigit())
+		assert(versionArrayOld[3].isdigit() or versionArrayOld[3]=="-1")
+		newBuildNumber = str(int(versionArrayOld[3]) + 1)
+		versionArrayOld[3] = newBuildNumber
+		global VersionArray
+		VersionArray = versionArrayOld
+		versionFileLineNew = '.'.join(VersionArray)
+	#Save new version
+		f.seek(0)
+		f.write(versionFileLineNew + "\n")
+		f.truncate()
 
-#	Zip up files
-zipFile = os.path.join(release, version)
-print("Zipping   " + zipFile + ".zip")
-shutil.make_archive(zipFile, 'zip', releaseTemp)
-shutil.rmtree(releaseTemp)
+	print("Building " + versionFileLineNew)
+	print("         " + Formatter.getFormat("version", "vW.X|vW.X.Y|vW.X.Y.Z"))
+	print("         " + Formatter.getFormat("version", "vW.X|vW.X.Y.Z-T"))
+	print("         " + Formatter.getFormat("version", "N vW.X|vW.X.Y.Z-T"))
+	print("")
 
-print("done")
-#time.sleep(100)
+	#clear out or make release file
+	if os.path.exists(Release):
+		for root, dirs, files in os.walk(Release):
+			for f in files:
+				os.unlink(os.path.join(root, f))
+			for d in dirs:
+				shutil.rmtree(os.path.join(root, d))
+	else:
+		os.makedirs(Release)
+	os.makedirs(ReleaseTemp)
+
+	for dirpath, dirnames, filenames in os.walk(Dev):
+		for filename in [f for f in filenames if f.endswith(".pray.cos")]:
+	#	Package using Monk
+			fullPathCos = os.path.join(dirpath, filename)
+			print("Packaging " + fullPathCos)
+			syatemArg = PathToMonk + " " + "\"" + fullPathCos + "\""
+			os.system(syatemArg)
+			for dirpath, dirnames, filenames in os.walk(dirpath):
+				for filename in [f for f in filenames if f.endswith(".agents")]:
+	#	Moving the .agents to the releaseTemp folder
+					fullPathAgent = os.path.join(dirpath, filename)
+					newName = os.path.join(ReleaseTemp, filename)
+					print("Moving    " + newName)
+					if os.path.exists(newName):
+						os.remove(newName)
+					os.rename(fullPathAgent, newName)
+	#	Copy the readme
+	readmeDestination = os.path.join(ReleaseTemp, Readme)
+	print("Copying   " + readmeDestination)
+	if os.path.exists(readmeDestination):
+		os.remove(readmeDestination)
+	shutil.copyfile(os.path.join(Dev, Readme), readmeDestination)
+
+	#	Zip up files
+	zipFile = os.path.join(Release, Formatter.getFormat("version", "N vW.X|vW.X.Y.Z-T"))
+	print("Zipping   " + zipFile + ".zip")
+	shutil.make_archive(zipFile, 'zip', ReleaseTemp)
+	shutil.rmtree(ReleaseTemp)
+
+class Formatter():
+	types = ["version", "date"]
+
+	class ReleaseType():
+		FULL = 0  # 1.0|1.1 Regular release
+		BETA = 1  # 1.1.1   Beta test release
+		ALPHA = 2 # 1.1.1.1 Alpha test (maybe release)
+
+	@staticmethod
+	def validType(value):
+		assert(isinstance(value, str))
+		return any(type == value for type in Formatter.types)
+
+	@classmethod
+	def getFormat(cls, formatType, formatArgment):
+		assert(Formatter.validType(formatType))
+		assert(isinstance(formatArgment, str))
+
+		if( VersionArray[3]!="0" ):
+# x.x.x.1
+			type = cls.ReleaseType.ALPHA
+		elif( VersionArray[2]!="0" ):
+# x.x.1.0
+			type = cls.ReleaseType.BETA
+		else:
+# x.x.0.0
+			type = cls.ReleaseType.FULL
+
+		toReturn = ""
+# BEGIN -Garbage which needs to be replaced.
+		if(formatArgment == "vW.X|vW.X.Y.Z-T"):
+			if(type == cls.ReleaseType.FULL):
+				toReturn = (
+					"v" +
+					VersionArray[0] +
+					"." +
+					VersionArray[1] )
+			else:
+				toReturn = (
+					"v" +
+					VersionArray[0] +
+					"." +
+					VersionArray[1] +
+					"." +
+					VersionArray[2] +
+					"." +
+					VersionArray[3] )
+				if(type == cls.ReleaseType.BETA):
+					toReturn += "-beta"
+				else:
+					toReturn += "-alpha"
+		elif(formatArgment == "vW.X|vW.X.Y|vW.X.Y.Z"):
+			if(type == cls.ReleaseType.FULL):
+				toReturn = (
+					"v" +
+					VersionArray[0] +
+					"." +
+					VersionArray[1] )
+			elif(type == cls.ReleaseType.BETA):
+					toReturn = (
+					VersionArray[0] +
+					"." +
+					VersionArray[1] +
+					"." +
+					VersionArray[2] )
+			else:
+					toReturn = (
+					VersionArray[0] +
+					"." +
+					VersionArray[1] +
+					"." +
+					VersionArray[2] +
+					"." +
+					VersionArray[3] )
+		elif(formatArgment == "N vW.X|vW.X.Y.Z-T"):
+			if(type == cls.ReleaseType.FULL):
+				toReturn = (
+					ReleaseName +
+					" v" +
+					VersionArray[0] +
+					"." +
+					VersionArray[1] )
+			else:
+				toReturn = (
+					"v" +
+					VersionArray[0] +
+					"." +
+					VersionArray[1] +
+					"." +
+					VersionArray[2] +
+					"." +
+					VersionArray[3] )
+				if(type == cls.ReleaseType.BETA):
+					toReturn += "-beta"
+				else:
+					toReturn += "-alpha"
+		else:
+			assert(False)
+# END -Garbage which needs to be replaced.
+# -Jacob Gantt 2019/2/13
+		return toReturn
+
+try:
+	main()
+	print("\n\ndone.")
+	print("(5 seconds...)")
+	time.sleep(5)
+except Exception as e:
+	print("\n\nError, build failed:\n\n" + str(e) + "\n\n")
+	print(traceback.format_exc())
+	print("\n\ndone.")
+	input("Press any key to exit.")
