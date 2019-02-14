@@ -1,2 +1,4 @@
 release/
 *.DS_Store
+buildtools/version.txt
+*.bak
