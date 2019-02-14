@@ -10,7 +10,7 @@ PathToMonk = r"Jagent\Monk.jar"		#relative to build.py
 Readme = "readme.txt"				#relative to dev
 Versionfile = "version.txt"			#relative to build.py
 
-FileTypesToParse= (".txt",".cos",".pray.cos")
+FileTypesToParse= (".txt",".cos",".pray.cos", ".catalogue")
 
 ReleaseName = "Children of Capillata"
 
@@ -83,7 +83,7 @@ def main():
 					backupFile.write(text)
 
 				f.seek(0)
-				f.write(Parser.parse(text))
+				f.write(Parser.parseAndReplace(text))
 				f.truncate()
 
 		for filename in [f for f in filenames if f.endswith(".pray.cos")]:
@@ -129,8 +129,99 @@ def main():
 
 class Parser():
 	@staticmethod
-	def parse(fileIn):
-		return(fileIn)
+	def parseAndReplace(fileIn):
+		index = 0
+		state = 0
+		restingStart = -1
+		lastRestingEnd = -1
+		fileOutChunked = []
+# We're looking for strings like "[[<[[blah blah blah]]>]]"
+# The state variable stores how far we've gotten:
+# 0		Looking for `[`[<[[    ]]>]]
+# 1		Looking for [`[`<[[    ]]>]]
+# 2		Looking for [[`<`[[    ]]>]]
+# 3		Looking for [[<`[`[    ]]>]]
+# 4		Looking for [[<[`[`    ]]>]]
+# 5		Looking for   [[<[[    `]`]>]]
+# 6		Looking for   [[<[[    ]`]`>]]
+# 7		Looking for   [[<[[    ]]`>`]]
+# 8		Looking for   [[<[[    ]]>`]`]
+# 9		Looking for   [[<[[    ]]>]`]`
+		while index < len(fileIn):
+			if(state==0):
+				if(fileIn[index]=='['):
+					state = 1
+			elif(state==1):
+				if(fileIn[index]=='['):
+					state = 2
+				else:
+					state = 0
+			elif(state==2):
+				if(fileIn[index]=='<'):
+					state = 3
+				else:
+					state = 0
+			elif(state==3):
+				if(fileIn[index]=='['):
+					state = 4
+				else:
+					state = 0
+			elif(state==4):
+				if(fileIn[index]=='['):
+					state = 5
+					restingStart = index - 4
+# We found an opening [[<[[
+#	Save everything up till here for file output
+					fileOutChunked += fileIn[lastRestingEnd+1:restingStart]
+				else:
+					state = 0
+			elif(state==5):
+				if(fileIn[index]==']'):
+					state = 6
+			elif(state==6):
+				if(fileIn[index]==']'):
+					state = 7
+				else:
+					state = 5
+			elif(state==7):
+				if(fileIn[index]=='>'):
+					state = 8
+				else:
+					state = 5
+			elif(state==8):
+				if(fileIn[index]==']'):
+					state = 9
+				else:
+					state = 5
+			else:
+				if(fileIn[index]==']'):
+# We found a closing ]]>]]
+					state = 0
+					lastRestingEnd = index
+					fileOutChunked += Parser.parseResting(fileIn, restingStart, index)
+				else:
+					state = 5
+			index = index+1
+		if( state > 4):
+			assert(False, "Error: Found opening [[<[[ but no closing ]]>]].")
+#	Save everything else for file output
+		fileOutChunked += fileIn[lastRestingEnd+1:index]
+		return(''.join(fileOutChunked))
+
+	@staticmethod
+	def parseResting(fileIn, startIndex, endIndex):
+		#resting = fileIn[startIndex:endIndex+1]
+		resting = fileIn[startIndex+5:endIndex-4]
+		commandEnd = str.find(resting, ':')
+		command = resting[:commandEnd]
+		arguments = resting[commandEnd+1:].split(",")
+		arguments = filter(None, arguments)
+		argumentsList = list(map(str.strip, arguments))
+		if(command.upper() == "FORMAT"):
+			toReturn = Formatter.getFormat(argumentsList[0], argumentsList[1])
+		else:
+			toReturn = ""
+		return toReturn
 
 class Formatter():
 	types = ["version", "date"]
