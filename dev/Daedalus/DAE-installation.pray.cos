@@ -78,7 +78,7 @@ scrp 1 2 24403 1000
 		pat: kill 2
 		pat: butt 2 "useful_screen" 13 2 122 290 0 [0 1 255] 1001 0
 		part 1
-		ptxt "You need to inject the Universal Hub first. Go to this webpage to get it:\n\nhttp://creatures.wikia.com/wiki/Universal_Hub"
+		ptxt "You need to inject the Universal Hub first. Go to this webpage to get it:\n\nhttps://creatures.wiki/Universal_Hub"
 	else
 *			*********
 *			***Map***
